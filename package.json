@@ -52,10 +52,10 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "@effect/platform": "^0.97.2",
-    "@effect/platform-node": "^0.108.2",
+    "@effect/platform-node": "^0.108.3",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.4.0",
-    "effect": "^3.22.2",
+    "effect": "^3.22.3",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
@@ -63,7 +63,7 @@
     "@axe-core/playwright": "^4.14.0",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
-    "@effect/language-service": "^0.87.4",
+    "@effect/language-service": "^0.87.5",
     "@effect/vitest": "^0.30.0",
     "@eslint/js": "^10.0.0",
     "@fontsource-variable/atkinson-hyperlegible-next": "^5.3.0",
