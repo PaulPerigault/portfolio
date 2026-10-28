@@ -20,3 +20,16 @@ variable "custom_domains" {
   type        = list(string)
   default     = []
 }
+
+variable "git_source" {
+  description = "Dépôt GitHub construit par Cloudflare (intégration Git native, previews par PR) ; null = envoi direct. L'application GitHub de Cloudflare doit être autorisée sur le dépôt (action manuelle)."
+  type = object({
+    owner           = string
+    repo_name       = string
+    build_command   = string
+    destination_dir = string
+    root_dir        = optional(string, "/")
+    env_vars        = optional(map(string), {})
+  })
+  default = null
+}
