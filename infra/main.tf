@@ -84,8 +84,8 @@ module "fr_www_redirect" {
   target_origin = local.canonical_origin
 }
 
-# Documentation du design system (#268) : projet Pages dédié (envoi direct par la CI du dépôt
-# PaulPerigault/design-system), servi sur `design.paulperigault.dev` par un CNAME proxifié. Hôte
+# Documentation du design system (#268) : projet Pages dédié, construit par Cloudflare depuis
+# PaulPerigault/design-system (production `main`, une preview par PR, D-036), servi sur `design.paulperigault.dev` par un CNAME proxifié. Hôte
 # exact : la redirection `.dev` → `.fr` ne le capture pas (`dev_redirect`, hôtes listés).
 module "ds_docs_site" {
   source = "./modules/pages-site"
@@ -93,6 +93,16 @@ module "ds_docs_site" {
   account_id     = var.account_id
   project_name   = "paulperigault-ds"
   custom_domains = ["design.${var.zone_name}"]
+
+  # Commande et dossier de sortie de apps/docs (docs/process/previews.md du dépôt design-system) ;
+  # NODE_VERSION égale son .nvmrc.
+  git_source = {
+    owner           = "PaulPerigault"
+    repo_name       = "design-system"
+    build_command   = "npm ci && npm -w @paulperigault/docs run build"
+    destination_dir = "apps/docs/dist"
+    env_vars        = { NODE_VERSION = "24" }
+  }
 }
 
 module "ds_docs_dns" {

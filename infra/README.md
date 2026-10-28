@@ -6,7 +6,7 @@ Services du portfolio hébergés chez Cloudflare : la zone `paulperigault.dev` (
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | `modules/contact-form`       | widget Turnstile, Worker `contact-form` (sans code : déployé par Wrangler depuis `worker/`), domaine personnalisé `contact.paulperigault.dev` |
 | `modules/resend-domain`      | DKIM et chemin de retour de Resend sur `paulperigault.dev`, **importés** (`imports.tf`) et non recréés                                        |
-| `modules/pages-site`         | projet Cloudflare Pages (envoi direct) et ses domaines personnalisés                                                                          |
+| `modules/pages-site`         | projet Cloudflare Pages (envoi direct, ou source Git avec previews par PR) et ses domaines personnalisés                                                                          |
 | `modules/zone-fr`            | zone `paulperigault.fr` : messagerie iCloud, vérifications, enregistrements du site, réglages, DNSSEC (sorties : serveurs de noms et DS)      |
 | `modules/canonical-redirect` | redirection 301 vers `https://paulperigault.fr` : `.dev` et `www.dev` (ruleset **importé**), `www.fr`                                         |
 | `modules/dns-caa`            | enregistrements CAA de l'apex (Let's Encrypt, Google Trust Services, SSL.com, Sectigo : autorités de Cloudflare) : `paulperigault.dev` (racine) et `.fr` (`zone-fr`)                |

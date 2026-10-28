@@ -49,7 +49,7 @@ Relevé du 2026-10-13 (lecture seule, relevé DNS aujourd'hui `npm run infra:dns
 ## 7. Dépôt design-system et documentation `design.paulperigault.dev` (ADR-0011, #268)
 
 - **Dépôt** `PaulPerigault/design-system` : `infra/github/design-system.tf` et `design-system-protections.tf` (importé, squash seul, rulesets, environnements `npm-publish` et `docs-deploy` limités à `main`).
-- **Docs** : projet Pages `paulperigault-ds` (`module.ds_docs_site`) et CNAME proxifié `design.paulperigault.dev` (`module.ds_docs_dns`, `infra/modules/dns-cname`).
+- **Docs** : projet Pages `paulperigault-ds` (`module.ds_docs_site`, construit par Cloudflare depuis `design-system`, `main` en production, une preview par PR, `git_source` du module `pages-site`) et CNAME proxifié `design.paulperigault.dev` (`module.ds_docs_dns`, `infra/modules/dns-cname`).
 - **Jeton** : `portfolio-ds-pages-deploy` (Pages Write), secret de l'environnement `docs-deploy` (`infra/identity/github.tf`).
 - **Étapes propriétaire**, dans l'ordre : étendre `GITHUB_IAC_TOKEN` et `IAC_GITHUB_READONLY_TOKEN` au dépôt (réglages des jetons fine-grained, aucune API) ; puis, sur la machine des secrets IaC :
 
