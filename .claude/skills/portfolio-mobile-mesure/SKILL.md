@@ -17,10 +17,13 @@ Un lot modifie le CSS, le JS, les polices, les images ou la structure d'une page
 - Les budgets bloquants sont ceux de `.lighthouserc.json` (profil bureau) : performance ≥ 0,98, accessibilité,
   bonnes pratiques et SEO = 1, LCP ≤ 800 ms, TBT ≤ 50 ms, CLS ≤ 0,01, poids ≤ 90 000 octets, JS ≤ 6 144 octets,
   12 requêtes au plus.
-- Le poids est affiché et non bloquant par défaut (`docs/passation-portfolio.md`, mission).
+- Dans `.lighthouserc.json`, `total-byte-weight` (90 000 octets) est en `error`, donc bloquant dans la CI actuelle.
+  L'objectif de Paul est un poids affiché et non bloquant : la décision n° 4 de `docs/audit-portfolio-2026-11.md`
+  est en attente. En attendant, ne pas modifier `.lighthouserc.json`, et signaler tout dépassement.
 - Rendre compte dans un tableau avant / après : mêmes pages, même méthode, même poste, unité écrite.
 - Dire d'où vient la mesure. Un serveur local est nommé comme tel : `scripts/serve-dist.mjs` n'envoie ni compression
-  ni les en-têtes de `public/_headers`, donc le poids transféré est du brut.
+  ni les en-têtes de `public/_headers` : la référence locale (`docs/perf-baseline-migration.md`) est sans
+  compression (gzip calculé à part), alors que la CI compresse.
 - Le build de mesure précise s'il a `PUBLIC_TURNSTILE_SITEKEY` : sans elle, le formulaire n'est pas construit.
 
 ## Interdits

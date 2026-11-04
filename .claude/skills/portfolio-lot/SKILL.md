@@ -31,6 +31,15 @@ Dès qu'un changement doit aboutir dans `develop` : code, contenu, documentation
 - `npm install` pour changer des dépendances hors PR dédiée ; `apply`, `publish`, secrets ; toucher `infra/`.
 - `gh pr ready`, commentaire dans une issue ou une PR non demandé.
 
+## Périmètre de session
+
+- Rien hors du dossier du dépôt.
+- Fichiers temporaires dans `tmp/`, sans `.js`/`.ts`/`.mjs`, supprimés un par un par chemin explicite : jamais de
+  vidage ni de suppression par motif.
+- Aucun `npx`, `npm install` ni téléchargement sans demande de Paul.
+- Ne lancer aucun binaire dont le nom exact n'est pas lu dans `package.json` (Lighthouse CI = `@lhci/cli`, jamais
+  `lhci`).
+
 ## Procédure
 
 1. Lire l'issue, `CLAUDE.md` et le document de passation du lot.

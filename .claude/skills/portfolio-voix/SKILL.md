@@ -25,7 +25,7 @@ Tout texte lu par un visiteur ou un recruteur, et toute relecture d'un texte pro
 
 | Tic | Exemple à éviter | Réécriture |
 | --- | --- | --- |
-| Intitulé gonflé | « Ingénieur DevOps » pour un alternant (`audit-ia.md`, B2) | « Alternant DevOps Cloud » |
+| Intitulé gonflé | « Ingénieur DevOps » pour un alternant (`audit-ia.md`, B2) | la valeur de `hero.role` dans les deux `ui.json` |
 | Fait absent | « J'interviens en école » sans école ni date (B2) | nom de l'école, date, sujet, ou rien |
 | Inventaire sans preuve | 42 technologies sans projet associé (A3) | trois outils reliés à un projet |
 | Solennité | « il convient de », « au cœur de » | le verbe direct |
@@ -34,10 +34,8 @@ Tout texte lu par un visiteur ou un recruteur, et toute relecture d'un texte pro
 | Série de trois | « fiable, scalable et performant » | le seul adjectif mesuré |
 | Formule d'accueil | « N'hésitez pas à », « Que vous soyez… » | l'adresse e-mail et ce qu'on peut demander |
 | Formule refusée par le dépôt | « passionné par », « cutting-edge », « delve into » | liste dans `scripts/lib/design-rules.mjs` |
+| Report vague | « pour le moment », « right now », « for now » | la date, ou rien |
 | Conclusion-écho | dernière phrase qui répète la première | la supprimer |
-
-Cas voisin : une affirmation qui se contredit entre sections (`about.body` dit ne pas intervenir en école, le
-sous-titre du contact propose d'y intervenir). Le signaler.
 
 ## Interdits
 

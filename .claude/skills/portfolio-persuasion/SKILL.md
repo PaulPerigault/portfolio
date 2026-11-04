@@ -18,11 +18,12 @@ projet ou d'une certification.
   décalage entre « ingénieur » et « alternant » est le cas d'école relevé par `docs/audit-ia.md` (B2).
 - Un chiffre est exact, daté et sourcé : mesure du dépôt (`docs/perf-baseline-migration.md`), donnée GitHub lue au
   build, date de certification. Pas d'arrondi flatteur.
-- Un appel à l'action est un verbe qui annonce ce qui se passe (« Télécharger le CV », « Me contacter »,
-  `hero.cta_*`) et ne promet rien d'autre.
+- Un appel à l'action est un verbe qui annonce ce qui se passe (« Télécharger le CV » / « Download CV »,
+  « Me contacter » / « Get in touch » : `hero.cta_cv`, `hero.cta_contact`) et ne promet rien d'autre.
 - Test « persuader ou manipuler » : le visiteur, informé de ma technique, déciderait-il de la même façon ? Si la
   réponse dépend de son ignorance, c'est de la manipulation : réécrire.
-- Un manque se dit au lieu de se masquer : `about.body` annonce « je n'interviens pas encore en école ».
+- Un manque se dit au lieu de se masquer : ce qui n'existe pas encore est écrit tel quel, sans formule qui le
+  contourne.
 
 ## Interdits
 
