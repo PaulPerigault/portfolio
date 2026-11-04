@@ -18,7 +18,7 @@ const href = Astro.url.pathname.replace(`/${lang}/`, `/${other}/`);
   hreflang={other}
   lang={other}
   data-lang-switch={other}
-  class="border-control hover:border-accent hover:text-accent rounded-control border px-2 py-1 text-sm font-semibold uppercase transition-colors duration-(--pp-duration-base)"
+  class="border-control hover:border-accent hover:text-accent inline-flex min-h-(--pp-size-control-height) min-w-(--pp-size-control-height) items-center justify-center rounded-control border px-2 text-sm font-semibold uppercase no-underline transition-colors duration-(--pp-duration-base)"
 >
   <!-- Nom accessible « en English » : il commence par le texte visible (WCAG 2.5.3). -->
   <span>{other}</span>

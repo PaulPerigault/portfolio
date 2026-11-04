@@ -18,7 +18,10 @@ const t = useTranslations(lang);
 
 <header class="border-line bg-bg sticky top-0 z-40 border-b">
   <Container class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-4">
-    <a href={`/${lang}/`} class="font-semibold tracking-tight">
+    <a
+      href={`/${lang}/`}
+      class="inline-flex min-h-(--pp-size-control-height) items-center font-semibold tracking-tight no-underline"
+    >
       {SITE.name}
     </a>
     <nav aria-label={t('nav.primary')} class="js:max-md:hidden">

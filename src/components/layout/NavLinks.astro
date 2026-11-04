@@ -13,12 +13,13 @@ const { lang, vertical = false } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<ul
-  class:list={['flex', vertical ? 'flex-col gap-5 text-xl' : 'flex-wrap gap-x-6 gap-y-2 text-sm']}
->
+<ul class:list={['flex', vertical ? 'flex-col gap-2 text-xl' : 'flex-wrap gap-x-4 text-sm']}>
   {NAV_SECTIONS.map((id) => (
     <li>
-      <a href={`/${lang}/#${id}`} class="hover:text-accent underline-offset-4 hover:underline">
+      <a
+        href={`/${lang}/#${id}`}
+        class="hover:text-accent inline-flex min-h-(--pp-size-control-height) items-center no-underline hover:underline"
+      >
         {t(`nav.${id}`)}
       </a>
     </li>

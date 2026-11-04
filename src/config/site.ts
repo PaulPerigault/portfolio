@@ -12,6 +12,8 @@ export const SITE = {
   schools: ['ESIEA Paris', 'IUT Paris Rives de Seine'],
   ogImagePath: '/image/og-cover.png',
   githubApiUrl: 'https://api.github.com',
+  /** Documentation du design system utilisé par le site (lien réciproque contrôlé de son côté). */
+  designSystemUrl: 'https://design.paulperigault.dev/',
   githubUrl: `https://github.com/${GITHUB_USER}`,
   linkedinUrl: 'https://www.linkedin.com/in/paul-perigault',
   /** CV servi par le site (copié au build par `scripts/fetch-cv.mjs`). */
