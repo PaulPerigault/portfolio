@@ -45,7 +45,7 @@
   "projects": {
     "title": "Projets",
     "view_code": "Code",
-    "view_demo": "Demo",
+    "view_demo": "Démo",
     "updated": "Mis à jour",
     "fetched_at": "Données GitHub —",
     "empty": "Aucun projet à afficher pour le moment."
@@ -57,7 +57,7 @@
   },
   "contact": {
     "title": "Contact",
-    "subtitle": "Je suis disponible pour intervenir en école, encadrer des projets étudiants et des hackathons.",
+    "subtitle": "Je souhaite intervenir en école et je suis disponible pour encadrer des projets étudiants et des hackathons.",
     "email_label": "E-mail",
     "linkedin_label": "LinkedIn",
     "github_label": "GitHub",
