@@ -53,7 +53,7 @@ export const RULES = [
   },
   {
     name: 'couleur-en-dur',
-    message: 'Couleur littérale : utiliser un token (src/styles/tokens.css).',
+    message: 'Couleur littérale : utiliser un jeton de @paulperigault/tokens.',
     pattern: /#[0-9a-fA-F]{6}\b|#[0-9a-fA-F]{3}\b|\b(?:rgb|rgba|hsl|hsla|oklch)\(/,
     only: CODE,
     allow: [/src\/styles\/tokens\.css$/, /src\/lib\/theme\.ts$/, /\.test\.ts$/],
