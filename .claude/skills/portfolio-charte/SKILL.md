@@ -11,16 +11,15 @@ Tout changement de CSS, de classes Tailwind, de composant `ui/` ou de section.
 
 ## État de la charte
 
-La direction visuelle de la refonte n'est pas encore choisie, et l'ADR-0006 sera remplacé. Tant que ce n'est pas fait,
-la source courante est `docs/design-charter.md`. Ne pas anticiper la future identité : si une règle ci-dessous
-et ce document divergent, c'est ce document qui l'emporte.
+La charte v2 (ADR-0012, direction A, jetons publiés tels quels) remplace l'ADR-0006. La source courante est
+`docs/design-charter.md` : si une règle ci-dessous et ce document divergent, c'est ce document qui l'emporte.
 
 ## Règles
 
-- Les valeurs viennent des jetons `--pp-*` de `src/styles/tokens.css`, exposés à Tailwind par `theme.css`. Clair et
+- Les valeurs viennent des jetons `--pp-*` de `@paulperigault/tokens`, exposés à Tailwind par `@paulperigault/css/theme.css`. Clair et
   sombre sont définis une fois avec `light-dark()`.
-- Une seule teinte d'accent, une seule famille typographique auto-hébergée (`src/styles/fonts.css`).
-- Titre de section à gauche, contenu à droite (`Section`), filets fins, angles quasi droits (`--pp-radius`).
+- Une seule teinte d'accent, une seule famille typographique auto-hébergée (`@paulperigault/css`).
+- Titre de section à gauche, contenu à droite (`Section`), filets fins, angles `--pp-radius-control` / `--pp-radius-surface`.
 - Nouvelle couleur : jeton dans les deux thèmes, puis contraste vérifié (`src/lib/contrast.test.ts`).
 - Motif répété : une primitive dans `src/components/ui/` (`docs/ui.md`).
 - La feuille d'impression reste valide (`e2e/print.spec.ts`).
@@ -46,6 +45,6 @@ et ce document divergent, c'est ce document qui l'emporte.
 
 ## Sources du dépôt
 
-- `docs/design-charter.md`, `src/styles/tokens.css`, `src/styles/theme.css`, `src/styles/base.css`
+- `docs/design-charter.md`, `src/styles/global.css`, `node_modules/@paulperigault/css`
 - `scripts/check-design.mjs`, `scripts/lib/design-rules.mjs`, `e2e/design-charter.spec.ts`
 - `docs/ui.md`, `docs/design-system-inventaire.md`, `docs/adr/0006-identite-visuelle-cv-d-abord.md`

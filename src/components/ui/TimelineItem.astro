@@ -21,7 +21,7 @@ const { title, subtitle, period, dateTime } = Astro.props;
     </p>
   </div>
   {subtitle && <p class="text-muted mt-1">{subtitle}</p>}
-  <div class="mt-3 max-w-prose">
+  <div class="mt-3 max-w-measure">
     <slot />
   </div>
 </li>

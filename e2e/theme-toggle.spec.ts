@@ -4,8 +4,8 @@ const LABELS = {
   fr: { toDark: 'Passer en mode sombre', toLight: 'Passer en mode clair' },
   en: { toDark: 'Switch to dark mode', toLight: 'Switch to light mode' },
 } as const;
-const DARK_BACKGROUND = 'rgb(14, 16, 21)';
-const LIGHT_BACKGROUND = 'rgb(252, 252, 253)';
+const DARK_BACKGROUND = 'oklch(0.201 0.0124 270.7)';
+const LIGHT_BACKGROUND = 'oklch(0.985 0.004 270.7)';
 
 const backgroundOf = (page: Page) =>
   page.evaluate(() => getComputedStyle(document.documentElement).backgroundColor);
