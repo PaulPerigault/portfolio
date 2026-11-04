@@ -11,7 +11,7 @@ const { as: Tag = 'div', interactive = false, class: className } = Astro.props;
 
 <Tag
   class:list={[
-    'border-line border p-6 transition-colors duration-(--pp-duration)',
+    'border-line border p-6 transition-colors duration-(--pp-duration-base)',
     interactive && 'hover:border-accent focus-within:border-accent',
     className,
   ]}

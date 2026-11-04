@@ -1,15 +1,19 @@
 import { readFileSync } from 'node:fs';
+import { parseOklch, toHex } from '@paulperigault/tokens/color';
 import { describe, expect, it } from 'vitest';
 import { contrastRatio } from './contrast';
 import { THEME_COLOR } from './theme';
 
-const TOKENS = readFileSync('src/styles/tokens.css', 'utf8');
-const PAIR = /--pp-([a-z-]+):\s*light-dark\((#[0-9a-f]{6}),\s*(#[0-9a-f]{6})\)/gi;
+const TOKENS = readFileSync('node_modules/@paulperigault/tokens/generated/tokens.css', 'utf8');
+const PAIR = /--pp-color-([a-z-]+):\s*light-dark\((oklch\([^)]*\)),\s*(oklch\([^)]*\))\)/gi;
+const ROLES = ['accent', 'bg', 'control', 'fg', 'line', 'muted', 'on-accent', 'surface'];
+const hex = (oklch: string): string => toHex(parseOklch(oklch));
 
 const palettes = { light: new Map<string, string>(), dark: new Map<string, string>() };
 for (const [, name, light, dark] of TOKENS.matchAll(PAIR)) {
-  palettes.light.set(name as string, light as string);
-  palettes.dark.set(name as string, dark as string);
+  if (!ROLES.includes(name as string)) continue;
+  palettes.light.set(name as string, hex(light as string));
+  palettes.dark.set(name as string, hex(dark as string));
 }
 
 const ratio = (mode: 'light' | 'dark', foreground: string, background: string): number =>

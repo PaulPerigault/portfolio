@@ -15,7 +15,7 @@ Création ou modification d'un composant, d'un lien, d'un formulaire, d'un menu,
   (`e2e/accessibility.spec.ts`, étiquettes `wcag2a` à `wcag22aa`). Ajouter une page ou un état interactif à ce test.
 - Tout contrôle a un nom accessible : texte visible, `aria-label` ou texte masqué (`VisuallyHidden`). Le libellé
   existe dans les deux `ui.json`.
-- Le focus reste visible (`src/styles/base.css`) et l'ordre du clavier suit l'ordre visuel. Le menu mobile est un
+- Le focus reste visible (`@paulperigault/css`, base) et l'ordre du clavier suit l'ordre visuel. Le menu mobile est un
   `<dialog>` natif : ne pas le remplacer par un composant maison.
 - Contrastes : chaque nouvelle couleur est un jeton défini dans les deux thèmes, et `src/lib/contrast.test.ts` doit
   rester vert (4,5:1 pour le texte, 3:1 pour les contrôles).
@@ -41,5 +41,5 @@ Création ou modification d'un composant, d'un lien, d'un formulaire, d'un menu,
 
 ## Sources du dépôt
 
-- `e2e/accessibility.spec.ts`, `src/lib/contrast.test.ts`, `src/styles/base.css`, `src/styles/tokens.css`
+- `e2e/accessibility.spec.ts`, `src/lib/contrast.test.ts`, `src/styles/global.css`, `@paulperigault/tokens`
 - `src/components/ui/ExternalLink.astro`, `docs/ui.md`, `docs/audit-ia.md`, `CLAUDE.md` (Conventions)

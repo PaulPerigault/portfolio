@@ -1,5 +1,43 @@
 @import 'tailwindcss';
-@import './fonts.css';
-@import './tokens.css';
-@import './theme.css';
-@import './base.css';
+@import '@paulperigault/css';
+@import '@paulperigault/css/theme.css';
+
+/*
+ * Utilitaires Tailwind propres au portfolio, absents du `theme.css` publié, construits avec ses
+ * jetons uniquement (ADR-0012). `--spacing` : le thème publié vide l'échelle numérique (`p-6`, `gap-5`),
+ * on garde son unité de base sur le jeton `3xs` (0,25 rem). Le reste vient tel quel de @paulperigault/css.
+ */
+@theme inline {
+  --spacing: var(--pp-space-3xs);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --text-display: clamp(var(--pp-font-size-3), 6vw + 0.75rem, var(--pp-font-size-4));
+  --spacing-section: clamp(var(--pp-space-xl), 6vw, var(--pp-space-2xl));
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  main:focus {
+    outline: none;
+  }
+}
+
+/* Impression : le CV papier est la page elle-même, sans navigation ni pied de page. */
+@media print {
+  header,
+  footer {
+    display: none !important;
+  }
+
+  li,
+  section > div > * {
+    break-inside: avoid;
+  }
+}

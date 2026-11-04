@@ -4,7 +4,7 @@
 
 ## 1. Tokens
 
-Source unique : `src/styles/tokens.css` (`--pp-*`, clair/sombre définis une fois avec `light-dark()`), exposés à Tailwind par `src/styles/theme.css`, qui retire la palette, les tailles, les rayons et les ombres par défaut de Tailwind.
+Source unique (avant la migration, #290) : l'ancien `tokens.css` du portfolio (`--pp-*`, clair/sombre définis une fois avec `light-dark()`), exposé à Tailwind par l'ancien `theme.css`, qui retirait la palette, les tailles, les rayons et les ombres par défaut de Tailwind.
 
 | Token | Rôle | Exposé à Tailwind | Utilisé dans les composants |
 | --- | --- | --- | --- |
@@ -69,7 +69,7 @@ Hors styleguide et tests.
 ## 4. Commandes de comptage (rejouables)
 
 ```shell
-grep -oE -- '--pp-[a-z0-9-]+:' src/styles/tokens.css | sort -u | wc -l          # 14 tokens
+grep -oE -- '--pp-[a-z0-9-]+:' node_modules/@paulperigault/tokens/generated/tokens.css | sort -u | wc -l
 find src/components -name '*.astro' | awk -F/ '{print $3}' | sort | uniq -c     # composants par dossier
 grep -rhoE '\btext-(xs|sm|base|lg|xl|2xl|display)\b' src --include='*.astro' | sort | uniq -c
 grep -rhoE '(bg|text|border)-surface\b' src --include='*.astro' --include='*.ts' | wc -l   # 0

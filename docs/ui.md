@@ -1,6 +1,6 @@
 # Primitives UI
 
-Composants Astro **sans logique métier** de `src/components/ui/`. Ils reçoivent des props typées (`interface Props`), n'importent que `lib/` et ne connaissent ni le contenu, ni les services, ni les sections (règle de couches vérifiée par `npm run check:layers`). Toutes les couleurs, tailles et espacements viennent des tokens (`src/styles/tokens.css`) — jamais de valeur en dur.
+Composants Astro **sans logique métier** de `src/components/ui/`. Ils reçoivent des props typées (`interface Props`), n'importent que `lib/` et ne connaissent ni le contenu, ni les services, ni les sections (règle de couches vérifiée par `npm run check:layers`). Toutes les couleurs, tailles et espacements viennent des jetons de `@paulperigault/tokens` — jamais de valeur en dur.
 
 Vitrine vivante : `/fr/styleguide/` et `/en/styleguide/` (non indexées, `noindex`, exclues du sitemap).
 

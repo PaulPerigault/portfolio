@@ -10,34 +10,41 @@ const allowedColors = (page: Page) =>
       return getComputedStyle(probe).color;
     };
     const tokens = [
-      '--pp-bg',
-      '--pp-surface',
-      '--pp-fg',
-      '--pp-muted',
-      '--pp-line',
-      '--pp-control',
-      '--pp-accent',
-      '--pp-on-accent',
+      '--pp-color-bg',
+      '--pp-color-surface',
+      '--pp-color-fg',
+      '--pp-color-muted',
+      '--pp-color-line',
+      '--pp-color-control',
+      '--pp-color-accent',
+      '--pp-color-on-accent',
     ];
     const colors = ['rgba(0, 0, 0, 0)', ...tokens.map(resolve)];
     probe.remove();
     return colors;
   });
 
+/** Rayon de surface du design system (`--pp-radius-surface`, 0,5 rem) : ADR-0012. */
+const MAX_RADIUS_PX = 8;
+
 const decorativeStyles = (page: Page) =>
-  page.evaluate(() =>
-    [...document.querySelectorAll('body, body *')].flatMap((element) => {
-      const style = getComputedStyle(element);
-      const found: string[] = [];
-      if (style.backgroundImage.includes('gradient')) found.push('gradient');
-      if (style.boxShadow !== 'none') found.push('box-shadow');
-      if (style.textShadow !== 'none') found.push('text-shadow');
-      if (style.backdropFilter !== 'none' && style.backdropFilter !== '')
-        found.push('backdrop-filter');
-      if (style.filter !== 'none') found.push('filter');
-      if (parseFloat(style.borderTopLeftRadius) > 4) found.push('radius');
-      return found.map((kind) => `${element.tagName.toLowerCase()}.${element.className} : ${kind}`);
-    }),
+  page.evaluate(
+    (maxRadius) =>
+      [...document.querySelectorAll('body, body *')].flatMap((element) => {
+        const style = getComputedStyle(element);
+        const found: string[] = [];
+        if (style.backgroundImage.includes('gradient')) found.push('gradient');
+        if (style.boxShadow !== 'none') found.push('box-shadow');
+        if (style.textShadow !== 'none') found.push('text-shadow');
+        if (style.backdropFilter !== 'none' && style.backdropFilter !== '')
+          found.push('backdrop-filter');
+        if (style.filter !== 'none') found.push('filter');
+        if (parseFloat(style.borderTopLeftRadius) > maxRadius) found.push('radius');
+        return found.map(
+          (kind) => `${element.tagName.toLowerCase()}.${element.className} : ${kind}`,
+        );
+      }),
+    MAX_RADIUS_PX,
   );
 
 const usedColors = (page: Page) =>

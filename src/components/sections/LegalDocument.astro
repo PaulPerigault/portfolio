@@ -24,7 +24,7 @@ const values = { email: SITE.email, domain: SITE.domain };
       {document.title}
     </Heading>
     <p class="text-muted mt-3 text-sm">{document.updated}</p>
-    <div class="mt-12 max-w-prose space-y-12">
+    <div class="mt-12 max-w-measure space-y-12">
       {document.sections.map((section) => (
         <section aria-labelledby={`${section.id}-title`}>
           <Heading level={2} size="xl" id={`${section.id}-title`}>
