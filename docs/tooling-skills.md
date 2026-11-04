@@ -69,6 +69,54 @@ Tout est déclaré dans le dépôt et vérifié par `scripts/claude-settings.tes
 
 Recommandations de `claude-code-setup` écartées : formatage Prettier après chaque édition (lint-staged le fait déjà au commit ; réécrire le fichier derrière l'outil d'édition crée des états périmés), lint ou tests après chaque édition (Vitest prend environ 24 s).
 
+## Skills du portfolio
+
+Huit skills de projet dans `.claude/skills/<nom>/SKILL.md` (issue #300). Chacun est écrit de zéro, tient en 60 lignes
+au plus (Quand, Règles, Interdits, Procédure, Sources du dépôt) et ne cite que des règles lisibles dans le dépôt. Aucun
+ne contient de hook, de script, de commande réseau ni d'instruction d'installation, et aucun ne demande de modifier
+`.claude/settings.json` : rien à activer.
+
+| Skill | Sert à |
+| --- | --- |
+| `portfolio-lot` | Flux d'un lot : issue, branche, commits, PR vers `develop`, vérifications, fusion |
+| `portfolio-mobile-mesure` | Mesures mobiles avant / après, budgets de `.lighthouserc.json` |
+| `portfolio-a11y` | Axe à zéro, nom accessible, focus, contrastes, nouvel onglet |
+| `portfolio-charte` | Jetons `--pp-*` et interdits de `scripts/check-design.mjs` (source courante : `docs/design-charter.md`) |
+| `portfolio-ux` | Boutons, erreurs, états vides, clés de `ui.json` FR/EN |
+| `portfolio-voix` | Textes factuels, catalogue de tics, relecture en deux passes |
+| `portfolio-persuasion` | Preuve avant affirmation, appel à l'action honnête |
+| `portfolio-seo-geo` | `SeoHead.astro`, `lastmod`, robots d'IA, identité identique partout |
+
+### Provenance des skills tiers lus
+
+Les dépôts ci-dessous ont été lus, jamais installés ni exécutés. Les SHA sont repris tels que relevés.
+
+| Source | SHA | Licence | Usage |
+| --- | --- | --- | --- |
+| design-system, branche `main` (8 skills `encre-*`) | `749b792312534137a3a5fb74920f0ec37de3d376` | dépôt du propriétaire | Lus, rien copié |
+| `blader/humanizer` | `0ef9fe5bc3572734fd3ae6c448fe00a30cd5dcf0` | MIT (Siqi Chen) | Démarche reprise (repérer puis réécrire), aucun texte repris |
+| `anthropics/knowledge-work-plugins`, `ux-copy` | `d900840716eb262e1feb17c6f4406c9ce0e06bcf` | Apache-2.0 | Inspiration |
+| `guia-matthieu/clawfu-skills`, `persuasion-principles` | `4108f5c0` | MIT | Grille éthique en inspiration. Son MCP `@clawfu/mcp-skills` ne doit jamais être installé |
+| `aevans-eng/seo-skill` | `5ba1717a0a5c` | MIT | Inspiration |
+| `content-designer/ux-writing-skill` | `98cacde4` | non évalué | Non évalué |
+| `wondelai/skills`, `influence-psychology` | `d8d5d75f` | non évalué | Non évalué |
+| `plugin87/ux-ui-agent-skills` | `def84a70fadc` | — | Rejeté : hooks et scripts exécutés |
+| `fullo/sustainable-code-skill-setup` | `b154a31f904c` | — | Rejeté : `.mcp.json` avec `npx -y` non épinglé |
+| green-claude | `d1308bbd91e3` | règles CC BY 4.0 | Installation rejetée, hooks et `install.sh` non lus. Attribution requise si une règle est reprise |
+| `AgriciDaniel/claude-seo` | non relevé | — | Non lu |
+
+### Grille d'analyse d'un skill tiers
+
+À remplir avant d'en retenir une idée ; un « non » écarte le skill.
+
+1. Provenance : auteur, dépôt, marketplace éventuelle.
+2. SHA épinglé : commit complet relevé, pas une branche.
+3. Licence : lue, compatible avec une réécriture ou avec une simple inspiration.
+4. Lecture intégrale : `SKILL.md`, `hooks/`, `.mcp.json`, scripts et références.
+5. Aucune exécution : rien lancé, rien installé, aucun accès réseau pendant la lecture.
+6. Réécriture au format du dépôt : texte neuf, règles appuyées sur un fichier du dépôt.
+7. Jamais `npx`, `curl` ni installation par marketplace pour l'essayer.
+
 ## Installation et désinstallation
 
 ```
