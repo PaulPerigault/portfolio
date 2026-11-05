@@ -1,5 +1,4 @@
-// Reprend les cas de l'ancien infra/tests/secrets-loader.test.ps1, sans jamais lire le vrai
-// fichier : chaque cas passe un faux contenu.
+// Chargeur de secrets : sans jamais lire le vrai fichier, chaque cas passe un faux contenu.
 import { describe, expect, it } from 'vitest';
 import { childEnv, parseSecrets, secretsFilePath } from './lib/infra-secrets.mjs';
 

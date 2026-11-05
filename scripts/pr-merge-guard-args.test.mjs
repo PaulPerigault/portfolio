@@ -1,5 +1,5 @@
 // Lecture des arguments d'une fusion : dépôt (`-R`/`--repo`, avant ou après `pr` et `merge`),
-// sélecteur de PR. `gh` accepte `-R` avant `pr` : cette forme doit aussi être contrôlée (#192).
+// sélecteur de PR. `gh` accepte `-R` avant `pr` : cette forme doit aussi être contrôlée.
 import { describe, expect, it } from 'vitest';
 import { mergeRefusal, parseMerge, prNumber } from './lib/pr-merge-guard.mjs';
 

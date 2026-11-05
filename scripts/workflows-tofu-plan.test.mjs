@@ -1,4 +1,4 @@
-// `tofu plan` en CI (#203) : token Cloudflare et clés R2 en LECTURE SEULE, jamais d'apply. Sans les
+// `tofu plan` en CI : token Cloudflare et clés R2 en LECTURE SEULE, jamais d'apply. Sans les
 // secrets (avant leur création, PR de fork), le job reste vert et l'annonce au lieu d'échouer.
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';

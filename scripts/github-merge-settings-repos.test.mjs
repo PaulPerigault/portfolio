@@ -1,4 +1,4 @@
-// Faux écart de infra/github sur plusieurs dépôts (#268) : chaque dépôt dont seuls les réglages de
+// Faux écart de infra/github sur plusieurs dépôts : chaque dépôt dont seuls les réglages de
 // fusion changent est vérifié par GraphQL, sous son propre nom ; une valeur réelle différente du
 // code est une dérive nommée par dépôt.
 import { describe, expect, it } from 'vitest';

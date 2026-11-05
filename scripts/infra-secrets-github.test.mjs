@@ -1,4 +1,4 @@
-// Jeton GitHub de l'IaC (#255) : connu du fichier de secrets, chargé seulement pour infra/github/
+// Jeton GitHub de l'IaC : connu du fichier de secrets, chargé seulement pour infra/github/
 // (githubEnv) et infra/identity/ (identityEnv), jamais pour infra/ ni infra/registrar/ (childEnv).
 // Faux contenu uniquement, jamais le vrai fichier.
 import { describe, expect, it } from 'vitest';
