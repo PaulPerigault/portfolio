@@ -50,7 +50,7 @@ for (const lang of ['fr', 'en'] as const) {
       const source = loadContent<Entry[]>(lang, 'experience');
       await expect(titles).toHaveCount(source.length);
       await expect(titles.first()).toHaveText(
-        lang === 'fr' ? 'Apprenti DevOps Cloud' : 'DevOps Cloud Apprentice',
+        lang === 'fr' ? 'Alternant DevOps Cloud' : 'Cloud DevOps Apprentice',
       );
       await expect(titles.last()).toHaveText(
         lang === 'fr' ? 'Piscine — formation intensive' : 'Piscine — intensive bootcamp',
