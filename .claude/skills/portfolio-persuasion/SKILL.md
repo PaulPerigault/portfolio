@@ -48,4 +48,4 @@ mission). Ce skill relit, il n'invente pas.
 ## Sources du dépôt
 
 - `docs/audit-ia.md` (A2, A3, B2), `docs/design-charter.md`, `docs/passation-portfolio.md`
-- `docs/perf-baseline-migration.md`, `scripts/lib/design-rules.mjs`, `src/content/{fr,en}/ui.json`
+- `docs/perf-baseline-migration.md`, `scripts/lib/generic-phrases.mjs`, `src/content/{fr,en}/ui.json`

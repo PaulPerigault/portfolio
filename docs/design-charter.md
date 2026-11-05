@@ -5,10 +5,6 @@ consomme les paquets publiés `@paulperigault/tokens`, `@paulperigault/css` et `
 https://design.paulperigault.dev) : les valeurs vivent dans ces paquets, cette page explique ce qu'on en fait, ce qu'on
 s'interdit et comment c'est vérifié.
 
-> **Transition.** La migration se fait par lots (#289 à #296). Tant qu'un lot n'a pas remplacé les feuilles maison
-> (`src/styles/`), `scripts/check-design.mjs`, `scripts/lib/design-rules.mjs` et `e2e/design-charter.spec.ts` appliquent
-> encore l'ancienne charte ; ils sont alignés sur celle-ci aux lots 1 et 7, avec leurs tests.
-
 ## Identité
 
 - **Lisibilité d'abord**, direction « encre bleue » : fond quasi blanc ou quasi noir, texte encre, un seul accent de teinte
@@ -46,7 +42,11 @@ s'interdit et comment c'est vérifié.
 | Formules creuses (« passionné par… », « cutting-edge », « solutions innovantes »)                 | On écrit des faits : employeur, technologies, dates        |
 
 Vérification : `scripts/check-design.mjs` (règles `scripts/lib/design-rules.mjs`), `e2e/design-charter.spec.ts` (styles
-calculés, FR/EN, clair/sombre), `e2e/print.spec.ts`, revue (checklist de PR). Voir la transition ci-dessus.
+calculés, FR/EN, clair/sombre), `e2e/print.spec.ts`, revue (checklist de PR). Règles de `check-design` : `gradient`,
+`ombre`, `flou`, `couleur-en-dur`, `palette-tailwind`, `valeur-arbitraire`, `famille-typographique` (serif ; mono
+sur titre, libellé, bouton, `Heading`, `Button`, `ButtonLink`, cherché dans tout le fichier pour une balise sur
+plusieurs lignes), `rayon`, `etiquette-majuscules` (toute capitale, sans exception : `LangSwitch` écrit son code en capitales dans le texte),
+`emoji`, `phrase-generique`. Le mono est accepté sur `code`, `kbd`, `samp`, `pre` dans l'e2e.
 
 ## Comment ajouter du design
 
