@@ -2,7 +2,7 @@
 
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/PaulPerigault/portfolio/badge)](https://scorecard.dev/viewer/?uri=github.com/PaulPerigault/portfolio)
 
-Portfolio personnel — Paul Perigault, Alternant DevOps Cloud.
+Portfolio personnel de Paul Perigault, alternant DevOps Cloud.
 
 ## Stack
 
