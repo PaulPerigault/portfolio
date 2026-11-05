@@ -1,7 +1,7 @@
 ---
 interface Props {
   as?: 'div' | 'li' | 'article';
-  /** Bordure d'accent au survol/focus interne, pour une carte qui contient un lien. */
+  /** Surface à filet et rayon `surface`, sans ombre ; bordure d'accent au survol/focus interne si elle contient un lien. */
   interactive?: boolean;
   class?: string;
 }
@@ -11,7 +11,7 @@ const { as: Tag = 'div', interactive = false, class: className } = Astro.props;
 
 <Tag
   class:list={[
-    'border-line border p-6 transition-colors duration-(--pp-duration-base)',
+    'border-line bg-surface rounded-surface border p-5 transition-colors duration-(--pp-duration-base) sm:p-6',
     interactive && 'hover:border-accent focus-within:border-accent',
     className,
   ]}

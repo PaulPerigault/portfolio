@@ -18,6 +18,8 @@ interface Props {
 const { lang, snapshot } = Astro.props;
 const t = useTranslations(lang);
 const newTab = t('a11y.new_tab');
+/** Cible tactile minimale du design system (2,75 rem), sans changer le texte du lien. */
+const LINK_TARGET = 'inline-flex min-h-(--pp-size-control-height) items-center';
 const month = (isoDate: string) => formatYearMonth(toYearMonth(isoDate), lang);
 ---
 
@@ -26,12 +28,12 @@ const month = (isoDate: string) => formatYearMonth(toYearMonth(isoDate), lang);
     {snapshot.projects.length === 0 ? (
       <p class="text-muted">{t('projects.empty')}</p>
     ) : (
-      <ul class="grid gap-4 md:grid-cols-2">
+      <ul class="grid gap-4 md:grid-cols-2 md:gap-6">
         {snapshot.projects.map((project) => (
           <Card as="li" interactive>
-            <div class="flex items-baseline justify-between gap-4">
+            <div class="flex items-center justify-between gap-4">
               <Heading level={3}>
-                <ExternalLink href={project.html_url} newTabLabel={newTab}>
+                <ExternalLink href={project.html_url} newTabLabel={newTab} class={LINK_TARGET}>
                   {project.name}
                 </ExternalLink>
               </Heading>
@@ -46,7 +48,7 @@ const month = (isoDate: string) => formatYearMonth(toYearMonth(isoDate), lang);
               {project.homepage && (
                 <span>
                   {SEPARATOR}
-                  <ExternalLink href={project.homepage} newTabLabel={newTab}>
+                  <ExternalLink href={project.homepage} newTabLabel={newTab} class={LINK_TARGET}>
                     {t('projects.view_demo')}
                   </ExternalLink>
                 </span>
