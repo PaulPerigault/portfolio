@@ -8,6 +8,7 @@ export const SITE = {
   domain: DOMAIN,
   email: 'contact@paulperigault.fr',
   githubUser: GITHUB_USER,
+  githubRepo: 'portfolio',
   employer: 'WeVii',
   schools: ['ESIEA Paris', 'IUT Paris Rives de Seine'],
   ogImagePath: '/image/og-cover.png',
