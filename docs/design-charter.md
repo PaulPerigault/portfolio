@@ -21,7 +21,8 @@ s'interdit et comment c'est vérifié.
 - **Mono** : Atkinson Hyperlegible Mono, seulement là où le design system l'autorise : code, identifiants, empreintes,
   métadonnées. Jamais pour décorer un titre ou un libellé.
 - **Formes** : rayons `--pp-radius-control` (0,25 rem) et `--pp-radius-surface` (0,5 rem), aucun autre. Filets d'un pixel
-  pour structurer ; pas d'ombre.
+  pour structurer ; pas d'ombre. `rounded-control` pour les commandes (boutons, champs), `rounded-surface` pour les
+  surfaces (`Card`, liste des compétences).
 - **Structure de CV** conservée par le portfolio : titre de section à gauche, contenu à droite (`Section`).
 - **Impression** : la feuille d'impression du design system supprime la décoration et écrit l'adresse des liens ; la page
   imprimée reste le CV papier.
