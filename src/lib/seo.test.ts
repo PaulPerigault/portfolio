@@ -13,6 +13,12 @@ describe('seo', () => {
     expect(pathForLang('/en/styleguide/', 'en', 'fr')).toBe('/fr/styleguide/');
   });
 
+  it('ne remplace que le préfixe de langue initial', () => {
+    expect(pathForLang('/legal/fr/', 'fr', 'en')).toBe('/legal/fr/');
+    expect(pathForLang('/fr/legal/fr/', 'fr', 'en')).toBe('/en/legal/fr/');
+    expect(pathForLang('/en/projets/fr/', 'fr', 'en')).toBe('/en/projets/fr/');
+  });
+
   it('liste fr, en et x-default (français) depuis n’importe quelle langue', () => {
     for (const from of ['fr', 'en'] as const) {
       expect(alternates(`/${from}/`, from)).toEqual([
