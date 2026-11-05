@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import type { Project } from '@/domain/project';
-import { MAX_TOPICS, newestUpdatedFirst, toYearMonth, visibleTopics } from './projects';
+import {
+  MAX_TOPICS,
+  newestUpdatedFirst,
+  toYearMonth,
+  visibleTopics,
+  withOverrides,
+} from './projects';
 
 const project = (name: string, updated_at: string) => ({ name, updated_at }) as Project;
 
@@ -19,5 +25,18 @@ describe('projects', () => {
 
   it('extrait le mois d’une date ISO', () => {
     expect(toYearMonth('2026-09-01T12:00:00Z')).toBe('2026-09');
+  });
+
+  it('remplace le site et la description du dépôt nommé, sans toucher aux autres', () => {
+    const base = { name: 'a', homepage: null, description: 'GitHub' } as Project;
+    const overrides = { sites: { a: 'https://site.test/' }, descriptions: { a: 'Texte' } };
+    expect(withOverrides(base, overrides)).toMatchObject({
+      homepage: 'https://site.test/',
+      description: 'Texte',
+    });
+    expect(withOverrides({ ...base, name: 'b' }, overrides)).toMatchObject({
+      homepage: null,
+      description: 'GitHub',
+    });
   });
 });

@@ -28,7 +28,10 @@ describe('contenu réel FR/EN', () => {
     expect(en.experience.map(key)).toEqual(fr.experience.map(key));
     expect(en.formation.map(key)).toEqual(fr.formation.map(key));
     expect(en.certifications.map((c) => c.id)).toEqual(fr.certifications.map((c) => c.id));
-    expect(en.projectsConfig).toEqual(fr.projectsConfig);
+    expect(en.projectsConfig.featured).toEqual(fr.projectsConfig.featured);
+    expect(Object.keys(en.projectsConfig.descriptions)).toEqual(
+      Object.keys(fr.projectsConfig.descriptions),
+    );
   });
 
   it('garde les mêmes sections légales (ids, nombre de paragraphes) dans les deux langues', () => {

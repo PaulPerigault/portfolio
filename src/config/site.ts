@@ -1,6 +1,7 @@
 /** Identité du site : source unique des noms, URLs et coordonnées (aucune URL en dur ailleurs). */
 const GITHUB_USER = 'PaulPerigault';
 const DOMAIN = 'https://paulperigault.fr';
+const DESIGN_SYSTEM_URL = 'https://design.paulperigault.dev/';
 const CV_PATH = '/cv-paul-perigault.pdf';
 
 export const SITE = {
@@ -14,7 +15,9 @@ export const SITE = {
   ogImagePath: '/image/og-cover.png',
   githubApiUrl: 'https://api.github.com',
   /** Documentation du design system utilisé par le site (lien réciproque contrôlé de son côté). */
-  designSystemUrl: 'https://design.paulperigault.dev/',
+  designSystemUrl: DESIGN_SYSTEM_URL,
+  /** Site d'un projet lu sur GitHub dont le champ `homepage` est vide (nom du dépôt → adresse). */
+  projectSites: { 'design-system': DESIGN_SYSTEM_URL } as Readonly<Record<string, string>>,
   githubUrl: `https://github.com/${GITHUB_USER}`,
   linkedinUrl: 'https://www.linkedin.com/in/paul-perigault',
   /** CV servi par le site (copié au build par `scripts/fetch-cv.mjs`). */

@@ -23,8 +23,13 @@ export const Project = Schema.Struct({
 });
 export type Project = typeof Project.Type;
 
+/** `featured` : dépôts lus sur GitHub au build ; `descriptions` : texte par langue qui remplace celui du dépôt. */
 export const ProjectsConfig = Schema.Struct({
   featured: Schema.Array(Schema.NonEmptyString),
+  descriptions: Schema.optionalWith(
+    Schema.Record({ key: Schema.NonEmptyString, value: Schema.NonEmptyString }),
+    { default: () => ({}) },
+  ),
 });
 export type ProjectsConfig = typeof ProjectsConfig.Type;
 

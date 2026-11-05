@@ -45,7 +45,7 @@
   "projects": {
     "title": "Projets",
     "view_code": "Code",
-    "view_demo": "Démo",
+    "view_site": "Site du projet",
     "updated": "Mis à jour",
     "fetched_at": "Données GitHub —",
     "empty": "Aucun projet à afficher pour le moment."
