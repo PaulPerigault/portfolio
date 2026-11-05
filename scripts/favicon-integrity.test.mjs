@@ -1,5 +1,5 @@
-// Le favicon est l'ancre de l'identité visuelle, partagée avec le design system @paulperigault
-// (ADR-0006 du portfolio, ADR-0002 « Encre » du design system) : il ne change jamais par accident.
+// Le favicon est l'ancre de l'identité visuelle, partagée avec le design system @paulperigault :
+// il ne change jamais par accident.
 // Toute modification voulue passe par le skill `update-favicon` et met à jour ces empreintes
 // dans la même PR, avec la raison.
 import { createHash } from 'node:crypto';

@@ -1,4 +1,4 @@
-// infra:github (#255) avec des doublures : jeton GitHub passé au provider sous GITHUB_TOKEN, jamais
+// infra:github avec des doublures : jeton GitHub passé au provider sous GITHUB_TOKEN, jamais
 // de jeton d'amorçage, mêmes refus que les autres briques, dépôt jamais détruit.
 import { describe, expect, it } from 'vitest';
 import { github } from './infra-github.mjs';

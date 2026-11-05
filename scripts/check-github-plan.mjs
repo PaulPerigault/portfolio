@@ -1,4 +1,4 @@
-// Qualifie l'écart du plan de infra/github en CI (#262) : faux écart du jeton en lecture seule
+// Qualifie l'écart du plan de infra/github en CI : faux écart du jeton en lecture seule
 // (réglages de fusion lus vides par l'API REST) seulement si GraphQL confirme les valeurs du code.
 //   tofu -chdir=infra/github show -json github.tfplan > github-plan.json
 //   GITHUB_TOKEN=<jeton en lecture seule> node scripts/check-github-plan.mjs github-plan.json

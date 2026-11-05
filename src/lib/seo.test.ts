@@ -10,7 +10,13 @@ describe('seo', () => {
 
   it("change la langue d'un chemin, y compris pour une sous-page", () => {
     expect(pathForLang('/fr/', 'fr', 'en')).toBe('/en/');
-    expect(pathForLang('/en/styleguide/', 'en', 'fr')).toBe('/fr/styleguide/');
+    expect(pathForLang('/en/legal/', 'en', 'fr')).toBe('/fr/legal/');
+  });
+
+  it('ne remplace que le préfixe de langue initial', () => {
+    expect(pathForLang('/legal/fr/', 'fr', 'en')).toBe('/legal/fr/');
+    expect(pathForLang('/fr/legal/fr/', 'fr', 'en')).toBe('/en/legal/fr/');
+    expect(pathForLang('/en/projets/fr/', 'fr', 'en')).toBe('/en/projets/fr/');
   });
 
   it('liste fr, en et x-default (français) depuis n’importe quelle langue', () => {

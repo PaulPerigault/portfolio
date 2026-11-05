@@ -1,4 +1,4 @@
-// Invariants de la configuration de infra/github/ (#255), lus dans les fichiers .tf : la brique a des
+// Invariants de la configuration de infra/github/, lus dans les fichiers .tf : la brique a des
 // blocs `import`, que `tofu test` refuse (comme la racine de infra/).
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';

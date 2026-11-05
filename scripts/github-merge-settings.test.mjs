@@ -1,4 +1,4 @@
-// Faux écart du plan de infra/github (#262) : accepté seulement si le seul changement porte sur les
+// Faux écart du plan de infra/github : accepté seulement si le seul changement porte sur les
 // 8 réglages de fusion de github_repository ET si GraphQL confirme les valeurs du code. Doublures de
 // fetch : aucun appel réel ; le jeton n'apparaît jamais dans le journal.
 import { describe, expect, it } from 'vitest';

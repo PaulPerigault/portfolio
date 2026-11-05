@@ -1,5 +1,5 @@
-// En-têtes HTTP du futur hébergement Cloudflare Pages (`public/_headers`, ADR-0008) : reprend ce
-// que vérifiait l'image Docker (scripts/check-container.sh, retiré) et le complète (HSTS, CORP).
+// En-têtes HTTP de l'hébergement Cloudflare Pages (`public/_headers`) : couvre ce
+// que contrôlerait un serveur classique, et ajoute HSTS et CORP.
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { headersFor, parseHeaders } from './lib/pages-headers.mjs';
