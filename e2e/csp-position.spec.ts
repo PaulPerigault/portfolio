@@ -1,10 +1,10 @@
 import { createHash } from 'node:crypto';
 import { expect, test } from '@playwright/test';
 
-// Constat S2 du lot 8 (docs/security-audit.md) : Astro place la balise CSP après le contenu de
-// <head> (script inline, JSON-LD, balises SEO), et une CSP en <meta> ne couvre que ce qui la suit.
-// Ce qui précède la balise ne peut donc compter que sur ce test : rien d'externe, rien d'actif, et
-// chaque script inline exécutable déjà autorisé par son hash (filet si la balise remonte un jour).
+// Astro place la balise CSP après le contenu de <head> (script inline, JSON-LD, balises SEO), et
+// une CSP en <meta> ne couvre que ce qui la suit. Ce qui précède la balise ne peut donc compter
+// que sur ce test : rien d'externe, rien d'actif, et chaque script inline exécutable déjà
+// autorisé par son hash (filet si la balise remonte un jour).
 const PAGES = ['/', '/fr/', '/en/', '/fr/legal/', '/en/legal/', '/404.html'];
 const CSP_META = /<meta http-equiv="content-security-policy" content="([^"]*)"/i;
 const ACTIVE = [

@@ -53,8 +53,8 @@ for (const lang of ['fr', 'en'] as const) {
     });
   }
 
-  // Ce que vérifiait la vitrine, désormais sur la page d'accueil : les tests ci-dessus ne passent
-  // pas à vide (liens externes et icônes présents) et la chronologie garde ses dates machine.
+  // Garde les tests ci-dessus de passer à vide : la page d'accueil contient des liens externes et
+  // des icônes, et la chronologie garde ses dates machine.
   test(`la page d’accueil contient liens externes, icônes et chronologie datée (${lang})`, async ({
     page,
   }) => {
