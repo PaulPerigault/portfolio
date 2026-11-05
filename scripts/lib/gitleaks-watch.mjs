@@ -1,4 +1,4 @@
-// Veille des versions de gitleaks (#204) : le binaire est épinglé à la main dans security.yml
+// Veille des versions de gitleaks : le binaire est épinglé à la main dans security.yml
 // (version + SHA-256), Dependabot ne le voit pas. Logique pure, réseau injecté par l'appelant.
 
 const VERSION_PIN = /GITLEAKS_VERSION:\s*([\d.]+)/;

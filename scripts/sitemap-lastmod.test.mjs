@@ -35,7 +35,7 @@ describe('lastmodFor', () => {
   });
 
   it('lit [lang] littéralement : src/pages/l/index.astro ne date pas l’accueil', () => {
-    // Sans :(literal), « [lang] » serait aussi un motif qui accepte le dossier « l » (mai 2026).
+    // Sans :(literal), « [lang] » serait aussi un motif qui accepte le dossier « l ».
     for (const path of ['/fr/', '/en/']) expect(lastmodFor(path, repo)).not.toMatch(/^2026-05/);
   });
 

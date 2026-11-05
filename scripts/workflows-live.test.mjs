@@ -1,4 +1,4 @@
-// Contrôle planifié de la production (#208).
+// Contrôle planifié de la production.
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 

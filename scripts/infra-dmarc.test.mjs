@@ -1,4 +1,4 @@
-// Politique DMARC de paulperigault.dev déclarée par la racine OpenTofu (#209) : quarantaine sur
+// Politique DMARC de paulperigault.dev déclarée par la racine OpenTofu : quarantaine sur
 // 100 % des messages, rapports agrégés conservés. (`tofu test` ne peut pas planifier la racine avec
 // un provider simulé à cause des blocs `import` : la valeur est lue ici, le module est testé à part.)
 import { readFileSync } from 'node:fs';
