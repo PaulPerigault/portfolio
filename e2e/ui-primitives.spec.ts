@@ -53,6 +53,17 @@ for (const lang of ['fr', 'en'] as const) {
     });
   }
 
+  // Ce que vérifiait la vitrine, désormais sur la page d'accueil : les tests ci-dessus ne passent
+  // pas à vide (liens externes et icônes présents) et la chronologie garde ses dates machine.
+  test(`la page d’accueil contient liens externes, icônes et chronologie datée (${lang})`, async ({
+    page,
+  }) => {
+    await page.goto(`/${lang}/`);
+    expect(await page.locator('main a[href^="http"]').count()).toBeGreaterThan(0);
+    expect(await page.locator('svg').count()).toBeGreaterThan(0);
+    expect(await page.locator('main ol > li time[datetime]').count()).toBeGreaterThan(0);
+  });
+
   test(`la navigation clavier garde un focus visible sur les mentions légales (${lang})`, async ({
     page,
   }) => {
