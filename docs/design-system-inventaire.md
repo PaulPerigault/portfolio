@@ -29,7 +29,7 @@ Source unique (avant la migration, #290) : l'ancien `tokens.css` du portfolio (`
 
 ## 2. Composants
 
-32 composants `.astro` : 13 primitives `ui`, 8 de mise en page, 10 sections, 1 interactif. Catalogue des primitives : `docs/ui.md`, vitrine `/fr/styleguide/`.
+32 composants `.astro` : 13 primitives `ui`, 8 de mise en page, 10 sections, 1 interactif. Catalogue des primitives : `docs/ui.md`. La vitrine `/fr/styleguide/` a été retirée (#295).
 
 | Primitive (`components/ui`) | Fichiers qui l'utilisent | Usages |
 | --- | --- | --- |
