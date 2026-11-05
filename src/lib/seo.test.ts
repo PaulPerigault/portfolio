@@ -10,7 +10,7 @@ describe('seo', () => {
 
   it("change la langue d'un chemin, y compris pour une sous-page", () => {
     expect(pathForLang('/fr/', 'fr', 'en')).toBe('/en/');
-    expect(pathForLang('/en/styleguide/', 'en', 'fr')).toBe('/fr/styleguide/');
+    expect(pathForLang('/en/legal/', 'en', 'fr')).toBe('/fr/legal/');
   });
 
   it('liste fr, en et x-default (français) depuis n’importe quelle langue', () => {

@@ -60,7 +60,7 @@ export const socialTags = ({ lang, path, title, description }: SeoInput) => {
 export const canonicalUrl = (path: string): string => absoluteUrl(path);
 
 /**
- * Directive des pages hors index (styleguide, 404). Sans `nofollow` : leurs liens mènent à des
+ * Directive des pages hors index (404). Sans `nofollow` : leurs liens mènent à des
  * pages indexables que les moteurs peuvent suivre.
  */
 export const NOINDEX = 'noindex';
