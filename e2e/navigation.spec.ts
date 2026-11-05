@@ -33,6 +33,23 @@ for (const lang of ['fr', 'en'] as const) {
       expect(hrefs).toEqual(SECTIONS.map((id) => `/${lang}/#${id}`));
     });
 
+    test('chaque lien de navigation atteint la taille de cible des contrôles', async ({ page }) => {
+      const minimum = await page.evaluate(() => {
+        const probe = document.createElement('div');
+        probe.style.height = 'var(--pp-size-control-height)';
+        document.body.append(probe);
+        const height = probe.getBoundingClientRect().height;
+        probe.remove();
+        return height;
+      });
+      const links = page.getByRole('navigation', { name: NAV_NAME[lang] }).getByRole('link');
+      for (const link of await links.all()) {
+        const box = await link.boundingBox();
+        expect(box?.width, await link.innerText()).toBeGreaterThanOrEqual(minimum);
+        expect(box?.height, await link.innerText()).toBeGreaterThanOrEqual(minimum);
+      }
+    });
+
     test('la marque ramène à l’accueil de la langue', async ({ page }) => {
       await expect(
         page.getByRole('banner').getByRole('link', { name: 'Paul Perigault', exact: true }),

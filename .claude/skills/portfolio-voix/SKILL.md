@@ -33,7 +33,7 @@ Tout texte lu par un visiteur ou un recruteur, et toute relecture d'un texte pro
 | Faux contraste | « n'est pas seulement X, mais Y » / « it's not just X, it's Y » | dire Y |
 | Série de trois | « fiable, scalable et performant » | le seul adjectif mesuré |
 | Formule d'accueil | « N'hésitez pas à », « Que vous soyez… » | l'adresse e-mail et ce qu'on peut demander |
-| Formule refusée par le dépôt | « passionné par », « cutting-edge », « delve into » | liste dans `scripts/lib/design-rules.mjs` |
+| Formule refusée par le dépôt | « passionné par », « cutting-edge », « delve into » | liste dans `scripts/lib/generic-phrases.mjs` |
 | Report vague | « pour le moment », « right now », « for now » | la date, ou rien |
 | Conclusion-écho | dernière phrase qui répète la première | la supprimer |
 
@@ -51,5 +51,5 @@ Tout texte lu par un visiteur ou un recruteur, et toute relecture d'un texte pro
 
 ## Sources du dépôt
 
-- `docs/audit-ia.md`, `docs/design-charter.md`, `scripts/lib/design-rules.mjs`
+- `docs/audit-ia.md`, `docs/design-charter.md`, `scripts/lib/generic-phrases.mjs`
 - `src/content/fr/ui.json`, `src/content/en/ui.json`, `src/lib/i18n.test.ts`, `e2e/geo-entity.spec.ts`

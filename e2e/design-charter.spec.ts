@@ -1,62 +1,5 @@
-import { expect, test, type Page } from '@playwright/test';
-
-/** Couleurs autorisées : les tokens, résolus par le navigateur dans le thème courant (+ transparent). */
-const allowedColors = (page: Page) =>
-  page.evaluate(() => {
-    const probe = document.createElement('span');
-    document.body.append(probe);
-    const resolve = (token: string) => {
-      probe.style.color = `var(${token})`;
-      return getComputedStyle(probe).color;
-    };
-    const tokens = [
-      '--pp-color-bg',
-      '--pp-color-surface',
-      '--pp-color-fg',
-      '--pp-color-muted',
-      '--pp-color-line',
-      '--pp-color-control',
-      '--pp-color-accent',
-      '--pp-color-on-accent',
-      '--pp-color-media-placeholder',
-    ];
-    const colors = ['rgba(0, 0, 0, 0)', ...tokens.map(resolve)];
-    probe.remove();
-    return colors;
-  });
-
-/** Rayon de surface du design system (`--pp-radius-surface`, 0,5 rem) : ADR-0012. */
-const MAX_RADIUS_PX = 8;
-
-const decorativeStyles = (page: Page) =>
-  page.evaluate(
-    (maxRadius) =>
-      [...document.querySelectorAll('body, body *')].flatMap((element) => {
-        const style = getComputedStyle(element);
-        const found: string[] = [];
-        if (style.backgroundImage.includes('gradient')) found.push('gradient');
-        if (style.boxShadow !== 'none') found.push('box-shadow');
-        if (style.textShadow !== 'none') found.push('text-shadow');
-        if (style.backdropFilter !== 'none' && style.backdropFilter !== '')
-          found.push('backdrop-filter');
-        if (style.filter !== 'none') found.push('filter');
-        if (parseFloat(style.borderTopLeftRadius) > maxRadius) found.push('radius');
-        return found.map(
-          (kind) => `${element.tagName.toLowerCase()}.${element.className} : ${kind}`,
-        );
-      }),
-    MAX_RADIUS_PX,
-  );
-
-const usedColors = (page: Page) =>
-  page.evaluate(() => [
-    ...new Set(
-      [...document.querySelectorAll('body, body *')].flatMap((element) => {
-        const style = getComputedStyle(element);
-        return [style.color, style.backgroundColor, style.borderTopColor];
-      }),
-    ),
-  ]);
+import { expect, test } from '@playwright/test';
+import { allowedColors, decorativeStyles, usedColors } from './helpers/design-styles';
 
 for (const lang of ['fr', 'en'] as const) {
   for (const scheme of ['light', 'dark'] as const) {
@@ -67,7 +10,7 @@ for (const lang of ['fr', 'en'] as const) {
         await page.goto(`/${lang}/`);
       });
 
-      test('aucun dégradé, ombre, flou, filtre ni grand arrondi', async ({ page }) => {
+      test('aucun dégradé, ombre, flou, filtre ni rayon hors design system', async ({ page }) => {
         expect(await decorativeStyles(page)).toEqual([]);
       });
 
@@ -77,7 +20,7 @@ for (const lang of ['fr', 'en'] as const) {
         expect(foreign).toEqual([]);
       });
 
-      test('une seule famille typographique, auto-hébergée et réellement chargée', async ({
+      test('texte en Atkinson Hyperlegible Next chargée, mono réservé au code, aucun serif', async ({
         page,
       }) => {
         const state = await page.evaluate(async () => {
@@ -92,16 +35,29 @@ for (const lang of ['fr', 'en'] as const) {
           expect(family).toContain('Atkinson Hyperlegible Next Variable');
         }
         expect(state.loaded).toContain('Atkinson Hyperlegible Next Variable');
-        expect(
-          await page.locator('main [class*="font-mono"], main [class*="font-serif"]').count(),
-        ).toBe(0);
+        // Le mono du design system (ADR-0012) : code, identifiants, empreintes, métadonnées seulement.
+        const outsideCode = await page.evaluate(() =>
+          [...document.querySelectorAll('body, body *')]
+            .filter((element) => !element.closest('code, kbd, samp, pre'))
+            .filter((element) => {
+              const family = getComputedStyle(element).fontFamily.toLowerCase();
+              return /mono|serif/.test(family.replace(/sans-serif/g, ''));
+            })
+            .map((element) => element.tagName.toLowerCase()),
+        );
+        expect(outsideCode).toEqual([]);
       });
 
       test('pas de numérotation ni d’étiquette décorative devant les titres', async ({ page }) => {
         for (const title of await page.locator('h2').allTextContents()) {
           expect(title.trim()).not.toMatch(/^\d+\s*[—–-]/);
         }
-        await expect(page.locator('[class*="uppercase"][class*="tracking"]')).toHaveCount(0);
+        const uppercased = await page.evaluate(() =>
+          [...document.querySelectorAll('body *')]
+            .filter((element) => getComputedStyle(element).textTransform === 'uppercase')
+            .map((element) => element.tagName.toLowerCase()),
+        );
+        expect(uppercased).toEqual([]);
       });
 
       test('n’affiche aucun emoji', async ({ page }) => {

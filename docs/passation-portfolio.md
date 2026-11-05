@@ -7,8 +7,8 @@
 ## Mission
 
 Migrer tout le portfolio (Astro 7 statique, FR/EN, Cloudflare Pages) vers les neuf paquets publiés `@paulperigault/*`
-0.1.0 (docs : https://design.paulperigault.dev), avec une refonte visible. Identité non choisie : teinte
-`--pp-accent-hue` et police `--pp-font-stack` sont des entrées de build des jetons, pas des variables CSS. Favicon
+0.1.0 (docs : https://design.paulperigault.dev), avec une refonte visible. Identité choisie depuis (ADR-0012, direction
+A) : jetons publiés tels quels, accent de teinte 270,7, Atkinson Hyperlegible Next, sans build de jetons. Favicon
 intact. Mobile d'abord. Poids mesuré et affiché, non bloquant par défaut. Hors périmètre : récit, résultats, CV.
 
 ## Dépôt, branches, fusion
@@ -67,8 +67,9 @@ npm run test:visual:update           # références visuelles (Docker amd64, bui
   `text-lg`, `text-display`, `rounded-sm`, `max-w-prose`, `py-section`, `transparent`, `current`.
 - Pas de Navbar, Footer, Heading, Icon, SkipLink, VisuallyHidden ni ExternalLink dans `@paulperigault/astro`. Ses
   READMEs publiés disent encore « 0.0.0 ». Pairs : Node ≥ 24, `astro ^7.4.0` (compatibles).
-- Charte « CV d'abord » (ADR-0006) appliquée par `scripts/check-design.mjs` et `e2e/design-charter.spec.ts` : pas de
-  capitales étiquetées, pastilles, ombres, dégradés, mono décoratif. Textes factuels issus de `src/content/{fr,en}`.
+- Charte v2 (ADR-0012, remplace « CV d'abord ») appliquée par `scripts/check-design.mjs` et
+  `e2e/design-charter.spec.ts` : pas de capitales en étiquette, pastilles, ombres, dégradés, mono décoratif, rayon
+  autre que `control`/`surface`. Textes factuels issus de `src/content/{fr,en}`.
 - Le site du DS vérifie un lien du portfolio vers lui (`PORTFOLIO_LINK_CHECK=1`) : prévoir un `<a href>` vers
   `design.paulperigault.dev`.
 
