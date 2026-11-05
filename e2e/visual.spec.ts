@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-// Régression visuelle (#201) : filet du futur design system (#182). Captures pleine page comparées
+// Régression visuelle : captures pleine page comparées
 // à des références versionnées, générées dans la même image Playwright que le job CI `visual`
 // (`npm run test:visual:update`, docs/visual-regression.md). Ailleurs (shards e2e, macOS, Windows),
 // le rendu des polices diffère : ces tests ne tournent qu'avec VISUAL=1.
