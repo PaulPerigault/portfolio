@@ -12,7 +12,7 @@ describe('check-design : ce qui doit échouer', () => {
     ['flou', 'src/components/Nav.astro', '<nav class="backdrop-blur-md">'],
     ['couleur-en-dur', 'src/components/Tag.astro', '<span style="color:#ff00aa">'],
     ['couleur-en-dur', 'src/styles/a.css', 'color: rgb(1, 2, 3);'],
-    // ADR-0012 : le portfolio ne redéfinit aucun jeton, l'ancienne feuille n'a plus d'exception.
+    // Le portfolio ne redéfinit aucun jeton : une feuille locale de jetons n'a aucune exception.
     ['couleur-en-dur', 'src/styles/tokens.css', '--pp-bg: light-dark(#f5f1e8, #14130f);'],
     ['palette-tailwind', 'src/components/Btn.astro', '<a class="bg-teal-500 text-white">'],
     ['valeur-arbitraire', 'src/components/Box.astro', '<div class="w-[13px] mt-[#fff]">'],
@@ -38,7 +38,7 @@ describe('check-design : ce qui doit échouer', () => {
     ['etiquette-majuscules', 'src/components/Kicker.astro', '<p class="text-xs uppercase">'],
     ['etiquette-majuscules', 'src/components/Kicker.astro', '<p class="tracking-wide uppercase">'],
     ['etiquette-majuscules', 'src/styles/a.css', 'h3 { text-transform: uppercase; }'],
-    // Plus aucune exception, code de langue compris (ADR-0012).
+    // Aucune exception, code de langue compris.
     [
       'etiquette-majuscules',
       'src/components/layout/LangSwitch.astro',
@@ -77,7 +77,7 @@ describe('check-design : ce qui doit passer', () => {
     ['src/components/B.astro', '<code class="font-mono text-sm">fa1b2c3</code>'],
     ['src/components/C.astro', '<pre class="font-mono text-sm overflow-x-auto">'],
     ['src/components/D.astro', '<dd class="font-mono text-sm">sha256</dd>'],
-    // Métadonnée en mono : autorisée par l'ADR-0012 (refusée sous l'ADR-0006).
+    // Métadonnée en mono : autorisée par la charte.
     ['src/components/Meta.astro', '<p class="font-mono text-xs">'],
     ['src/components/E.astro', '<a class="rounded-control border px-2">'],
     ['src/components/F.astro', '<div class="rounded-surface border">'],
