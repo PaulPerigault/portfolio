@@ -41,10 +41,10 @@ for (const lang of ['fr', 'en'] as const) {
   });
 }
 
-test('garde la page technique en changeant de langue', async ({ page }) => {
-  await page.goto('/fr/styleguide/');
+test('garde la page courante (mentions légales) en changeant de langue', async ({ page }) => {
+  await page.goto('/fr/legal/');
   await page.getByRole('link', { name: SWITCH.fr.name, exact: true }).click();
-  await expect(page).toHaveURL(/\/en\/styleguide\/$/);
+  await expect(page).toHaveURL(/\/en\/legal\/$/);
 });
 
 test.describe('racine du site', () => {
