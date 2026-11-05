@@ -1,6 +1,6 @@
 {
   "seo": {
-    "title": "Paul Perigault — Cloud DevOps Apprentice, ESIEA Paris",
+    "title": "Paul Perigault | Cloud DevOps Apprentice, ESIEA Paris",
     "description": "Paul Perigault, cloud DevOps apprentice at WeVii, engineering student (Software Engineering) at ESIEA Paris. CI/CD, Terraform, Kubernetes, ArgoCD, AWS, GCP."
   },
   "nav": {
@@ -24,11 +24,11 @@
     "cta_contact": "Get in touch",
     "cta_github": "GitHub",
     "cta_linkedin": "LinkedIn",
-    "summary": "I'm Paul Perigault, a cloud DevOps apprentice at WeVii and an engineering student at ESIEA Paris, Software Engineering major. I build HR applications in Java and Angular, do multicloud R&D in Go and work on CI/CD pipelines and AWS and GCP deployments."
+    "summary": "I’m Paul Perigault, a cloud DevOps apprentice at WeVii and an engineering student at ESIEA Paris, Software Engineering major. I build HR applications in Java and Angular, do multicloud R&D in Go and work on CI/CD pipelines and AWS and GCP deployments."
   },
   "about": {
     "title": "About",
-    "body": "Apprenticed at WeVii since September 2023, alongside the engineering cycle at ESIEA Paris. I don't speak at schools yet, and I would like to.",
+    "body": "Apprenticed at WeVii since September 2023, alongside the engineering cycle at ESIEA Paris. I don’t speak at schools yet, and I would like to.",
     "location": "Paris, France",
     "location_label": "Location"
   },
@@ -47,7 +47,7 @@
     "view_code": "Code",
     "view_site": "Project site",
     "updated": "Updated",
-    "fetched_at": "GitHub data —",
+    "fetched_at": "GitHub data as of",
     "empty": "No project to show right now."
   },
   "certifications": {

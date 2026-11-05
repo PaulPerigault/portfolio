@@ -17,28 +17,28 @@
       "title": "Hébergement et domaines",
       "paragraphs": [
         "Le site est un site statique hébergé par Cloudflare Pages : Cloudflare, Inc., 101 Townsend Street, San Francisco, CA 94107, États-Unis.",
-        "Le domaine principal est {domain} ; l'adresse paulperigault.dev redirige vers celui-ci.",
-        "Le service qui reçoit les messages du formulaire de contact est hébergé par Cloudflare, Inc. (101 Townsend Street, San Francisco, CA 94107, États-Unis) à l'adresse contact.paulperigault.dev."
+        "Le domaine principal est {domain} ; l’adresse paulperigault.dev redirige vers celui-ci.",
+        "Le service qui reçoit les messages du formulaire de contact est hébergé par Cloudflare, Inc. (101 Townsend Street, San Francisco, CA 94107, États-Unis) à l’adresse contact.paulperigault.dev."
       ]
     },
     {
       "id": "donnees",
       "title": "Données personnelles",
       "paragraphs": [
-        "Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience ni de publicité. À l'ouverture des pages, il ne charge aucune ressource d'un tiers (polices, scripts, images, vidéos). Seul le formulaire de contact fait appel à des services tiers, et seulement quand vous l'utilisez (voir « Formulaire de contact »).",
-        "Comme tout hébergeur web, Cloudflare peut enregistrer des données techniques de connexion (adresse IP, date et heure, pages demandées) pour assurer la sécurité et le bon fonctionnement du service. Ces traitements relèvent de Cloudflare, qui les décrit dans sa déclaration de confidentialité, y compris pour les transferts de données hors de l'Union européenne."
+        "Ce site ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience ni de publicité. À l’ouverture des pages, il ne charge aucune ressource d’un tiers (polices, scripts, images, vidéos). Seul le formulaire de contact fait appel à des services tiers, et seulement quand vous l’utilisez (voir « Formulaire de contact »).",
+        "Comme tout hébergeur web, Cloudflare peut enregistrer des données techniques de connexion (adresse IP, date et heure, pages demandées) pour assurer la sécurité et le bon fonctionnement du service. Ces traitements relèvent de Cloudflare, qui les décrit dans sa déclaration de confidentialité, y compris pour les transferts de données hors de l’Union européenne."
       ]
     },
     {
       "id": "contact",
       "title": "Formulaire de contact",
       "paragraphs": [
-        "Le formulaire de la section Contact transmet votre nom, votre adresse e-mail et votre message. Ils servent uniquement à vous répondre (base légale : intérêt légitime à répondre aux sollicitations). Le formulaire n'existe qu'avec JavaScript ; vous pouvez aussi écrire directement à {email}.",
-        "Le message passe par le service du formulaire, hébergé par Cloudflare Workers, qui le vérifie puis le confie au service d'envoi d'e-mails Resend (exploité par Plus Five Five, Inc., États-Unis). Le service du formulaire ne stocke ni ne journalise votre message. Le message arrive ensuite dans ma boîte de réception ({email}).",
-        "Pour bloquer les envois automatisés, le formulaire utilise Cloudflare Turnstile. Ce service n'est chargé que lorsque vous commencez à remplir le formulaire, jamais à l'ouverture de la page. Selon la politique de confidentialité de Turnstile, Cloudflare traite alors l'adresse IP, l'empreinte TLS, l'en-tête User-Agent de votre navigateur et l'origine du site, pour distinguer une personne d'un robot. Mesuré sur ce site : aucun cookie n'est déposé ; Cloudflare enregistre une valeur technique (« cf.turnstile.u ») dans le stockage de son propre cadre intégré, distinct de celui de ce site. Cette vérification sert uniquement à protéger le formulaire contre les envois automatisés.",
-        "Pour limiter les envois en rafale, le service qui reçoit le formulaire (un Worker Cloudflare) compte les envois par adresse IP : au-delà de 5 par minute, l'envoi est refusé et vous êtes invité à patienter. Ce compteur est tenu par Cloudflare le temps de la fenêtre d'une minute ; le Worker ne conserve ni ne journalise l'adresse.",
-        "Cloudflare, Inc. et Resend (Plus Five Five, Inc.) sont des sociétés établies aux États-Unis. Resend envoie les e-mails depuis sa région Irlande mais, selon sa documentation, conserve les données de compte, le contenu des e-mails et les journaux d'envoi aux États-Unis. Ces transferts reposent sur le Data Privacy Framework UE–États-Unis : les deux sociétés figurent sur la liste officielle de ses participants. Leurs accords de traitement des données prévoient aussi les clauses contractuelles types de la Commission européenne, qui prennent le relais si ce cadre venait à être invalidé.",
-        "Je conserve les messages reçus dans ma boîte de réception 12 mois après notre dernier échange, puis je les supprime. Le service du formulaire n'en garde aucune copie. Selon sa documentation, Resend conserve le contenu des e-mails, leurs métadonnées et les journaux d'envoi pendant 30 jours.",
+        "Le formulaire de la section Contact transmet votre nom, votre adresse e-mail et votre message. Ils servent uniquement à vous répondre (base légale : intérêt légitime à répondre aux sollicitations). Le formulaire n’existe qu’avec JavaScript ; vous pouvez aussi écrire directement à {email}.",
+        "Le message passe par le service du formulaire, hébergé par Cloudflare Workers, qui le vérifie puis le confie au service d’envoi d’e-mails Resend (exploité par Plus Five Five, Inc., États-Unis). Le service du formulaire ne stocke ni ne journalise votre message. Le message arrive ensuite dans ma boîte de réception ({email}).",
+        "Pour bloquer les envois automatisés, le formulaire utilise Cloudflare Turnstile. Ce service n’est chargé que lorsque vous commencez à remplir le formulaire, jamais à l’ouverture de la page. Selon la politique de confidentialité de Turnstile, Cloudflare traite alors l’adresse IP, l’empreinte TLS, l’en-tête User-Agent de votre navigateur et l’origine du site, pour distinguer une personne d’un robot. Mesuré sur ce site : aucun cookie n’est déposé ; Cloudflare enregistre une valeur technique (« cf.turnstile.u ») dans le stockage de son propre cadre intégré, distinct de celui de ce site. Cette vérification sert uniquement à protéger le formulaire contre les envois automatisés.",
+        "Pour limiter les envois en rafale, le service qui reçoit le formulaire (un Worker Cloudflare) compte les envois par adresse IP : au-delà de 5 par minute, l’envoi est refusé et vous êtes invité à patienter. Ce compteur est tenu par Cloudflare le temps de la fenêtre d’une minute ; le Worker ne conserve ni ne journalise l’adresse.",
+        "Cloudflare, Inc. et Resend (Plus Five Five, Inc.) sont des sociétés établies aux États-Unis. Resend envoie les e-mails depuis sa région Irlande mais, selon sa documentation, conserve les données de compte, le contenu des e-mails et les journaux d’envoi aux États-Unis. Ces transferts reposent sur le Data Privacy Framework UE-États-Unis : les deux sociétés figurent sur la liste officielle de ses participants. Leurs accords de traitement des données prévoient aussi les clauses contractuelles types de la Commission européenne, qui prennent le relais si ce cadre venait à être invalidé.",
+        "Je conserve les messages reçus dans ma boîte de réception 12 mois après notre dernier échange, puis je les supprime. Le service du formulaire n’en garde aucune copie. Selon sa documentation, Resend conserve le contenu des e-mails, leurs métadonnées et les journaux d’envoi pendant 30 jours.",
         "La boîte de réception {email} est hébergée par Apple (iCloud Mail), qui reçoit et stocke les messages pour mon compte selon sa propre politique de confidentialité."
       ]
     },
@@ -46,8 +46,8 @@
       "id": "stockage",
       "title": "Stockage local du navigateur",
       "paragraphs": [
-        "Deux préférences d'affichage sont mémorisées dans le stockage local de votre navigateur lorsque vous les modifiez : « theme » (clair ou sombre) et « lang » (français ou anglais). Elles restent sur votre appareil, ne sont jamais envoyées à un serveur et servent uniquement à personnaliser l'affichage à votre demande ; elles ne nécessitent donc pas de consentement. Vous pouvez les effacer à tout moment depuis les réglages de votre navigateur.",
-        "Le site lui-même n'écrit rien d'autre. Si vous utilisez le formulaire de contact, Cloudflare Turnstile enregistre une valeur technique dans le stockage de son propre cadre (voir « Formulaire de contact »)."
+        "Deux préférences d’affichage sont mémorisées dans le stockage local de votre navigateur lorsque vous les modifiez : « theme » (clair ou sombre) et « lang » (français ou anglais). Elles restent sur votre appareil, ne sont jamais envoyées à un serveur et servent uniquement à personnaliser l’affichage à votre demande ; elles ne nécessitent donc pas de consentement. Vous pouvez les effacer à tout moment depuis les réglages de votre navigateur.",
+        "Le site lui-même n’écrit rien d’autre. Si vous utilisez le formulaire de contact, Cloudflare Turnstile enregistre une valeur technique dans le stockage de son propre cadre (voir « Formulaire de contact »)."
       ]
     },
     {
@@ -61,8 +61,8 @@
       "id": "droits",
       "title": "Vos droits",
       "paragraphs": [
-        "Si vous m'écrivez à {email} ou par le formulaire de contact, votre nom, votre adresse et votre message sont utilisés uniquement pour vous répondre et conservés le temps nécessaire à cet échange (base légale : intérêt légitime à répondre aux sollicitations).",
-        "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité sur les données vous concernant, que vous pouvez exercer à la même adresse. En cas de désaccord, vous pouvez saisir la CNIL (cnil.fr)."
+        "Si vous m’écrivez à {email} ou par le formulaire de contact, votre nom, votre adresse et votre message sont utilisés uniquement pour vous répondre et conservés le temps nécessaire à cet échange (base légale : intérêt légitime à répondre aux sollicitations).",
+        "Conformément au RGPD, vous disposez d’un droit d’accès, de rectification, d’effacement, de limitation, d’opposition et de portabilité sur les données vous concernant, que vous pouvez exercer à la même adresse. En cas de désaccord, vous pouvez saisir la CNIL (cnil.fr)."
       ]
     },
     {

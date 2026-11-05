@@ -14,6 +14,6 @@ const { portfolio } = await getSiteData(lang);
 const { legal } = portfolio;
 ---
 
-<BaseLayout lang={lang} title={`${legal.title} — ${SITE.name}`} description={legal.description}>
+<BaseLayout lang={lang} title={`${legal.title} | ${SITE.name}`} description={legal.description}>
   <LegalDocument lang={lang} document={legal} />
 </BaseLayout>
