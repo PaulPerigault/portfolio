@@ -24,7 +24,7 @@ export const entryLines = (
 ): string[] =>
   entries.map((entry) =>
     [
-      `### ${entry.title} — ${entry.subtitle}`,
+      `### ${entry.title}, ${entry.subtitle}`,
       `*${entry.period}*`,
       entry.description,
       entry.tags.length > 0 ? `${technologies}${colon(lang)} ${entry.tags.join(', ')}` : '',
@@ -43,11 +43,11 @@ export const certificationLine = (cert: Certification, lang: Lang, t: T): string
       ]
         .filter(Boolean)
         .join(', ');
-  return `- **${cert.name}** — ${cert.issuer}${status ? ` (${status})` : ''}`;
+  return `- **${cert.name}**, ${cert.issuer}${status ? ` (${status})` : ''}`;
 };
 
 export const projectLine = (project: ProjectsSnapshot['projects'][number]): string => {
   const details = [project.language, ...visibleTopics(project.topics)].filter(Boolean).join(', ');
-  const description = project.description ? ` — ${project.description}` : '';
+  const description = project.description ? `: ${project.description}` : '';
   return `- [${project.name}](${project.html_url})${description}${details ? ` (${details})` : ''}`;
 };

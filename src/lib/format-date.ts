@@ -1,6 +1,6 @@
 import type { Lang } from '@/domain/lang';
 
-const SEPARATOR = ' — ';
+const SEPARATOR = ' - ';
 const DAY_OF_MONTH = 1;
 const MONTH_INDEX_OFFSET = 1;
 
@@ -13,7 +13,7 @@ export const formatYearMonth = (yearMonth: string, lang: Lang): string => {
   return formatter(lang).format(new Date(Date.UTC(year, month - MONTH_INDEX_OFFSET, DAY_OF_MONTH)));
 };
 
-/** Période localisée : « sept. 2023 — Présent », « août 2022 » si début = fin. */
+/** Période localisée : « sept. 2023 - Présent », « août 2022 » si début = fin. */
 export const formatPeriod = (
   start: string,
   end: string | null,

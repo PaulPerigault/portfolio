@@ -13,7 +13,7 @@ const certification = {
 const input: JsonLdInput = {
   lang: 'fr',
   path: '/fr/',
-  title: 'Paul Perigault — Ingénieur DevOps',
+  title: 'Paul Perigault | Ingénieur DevOps',
   description: 'Portfolio',
   jobTitle: 'Ingénieur DevOps',
   summary: 'Paul Perigault est ingénieur DevOps chez WeVii.',

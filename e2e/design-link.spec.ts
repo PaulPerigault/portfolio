@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { SITE } from '../src/config/site';
 
 const LINK_NAME = /^Design system \(.+\)$/;
-const NEW_TAB = { fr: "s'ouvre dans un nouvel onglet", en: 'opens in a new tab' } as const;
+const NEW_TAB = { fr: 's’ouvre dans un nouvel onglet', en: 'opens in a new tab' } as const;
 
 for (const lang of ['fr', 'en'] as const) {
   test.describe(`lien vers le design system (${lang})`, () => {
