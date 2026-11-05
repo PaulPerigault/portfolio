@@ -1,5 +1,6 @@
 import { describe, expect, it } from '@effect/vitest';
 import { Effect, Either, Layer, TestClock } from 'effect';
+import { SITE } from '@/config/site';
 import { contentRepositoryWith } from '@/test/content-fixtures';
 import { fakeGithub, jsonResponse, repoBody } from '@/test/github-http';
 import { BuildConfig } from './build-config';
@@ -61,5 +62,29 @@ describe('loadProjects', () => {
     Effect.gen(function* () {
       expect((yield* loadProjects('fr')).projects).toEqual([]);
     }).pipe(Effect.provide(layerFor([], true))),
+  );
+
+  it.effect('applique le site de SITE et la description de la langue au dépôt design-system', () =>
+    Effect.gen(function* () {
+      const [project] = (yield* loadProjects('fr')).projects;
+      expect(project?.name).toBe('design-system');
+      expect(project?.homepage).toBe(SITE.projectSites['design-system']);
+      expect(project?.description).toBe('Texte français');
+    }).pipe(
+      Effect.provide(
+        Layer.mergeAll(
+          contentRepositoryWith({
+            'content/fr/projects-config.json': JSON.stringify({
+              featured: ['design-system'],
+              descriptions: { 'design-system': 'Texte français' },
+            }),
+          }),
+          fakeGithub((_attempt, url) =>
+            jsonResponse({ ...repoBody, name: url.split('/').pop(), description: 'GitHub' }),
+          ).layer,
+          BuildConfig.layerTest({ strictData: true }),
+        ),
+      ),
+    ),
   );
 });

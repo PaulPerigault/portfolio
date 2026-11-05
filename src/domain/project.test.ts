@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@effect/vitest';
 import { Either, Schema } from 'effect';
-import { Project } from './project';
+import { Project, ProjectsConfig } from './project';
 
 const repo = {
   id: 1,
@@ -31,5 +31,21 @@ describe('Project : liens rendus en href', () => {
 
   it('refuse un dépôt dont l’adresse n’est pas sur https://github.com/', () => {
     expect(Either.isLeft(decode({ ...repo, html_url: 'javascript:alert(1)' }))).toBe(true);
+  });
+});
+
+describe('ProjectsConfig', () => {
+  const decodeConfig = Schema.decodeUnknownEither(ProjectsConfig);
+
+  it('n’exige pas de descriptions : aucune surcharge par défaut', () => {
+    expect(Either.getOrThrow(decodeConfig({ featured: ['a'] })).descriptions).toEqual({});
+  });
+
+  it('lit une description par dépôt et refuse une description vide', () => {
+    const config = Either.getOrThrow(
+      decodeConfig({ featured: ['a'], descriptions: { a: 'Texte' } }),
+    );
+    expect(config.descriptions).toEqual({ a: 'Texte' });
+    expect(Either.isLeft(decodeConfig({ featured: ['a'], descriptions: { a: '' } }))).toBe(true);
   });
 });
