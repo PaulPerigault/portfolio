@@ -19,13 +19,27 @@ Il n'y a plus de vitrine : les pages `/fr/styleguide/` et `/en/styleguide/` ont 
 | `VisuallyHidden`            | Texte réservé aux lecteurs d'écran                                                                                       | slot                                                                                                         |
 | `SkipLink`                  | Lien d'évitement (premier arrêt clavier)                                                                                 | `label`, `target`                                                                                            |
 
+## Composants du design system utilisés
+
+Importés de `@paulperigault/astro` 0.1.0 (version de `package.json`). La liste vient des imports présents dans `src/` :
+
+| Composant | Importé par | Usage |
+| --------- | ----------- | ----- |
+| `Photo`   | `sections/Hero.astro` | Photo du hero (AVIF, WebP, repli JPEG) |
+| `Prose`   | `sections/LegalDocument.astro` | Paragraphes des mentions légales |
+| `Button`  | `interactive/ContactForm.astro` | Bouton d'envoi du formulaire |
+| `Field`   | `ui/FormField.astro` | Libellé, aide et erreur autour des champs natifs |
+
+Le reste de `src/components/` est propre au portfolio : les primitives ci-dessus, la navigation, le pied de page, les
+sections et `ButtonLink` (le `Button` publié n'a ni `target`, ni `rel`, ni `download`).
+
 ## Règles d'usage
 
 - **Un motif répété = une primitive.** Si un bloc de classes apparaît deux fois, il devient un composant ici.
 - **Textes traduits en amont** : les primitives reçoivent des chaînes (`newTabLabel`, `period`…), elles n'appellent pas `t()`.
 - **Liens** : `lib/links.ts` (`linkAttributes`) décide de `target="_blank" rel="noopener noreferrer"` ; ne jamais l'écrire à la main.
 - **Icônes** : ajouter le tracé dans `lib/icons.ts` (grille 24, trait 1.5) ; les icônes restent décoratives, le sens passe par du texte.
-- **Nouvelle primitive** : props typées, ≤ 60 lignes, test de rendu (`*.test.ts` avec `src/test/render.ts`), usage réel dans une section, ligne dans ce tableau.
+- **Nouvelle primitive** : props typées, courte (convention ; la limite contrôlée par `npm run check:size` est de 120 lignes), test de rendu (`*.test.ts` avec `src/test/render.ts`), usage réel dans une section, ligne dans ce tableau.
 
 ## Tests
 
