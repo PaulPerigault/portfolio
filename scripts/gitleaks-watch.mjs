@@ -1,4 +1,4 @@
-// Ouvre une issue quand une version de gitleaks plus récente que celle épinglée sort (#204).
+// Ouvre une issue quand une version de gitleaks plus récente que celle épinglée sort.
 // Lancé chaque semaine par .github/workflows/gitleaks-watch.yml (GITHUB_TOKEN, `issues: write`).
 //   node scripts/gitleaks-watch.mjs     (GITHUB_TOKEN et GITHUB_REPOSITORY requis)
 import { readFileSync } from 'node:fs';

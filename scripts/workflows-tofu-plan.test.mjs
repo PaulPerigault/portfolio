@@ -1,4 +1,4 @@
-// `tofu plan` en CI (#203) : token Cloudflare et clés R2 en LECTURE SEULE, jamais d'apply. Sans les
+// `tofu plan` en CI : token Cloudflare et clés R2 en LECTURE SEULE, jamais d'apply. Sans les
 // secrets (avant leur création, PR de fork), le job reste vert et l'annonce au lieu d'échouer.
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
@@ -39,5 +39,47 @@ describe('job tofu-plan', () => {
   it('signale un écart avec l’infrastructure réelle sans casser la CI (code 2)', () => {
     expect(plan).toContain('-detailed-exitcode');
     expect(plan).toMatch(/"\$code" = 2/);
+  });
+
+  it('planifie aussi infra/github avec un jeton GitHub en lecture seule, sauté sans lui', () => {
+    expect(plan).toContain('secrets.IAC_GITHUB_READONLY_TOKEN');
+    expect(plan).toContain('GITHUB_TOKEN: ${{ secrets.IAC_GITHUB_READONLY_TOKEN }}');
+    expect(plan).toContain("steps.gate.outputs.github == 'true'");
+    expect(plan).toContain('tofu -chdir=infra/github plan -input=false -lock=false');
+    expect(plan).not.toContain('GITHUB_IAC_TOKEN');
+  });
+
+  it('échoue si le résumé du plan n’est pas trouvé, et le rapporte sinon (#262)', () => {
+    const steps = plan
+      .split('\n      - ')
+      .filter((step) => /tofu -chdir=infra\S* plan /.test(step));
+    expect(steps).toHaveLength(2);
+    for (const step of steps) {
+      const output = /> (\S+\.txt) 2>&1/.exec(step)?.[1];
+      expect(step).toContain(`grep -E '^(Plan: |No changes\\.)' ${output} | tail -n 1`);
+      expect(step).toMatch(/if \[ -z "\$verdict" \]; then\n\s+echo "::error::[^"]+"\n\s+exit 1/);
+      expect(step).toMatch(/echo "Résultat du plan de [^:]+ : \$verdict"/);
+      // Le contrôle passe avant la lecture du code de sortie : un écart (2) ne le court-circuite pas.
+      expect(step.indexOf('$verdict')).toBeLessThan(step.indexOf('"$code" = 2'));
+    }
+  });
+
+  it('saute explicitement le dépôt design-system tant que le jeton n’y a pas accès (#268)', () => {
+    const step = plan.split('\n      - ').find((text) => text.includes('infra/github plan')) ?? '';
+    expect(step).toContain('repos/PaulPerigault/design-system/actions/permissions');
+    expect(step).toMatch(/::notice::plan du dépôt design-system sauté/);
+    expect(step).toContain('-var="design_system=$ds"');
+    expect(step.indexOf('design_system=$ds')).toBeGreaterThan(step.indexOf('ds=false'));
+  });
+
+  it('qualifie un écart de infra/github par GraphQL, sans jamais le masquer (#262)', () => {
+    const step = plan.split('\n      - ').find((text) => text.includes('infra/github plan')) ?? '';
+    expect(step).toContain('-out=github.tfplan');
+    expect(step).toContain('tofu -chdir=infra/github show -json github.tfplan > github-plan.json');
+    expect(step).toContain('node scripts/check-github-plan.mjs github-plan.json');
+    expect(step.indexOf('check-github-plan')).toBeGreaterThan(step.indexOf('"$code" = 2'));
+    expect(plan).toMatch(
+      /setup-node@[0-9a-f]{40} # v\d+\n\s+if: steps\.gate\.outputs\.ready == 'true'/,
+    );
   });
 });

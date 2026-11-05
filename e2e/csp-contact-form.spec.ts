@@ -39,7 +39,7 @@ test('la CSP ne s’ouvre qu’au Worker et à Turnstile, et seulement sur les p
   expect(directives['connect-src']).toEqual(["'self'", WORKER_ORIGIN, SITE.turnstileOrigin]);
   expect(directives['frame-src']).toEqual([SITE.turnstileOrigin]);
   expect(directives['script-src']).toEqual(["'self'", SITE.turnstileOrigin]);
-  for (const path of ['/fr/legal/', '/en/styleguide/', '/introuvable/']) {
+  for (const path of ['/fr/legal/', '/en/legal/', '/introuvable/']) {
     await page.goto(path);
     expect(await policyOf(page), path).not.toMatch(/https?:/);
   }

@@ -25,8 +25,9 @@ module "resend_domain" {
   zone_id         = data.cloudflare_zone.services.zone_id
   domain          = var.zone_name
   dkim_public_key = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMOqYxCjpS8Ak1bCzMbG6sWL0L7hz35oX6g7aHcptnThF3DO8I32G4MkX59+pyrGlLlpYwMz/8aHeXUfHUtTbrsojiRQFV9Isl7YathNKJysHFBicX+3bD1rTx+5OPNqmx4eHjaIHUGCnN2hGUZBnBXOXUAyRHvN1j91WPVDPmUQIDAQAB"
-  # Observation (p=none) puis durcissement progressif : voir ROADMAP.md.
-  dmarc_policy = "v=DMARC1; p=none; rua=mailto:contact@paulperigault.fr"
+  # Quarantaine après les semaines d'observation (p=none) aux rapports propres (#209) ; ensuite
+  # p=reject : voir ROADMAP.md.
+  dmarc_policy = "v=DMARC1; p=quarantine; pct=100; rua=mailto:contact@paulperigault.fr"
   return_path_targets = {
     send  = "send.forge.rmta.net"
     rsend = "rsend-euw1.forge.rmta.net"
@@ -57,6 +58,14 @@ module "zone_fr" {
   pages_target   = local.on_pages ? module.pages_site.subdomain : null
 }
 
+# Autorités de certification admises pour le `.dev` (celles de Cloudflare, modules/dns-caa).
+module "dev_caa" {
+  source = "./modules/dns-caa"
+
+  zone_id = data.cloudflare_zone.services.zone_id
+  domain  = var.zone_name
+}
+
 # `.dev` et `www.dev` → `.fr` (docs/infra.md §2) ; ruleset créé à la main, importé (imports.tf).
 module "dev_redirect" {
   source = "./modules/canonical-redirect"
@@ -73,4 +82,33 @@ module "fr_www_redirect" {
   zone_id       = module.zone_fr.zone_id
   hosts         = ["www.${var.canonical_domain}"]
   target_origin = local.canonical_origin
+}
+
+# Documentation du design system (#268) : projet Pages dédié, construit par Cloudflare depuis
+# PaulPerigault/design-system (production `main`, une preview par PR, D-036), servi sur `design.paulperigault.dev` par un CNAME proxifié. Hôte
+# exact : la redirection `.dev` → `.fr` ne le capture pas (`dev_redirect`, hôtes listés).
+module "ds_docs_site" {
+  source = "./modules/pages-site"
+
+  account_id     = var.account_id
+  project_name   = "paulperigault-ds"
+  custom_domains = ["design.${var.zone_name}"]
+
+  # Commande et dossier de sortie de apps/docs (docs/process/previews.md du dépôt design-system) ;
+  # NODE_VERSION égale son .nvmrc.
+  git_source = {
+    owner           = "PaulPerigault"
+    repo_name       = "design-system"
+    build_command   = "npm ci && npm -w @paulperigault/docs run build"
+    destination_dir = "apps/docs/dist"
+    env_vars        = { NODE_VERSION = "24" }
+  }
+}
+
+module "ds_docs_dns" {
+  source = "./modules/dns-cname"
+
+  zone_id = data.cloudflare_zone.services.zone_id
+  name    = "design.${var.zone_name}"
+  target  = module.ds_docs_site.subdomain
 }

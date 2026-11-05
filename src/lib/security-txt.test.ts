@@ -32,4 +32,8 @@ describe('humans.txt', () => {
     expect(text).toContain('Name: Paul Perigault');
     expect(text).toContain('Astro, Effect');
   });
+
+  it('cite le dépôt sous son nom actuel', () => {
+    expect(buildHumansTxt()).toContain('Source: https://github.com/PaulPerigault/portfolio');
+  });
 });

@@ -1,8 +1,11 @@
 ---
 /**
- * Champ de formulaire accessible : libellé visible relié au champ, message d'erreur relié par
- * `aria-describedby` (vide et masqué tant qu'il n'y a pas d'erreur ; rempli par le script).
+ * Champ de formulaire accessible : libellé et structure du `Field` du design system, message
+ * d'erreur relié par `aria-describedby` (vide et masqué tant qu'il n'y a pas d'erreur ; rempli par
+ * le script). Les contrôles restent natifs : `Input` et `Textarea` du design system n'acceptent
+ * pas `maxlength`, dont dépendent la limite de saisie et `validity.tooLong`.
  */
+import Field from '@paulperigault/astro/Field.astro';
 interface Props {
   id: string;
   name: string;
@@ -27,13 +30,10 @@ const {
 } = Astro.props;
 const errorId = `${id}-error`;
 const control =
-  'border-control bg-bg text-fg aria-invalid:border-fg w-full rounded-sm border px-3 py-2 aria-invalid:border-2';
+  'border-control bg-bg text-fg aria-invalid:border-fg min-h-(--pp-size-control-height) w-full rounded-control border px-3 py-2 text-base aria-invalid:border-2';
 ---
 
-<div class="flex flex-col gap-1.5">
-  <label for={id} class="text-sm font-medium">
-    {label}
-  </label>
+<Field {id} {label}>
   {type === 'textarea' ? (
     <textarea
       {id}
@@ -57,4 +57,4 @@ const control =
     />
   )}
   <p id={errorId} class="text-sm font-medium" data-field-error hidden></p>
-</div>
+</Field>

@@ -63,11 +63,59 @@ Tout est déclaré dans le dépôt et vérifié par `scripts/claude-settings.tes
 - **Hooks `PreToolUse`** (Bash et PowerShell, bloquants, déterministes) :
   - `scripts/guard-secret-files.mjs` : refuse toute commande qui cite un fichier de secrets local ;
   - `scripts/guard-pr-merge.mjs` (logique dans `scripts/lib/pr-merge-guard.mjs`, tests `scripts/guard-pr-merge.test.mjs` et `scripts/pr-merge-guard-args.test.mjs`) : toute commande `gh pr merge` doit citer un numéro de PR explicite dont la base et la tête, lues par `gh pr view <n> --json baseRefName,headRefName,isCrossRepository`, sont admises par `scripts/lib/pr-merge-policy.mjs` : base `develop`, ou base `main` avec la tête `develop` ou la branche de release-please, jamais depuis un fork (#181, tests `scripts/pr-merge-policy.test.mjs`, dont le hook lancé par Bash avec un faux `gh`). Numéro absent, variable shell, PR illisible ou autre couple base/tête : refus. Chaque sous-commande d'une commande composée est contrôlée, y compris dans un shell imbriqué (`bash -c "…"`) et avec `-R`/`--repo` placé avant `merge` ou même avant `pr` (`gh -R o/r pr merge 1`, accepté par gh, #192 ; doublé par des règles `deny`), avec `GH_REPO=` en préfixe, une URL de PR d'un autre dépôt (son dépôt est lu dans l'URL), `gh` appelé par son chemin, via un lanceur (`env`, `sudo`, `command`…) ou dans une substitution `$(…)` (revue finale, #180 ; découpage dans `scripts/lib/shell-segments.mjs`) ; le même texte entre guillemets (message de commit, `grep`) n'est pas une fusion.
-- **Règles `deny`** (mêmes motifs pour `Bash(...)` et `PowerShell(...)`, vérifié par `scripts/claude-settings-guardrails.test.mjs`) : `terraform`/`tofu` appelés directement en `apply`, `destroy`, `-destroy` et `import` ; toute destruction par les scripts `infra:*` ; l'appel direct par `node` des scripts `infra-*.mjs` en `apply` et de `infra-identity-push.mjs` ; `show`, `state`, `output` nu ou `-json` et les sorties secrètes, qui afficheraient une valeur de secret ; `npm run infra:worker-secrets` ; `wrangler deploy`, `wrangler secret`, `wrangler versions deploy` et `wrangler … delete` appelés directement ou par `npx`, `npm exec` ; la suppression de zone, de domaine ou de projet Pages (`DELETE` sur `/zones`, `/domain`, `/pages/projects`) ; les chemins OVH de transfert, `authInfo`, `lockStatus`, owner et contacts ; le push forcé (`--force`, `-f` ; `--force-with-lease` reste admis) ; tout push vers `main` ; `gh pr merge --admin` et `-R`/`--repo` placé avant `pr` ; `gh pr ready`, même avec `-R`/`--repo` (les PR en brouillon du groupe B de #198 ne passent jamais en « ready » par l'assistant, #199) ; `gh api` en écriture (`-X`, `--method`, `-f`, `-F`, `--field`, `--input`) ; `gh repo edit|delete|rename|archive`, `gh secret` et `gh variable set|delete`. `Edit` et `Write` sont refusés sur `package-lock.json`, `.terraform.lock.hcl` et `CHANGELOG.md`.
+- **Règles `deny`** (mêmes motifs pour `Bash(...)` et `PowerShell(...)`, vérifié par `scripts/claude-settings-guardrails.test.mjs`) : `terraform`/`tofu` appelés directement en `apply`, `destroy`, `-destroy` et `import` ; toute destruction par les scripts `infra:*` ; l'appel direct par `node` des scripts `infra-*.mjs` en `apply` (identité, registrar, github) et de `infra-identity-push.mjs` ; `show`, `state`, `output` nu ou `-json` et les sorties secrètes, qui afficheraient une valeur de secret ; `npm run infra:worker-secrets` ; `wrangler deploy`, `wrangler secret`, `wrangler versions deploy` et `wrangler … delete` appelés directement ou par `npx`, `npm exec` ; la suppression de zone, de domaine ou de projet Pages (`DELETE` sur `/zones`, `/domain`, `/pages/projects`) ; les chemins OVH de transfert, `authInfo`, `lockStatus`, owner et contacts ; le push forcé (`--force`, `-f` ; `--force-with-lease` reste admis) ; tout push vers `main` ; `gh pr merge --admin` et `-R`/`--repo` placé avant `pr` ; `gh pr ready`, même avec `-R`/`--repo` (les PR en brouillon du groupe B de #198 ne passent jamais en « ready » par l'assistant, #199) ; `gh api` en écriture (`-X`, `--method`, `-f`, `-F`, `--field`, `--input`) ; `gh repo edit|delete|rename|archive`, `gh secret` et `gh variable set|delete`. `Edit` et `Write` sont refusés sur `package-lock.json`, `.terraform.lock.hcl` et `CHANGELOG.md`.
 - **Retirées des `deny` (#181), gardées dans du code testé** : `npm run infra:tf|infra:identity|infra:registrar -- apply <fichier>.tfplan` (`scripts/lib/tf-args.mjs` : pas d'`apply` sans plan `*.tfplan`, pas de destruction, et refus d'un plan qui détruit ou remplace une ressource, lu par `tofu show -json` sans rien afficher ; tests `scripts/infra-tf-plan-guard.test.mjs`, `scripts/infra-tf-plan-commands.test.mjs`) ; `npm run infra:identity-push` ; les scripts npm de déploiement (Worker, Pages) ; `gh pr merge` vers `main` depuis `develop` ou release-please (hook ci-dessus). PowerShell est absent du poste macOS : ses règles sont testées par motif seulement.
 - Limite documentée par Claude Code : une règle `deny` ne lit que le texte de la commande (`bash -c "…"` ou un chemin complet passe). Ces règles évitent les accidents ; elles ne sont pas une frontière de sécurité.
 
 Recommandations de `claude-code-setup` écartées : formatage Prettier après chaque édition (lint-staged le fait déjà au commit ; réécrire le fichier derrière l'outil d'édition crée des états périmés), lint ou tests après chaque édition (Vitest prend environ 24 s).
+
+## Skills du portfolio
+
+Huit skills de projet dans `.claude/skills/<nom>/SKILL.md` (issue #300). Chacun est écrit de zéro, tient en 60 lignes
+au plus (Quand, Règles, Interdits, Procédure, Sources du dépôt) et ne cite que des règles lisibles dans le dépôt. Aucun
+ne contient de hook, de script, de commande réseau ni d'instruction d'installation, et aucun ne demande de modifier
+`.claude/settings.json` : rien à activer.
+
+| Skill | Sert à |
+| --- | --- |
+| `portfolio-lot` | Flux d'un lot : issue, branche, commits, PR vers `develop`, vérifications, fusion |
+| `portfolio-mobile-mesure` | Mesures mobiles avant / après, budgets de `.lighthouserc.json` |
+| `portfolio-a11y` | Axe à zéro, nom accessible, focus, contrastes, nouvel onglet |
+| `portfolio-charte` | Jetons `--pp-*` et interdits de `scripts/check-design.mjs` (source courante : `docs/design-charter.md`) |
+| `portfolio-ux` | Boutons, erreurs, états vides, clés de `ui.json` FR/EN |
+| `portfolio-voix` | Textes factuels, catalogue de tics, relecture en deux passes |
+| `portfolio-persuasion` | Preuve avant affirmation, appel à l'action honnête |
+| `portfolio-seo-geo` | `SeoHead.astro`, `lastmod`, robots d'IA, identité identique partout |
+
+### Provenance des skills tiers lus
+
+Les dépôts ci-dessous ont été lus, jamais installés ni exécutés. Les SHA sont repris tels que relevés.
+
+| Source | SHA | Licence | Usage |
+| --- | --- | --- | --- |
+| design-system, branche `main` (8 skills `encre-*`) | `749b792312534137a3a5fb74920f0ec37de3d376` | dépôt du propriétaire | Lus, rien copié |
+| `blader/humanizer` | `0ef9fe5bc3572734fd3ae6c448fe00a30cd5dcf0` | MIT (Siqi Chen) | Démarche reprise (repérer puis réécrire), aucun texte repris |
+| `anthropics/knowledge-work-plugins`, `ux-copy` | `d900840716eb262e1feb17c6f4406c9ce0e06bcf` | Apache-2.0 | Inspiration |
+| `guia-matthieu/clawfu-skills`, `persuasion-principles` | `4108f5c0` | MIT | Grille éthique en inspiration. Son MCP `@clawfu/mcp-skills` ne doit jamais être installé |
+| `aevans-eng/seo-skill` | `5ba1717a0a5c` | MIT | Inspiration |
+| `content-designer/ux-writing-skill` | `98cacde4` | non évalué | Non évalué |
+| `wondelai/skills`, `influence-psychology` | `d8d5d75f` | non évalué | Non évalué |
+| `plugin87/ux-ui-agent-skills` | `def84a70fadc` | — | Rejeté : hooks et scripts exécutés |
+| `fullo/sustainable-code-skill-setup` | `b154a31f904c` | — | Rejeté : `.mcp.json` avec `npx -y` non épinglé |
+| green-claude | `d1308bbd91e3` | règles CC BY 4.0 | Installation rejetée, hooks et `install.sh` non lus. Attribution requise si une règle est reprise |
+| `AgriciDaniel/claude-seo` | non relevé | — | Non lu |
+
+### Grille d'analyse d'un skill tiers
+
+À remplir avant d'en retenir une idée ; un « non » écarte le skill.
+
+1. Provenance : auteur, dépôt, marketplace éventuelle.
+2. SHA épinglé : commit complet relevé, pas une branche.
+3. Licence : lue, compatible avec une réécriture ou avec une simple inspiration.
+4. Lecture intégrale : `SKILL.md`, `hooks/`, `.mcp.json`, scripts et références.
+5. Aucune exécution : rien lancé, rien installé, aucun accès réseau pendant la lecture.
+6. Réécriture au format du dépôt : texte neuf, règles appuyées sur un fichier du dépôt.
+7. Jamais `npx`, `curl` ni installation par marketplace pour l'essayer.
 
 ## Installation et désinstallation
 

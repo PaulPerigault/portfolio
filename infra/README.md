@@ -6,15 +6,19 @@ Services du portfolio hébergés chez Cloudflare : la zone `paulperigault.dev` (
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | `modules/contact-form`       | widget Turnstile, Worker `contact-form` (sans code : déployé par Wrangler depuis `worker/`), domaine personnalisé `contact.paulperigault.dev` |
 | `modules/resend-domain`      | DKIM et chemin de retour de Resend sur `paulperigault.dev`, **importés** (`imports.tf`) et non recréés                                        |
-| `modules/pages-site`         | projet Cloudflare Pages (envoi direct) et ses domaines personnalisés                                                                          |
+| `modules/pages-site`         | projet Cloudflare Pages (envoi direct, ou source Git avec previews par PR) et ses domaines personnalisés                                                                          |
 | `modules/zone-fr`            | zone `paulperigault.fr` : messagerie iCloud, vérifications, enregistrements du site, réglages, DNSSEC (sorties : serveurs de noms et DS)      |
 | `modules/canonical-redirect` | redirection 301 vers `https://paulperigault.fr` : `.dev` et `www.dev` (ruleset **importé**), `www.fr`                                         |
+| `modules/dns-caa`            | enregistrements CAA de l'apex (Let's Encrypt, Google Trust Services, SSL.com, Sectigo : autorités de Cloudflare) : `paulperigault.dev` (racine) et `.fr` (`zone-fr`)                |
+| `modules/dns-cname`          | CNAME proxifié vers un projet Pages : `design.paulperigault.dev`, documentation du design system (`module.ds_docs_site`, ADR-0011)                |
 
 La limitation de débit du formulaire est dans `modules/contact-form` (seule règle `http_ratelimit` de l'offre gratuite).
 
 **Bascule pilotée par deux variables** (`variables.tf`), changées par une PR à l'étape voulue du runbook, jamais en ligne de commande : `fr_dnssec` (`false`, puis `true` au §4.5) et `fr_site_host` (`github-pages`, puis `cloudflare-pages` au §5 : domaines Pages, `CNAME` proxifiés, enregistrements GitHub supprimés dans le même `apply`).
 
 **Délégation chez OVH** : `infra/registrar/` (brique séparée, son propre state) gère les serveurs de noms et le DS de `paulperigault.fr` (`infra/registrar/README.md`), avec les contrôles `npm run check:dnssec`.
+
+**Dépôt GitHub** : `infra/github/` (brique séparée, son propre state) gère les réglages, protections, variable et environnements de `PaulPerigault/portfolio` (`infra/github/README.md`, ADR-0010).
 
 **Jetons** : `infra/identity/` (brique séparée, son propre state) crée les jetons Cloudflare limités et les comptes de service OVH, avec les seuls jetons d'amorçage ; `infra/` n'utilise ensuite que le jeton limité « terraform » (`infra/identity/README.md`).
 
@@ -36,20 +40,22 @@ Ajouter un service = un nouveau dossier `modules/<service>` (variables, outputs,
   - `TF_VAR_resend_api_key` : clé Resend (accès _Sending_, domaine `paulperigault.dev`), lue seulement par `npm run infra:worker-secrets` ;
   - `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` : clés **S3** du bucket R2 du state. Ce sont l'_Access Key ID_ (32 caractères hexadécimaux) et la _Secret Access Key_ (64), pas la valeur du token R2 ; une confusion donne `SignatureDoesNotMatch`. Les noms `AWS_*` sont imposés par le backend `s3` d'OpenTofu ; il n'y a aucun compte AWS.
   - `BOOTSTRAP_CLOUDFLARE`, `BOOTSTRAP_OVH_KEY`, `BOOTSTRAP_OVH_SECRET`, `BOOTSTRAP_OVH_CONSUMER` (facultatifs) : jetons d'amorçage, larges et de courte durée, qui ne servent qu'à créer les jetons limités. Réservés aux commandes de `infra/identity/` (`identityEnv`) ; `childEnv`, utilisé par toutes les autres, les refuse et les retire de l'environnement hérité (`scripts/infra-secrets-bootstrap.test.mjs`). À supprimer une fois les jetons limités créés.
+  - `GITHUB_IAC_TOKEN` : jeton GitHub fine-grained limité à `PaulPerigault/portfolio` (90 jours, droits dans `infra/github/README.md`). Réservé à `infra/github/` (`githubEnv`) et à `infra/identity/` (secrets Actions) ; `childEnv` le refuse et le retire de l'environnement hérité (`scripts/infra-secrets-github.test.mjs`).
 
 ## Usage
 
 Toujours passer par ces commandes (`scripts/infra-*.mjs`, chargeur `scripts/lib/infra-secrets.mjs`). Chacune charge **seulement** les variables dont elle a besoin, dans l'environnement du seul processus enfant (`tofu`, Wrangler), jamais dans le shell courant. Une variable inconnue dans le fichier fait échouer. Aucune valeur n'est jamais affichée.
 
-| Commande                       | Variables chargées                                                         |
-| ------------------------------ | -------------------------------------------------------------------------- |
-| `npm run infra:tf`             | token Cloudflare, clés S3 du state                                         |
-| `npm run infra:dns`            | token Cloudflare                                                           |
-| `npm run infra:identity`       | jetons d'amorçage (`BOOTSTRAP_*`), clés S3 du state                        |
-| `npm run infra:identity-push`  | clés S3 du state (lit les sorties, écrit le fichier et les secrets GitHub) |
-| `npm run infra:r2-check`       | token Cloudflare                                                           |
-| `npm run infra:rulesets`       | token Cloudflare                                                           |
-| `npm run infra:worker-secrets` | les quatre (token pour Wrangler, clé Resend, clés S3 pour `tofu output`)   |
+| Commande                       | Variables chargées                                                       |
+| ------------------------------ | ------------------------------------------------------------------------ |
+| `npm run infra:tf`             | token Cloudflare, clés S3 du state                                       |
+| `npm run infra:dns`            | token Cloudflare                                                         |
+| `npm run infra:github`         | jeton GitHub (`GITHUB_IAC_TOKEN`), clés S3 du state                      |
+| `npm run infra:identity`       | jetons d'amorçage (`BOOTSTRAP_*`), jeton GitHub, clés S3 du state        |
+| `npm run infra:identity-push`  | clés S3 du state (lit les sorties, écrit le seul fichier de secrets)     |
+| `npm run infra:r2-check`       | token Cloudflare                                                         |
+| `npm run infra:rulesets`       | token Cloudflare                                                         |
+| `npm run infra:worker-secrets` | les quatre (token pour Wrangler, clé Resend, clés S3 pour `tofu output`) |
 
 ```shell
 npm run infra:tf -- init               # première fois : backend R2

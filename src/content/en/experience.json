@@ -2,11 +2,11 @@
   {
     "id": "wevii",
     "company": "WeVii",
-    "role": "DevOps Cloud Apprentice",
+    "role": "Cloud DevOps Apprentice",
     "location": "Bordeaux (remote)",
     "dateStart": "2023-09",
     "dateEnd": null,
-    "description": "Development of HR applications in Java and Angular, multicloud R&D in Golang. CI/CD pipelines, AWS/GCP cloud infrastructure with Terraform and Kubernetes. Security: Vault, SOPS, ArgoCD, Prometheus/Grafana monitoring.",
+    "description": "Development of HR applications in Java and Angular, multicloud R&D in Golang. CI/CD pipelines, AWS/GCP cloud infrastructure with Terraform and Kubernetes. GitOps deployments with ArgoCD, secrets with Vault and SOPS, monitoring with Prometheus and Grafana.",
     "tags": ["Go", "Angular", "Java", "Kubernetes", "Terraform", "AWS", "GCP", "ArgoCD"]
   },
   {
@@ -16,8 +16,8 @@
     "location": "Paris",
     "dateStart": "2022-08",
     "dateEnd": "2022-08",
-    "description": "Immersive 4-week programme: algorithmics, C, unsupervised peer learning.",
-    "tags": ["C", "Algorithmics", "Peer learning", "Shell"]
+    "description": "Immersive 4-week programme: algorithms, C, unsupervised peer learning.",
+    "tags": ["C", "Algorithms", "Peer learning", "Shell"]
   },
   {
     "id": "patounes",

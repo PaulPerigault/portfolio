@@ -145,6 +145,12 @@ Resolve-DnsName paulperigault.fr -Type DS -Server d.nic.fr              # toujou
 
 Vérification : DNSKEY d'algorithme 13 présentes ; dnsviz : zone signée mais délégation encore **insecure** (pas de DS), aucune erreur. Jusqu'à 4.6, Cloudflare affiche DNSSEC _Pending_ et un `plan` peut proposer de remettre `status` à `active` : attendu, ne rien appliquer.
 
+**Attendre une heure avant 4.6.** Entre la signature de la zone (4.5) et la publication du DS (4.6), il faut laisser passer le TTL des enregistrements (3600 s). Les résolveurs gardent en cache les réponses obtenues avant la signature, **sans RRSIG**. Si le DS est publié avant leur expiration, un résolveur qui valide reçoit ce DS avec des données non signées : il répond SERVFAIL jusqu'à l'expiration de son cache, site et messagerie compris. Incident du 2026-10-20 (#181) : signature à 09:05 UTC, DS publié à 09:24, SERVFAIL chez 1.0.0.1 pendant quelques minutes (MX), alors que 1.1.1.1, 9.9.9.9 et dnsviz validaient déjà. Retirer le DS n'aurait rien accéléré, car il est lui aussi en cache une heure.
+
+```shell
+npm run check:dnssec -- --phase=avant-ds    # relancer au moins 1 h après l'apply de 4.5 : DNSKEY présentes, toujours aucun DS
+```
+
 ### 4.6 Action OVH ③ : publier le DS
 
 OVH : _Web Cloud → Domaines → paulperigault.fr → DNSSEC_ (avec des serveurs DNS externes, OVH demande la clé) → saisir `key_tag`, `flags` (257), `algorithm` (13) et `public_key` de la sortie `fr_dnssec_ds`. Cloudflare passe DNSSEC à _Success_ quand il voit le DS.
@@ -192,4 +198,4 @@ Vérification : `check:dns -- --expect=cloudflare` code 0 (les deux noms) ; `che
 1. Créer le secret `CLOUDFLARE_API_TOKEN_PAGES` (token _Cloudflare Pages : Edit_). Les jobs `pages` (`deploy.yml`) et `pages-preview` (`ci.yml`), préparés par #207, l'utilisent dès qu'il existe ; le nettoyage de GitHub Pages est préparé par #208.
 2. Après un déploiement réussi par la CI : _Settings → Pages_ du dépôt → désactiver GitHub Pages.
 
-Vérification : `npm run check:live` reste vert ; `npm run check:dns -- --expect=cloudflare` code 0.
+Vérification : `npm run check:live` reste vert, y compris `paulperigault.github.io` en 404 (le dépôt est renommé `PaulPerigault/portfolio` : GitHub interdit de désactiver Pages sur le nom réservé `<compte>.github.io`, erreur 422) ; `npm run check:dns -- --expect=cloudflare` code 0.

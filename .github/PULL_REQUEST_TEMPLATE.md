@@ -27,7 +27,10 @@ Closes #
 
 ## Design anti-IA (si l'interface ou les textes changent)
 
-- [ ] Textes relus et réécrits à la main, sans formule générique ni placeholder
-- [ ] Un seul accent, styles via les tokens, aucun dégradé / ombre décorative / flou / emoji
-- [ ] Provenance des assets connue ; contraste AA vérifié en clair et en sombre
+- [ ] Aucun texte laissé tel que généré : relu et réécrit à la main, sans placeholder.
+- [ ] Un seul accent, tous les styles passent par les jetons.
+- [ ] Aucun dégradé, ombre décorative, flou, emoji, étiquette en capitales.
+- [ ] Provenance des assets connue (photo personnelle, logo `logo.svg`, polices sous licence OFL, icônes maison).
+- [ ] Carte de partage et favicons régénérés (`scripts/generate-og-image.mjs`, skill `update-favicon`) si le design change.
+- [ ] Contraste AA vérifié en clair **et** en sombre.
 - [ ] `npm run check:design` est vert (voir `docs/design-charter.md`)

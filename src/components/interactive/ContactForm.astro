@@ -4,11 +4,11 @@
  * le repli. Turnstile n'est chargé qu'au premier focus (`scripts/contact-form.ts`). Rendu absent
  * si aucune clé de site n'est fournie au build.
  */
+import Button from '@paulperigault/astro/Button.astro';
 import FormField from '@/components/ui/FormField.astro';
 import { FIELD_LIMITS } from '@/config/contact';
 import { SITE } from '@/config/site';
 import type { Lang } from '@/domain/lang';
-import { BUTTON_BASE, BUTTON_VARIANT } from '@/lib/button-styles';
 import { HONEYPOT_FIELD, turnstileSiteKey } from '@/lib/contact-form';
 import { useTranslations } from '@/lib/i18n';
 import { fillPlaceholders } from '@/lib/placeholders';
@@ -37,7 +37,7 @@ const messages = {
 
 {siteKey && (
   <form
-    class="mt-12 hidden max-w-prose flex-col gap-5 js:flex"
+    class="mt-12 hidden max-w-measure flex-col gap-5 js:flex"
     aria-labelledby="contact-form-heading"
     novalidate
     data-contact-form
@@ -91,12 +91,9 @@ const messages = {
       </a>
     </p>
     <div class="flex flex-wrap items-center gap-4">
-      <button
-        type="submit"
-        class:list={[BUTTON_BASE, BUTTON_VARIANT.primary, 'disabled:cursor-wait']}
-      >
+      <Button type="submit" class="disabled:cursor-wait">
         {t('contact.form.submit')}
-      </button>
+      </Button>
       <p role="status" aria-live="polite" class="font-medium" data-form-status />
     </div>
   </form>

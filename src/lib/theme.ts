@@ -12,5 +12,5 @@ export const resolveTheme = (chosen: string | undefined, systemPrefersDark: bool
 
 export const nextTheme = (current: Theme): Theme => (current === 'dark' ? 'light' : 'dark');
 
-/** Couleurs de barre du navigateur : doivent égaler `--pp-bg` (tokens.css), vérifié par test. */
-export const THEME_COLOR = { light: '#fcfcfd', dark: '#0e1015' } as const;
+/** Couleurs de barre du navigateur : doivent égaler `--pp-color-bg` de @paulperigault/tokens, vérifié par test. */
+export const THEME_COLOR = { light: '#f9fafd', dark: '#14161c' } as const;

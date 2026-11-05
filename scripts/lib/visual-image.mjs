@@ -1,4 +1,4 @@
-// Image Playwright partagée par le job CI `visual` et `npm run test:visual:update` (#201) : même
+// Image Playwright partagée par le job CI `visual` et `npm run test:visual:update` : même
 // navigateur, mêmes polices système, même architecture (amd64, celle des runners GitHub). Sa version
 // doit égaler celle de @playwright/test (scripts/workflows-visual.test.mjs).
 export const VISUAL_IMAGE =

@@ -23,7 +23,8 @@ for (const lang of ['fr', 'en'] as const) {
 
     test('a un seul h1 : le nom, avec rôle et école dans la langue', async ({ page }) => {
       await expect(page.getByRole('heading', { level: 1 })).toHaveText('Paul Perigault');
-      await expect(page.getByText(COPY[lang].role, { exact: true })).toBeVisible();
+      const hero = page.locator('section[aria-labelledby="hero-title"]');
+      await expect(hero.getByText(COPY[lang].role, { exact: true })).toBeVisible();
       await expect(page.getByText(COPY[lang].school)).toBeVisible();
     });
 
@@ -50,10 +51,11 @@ for (const lang of ['fr', 'en'] as const) {
       page,
     }) => {
       const photo = page.getByRole('img', { name: 'Paul Perigault' });
-      await expect(photo).toHaveAttribute('src', /\.webp$/);
-      // AVIF (≈ −47 %) servi en priorité, WebP en repli.
+      // `Photo` (design system) : AVIF servi en priorité, WebP en source, JPEG en repli de `<img>`.
+      await expect(photo).toHaveAttribute('src', /\.jpg$/);
+      await expect(page.locator('picture source[type="image/webp"]')).toHaveCount(1);
       const avif = page.locator('picture source[type="image/avif"]');
-      await expect(avif).toHaveAttribute('srcset', /\.avif$/);
+      await expect(avif).toHaveAttribute('srcset', /\.avif \d+w$/);
       await expect(photo).toHaveAttribute('width', '200');
       await expect(photo).toHaveAttribute('height', '200');
       await expect(photo).toHaveAttribute('fetchpriority', 'high');

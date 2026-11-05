@@ -1,7 +1,8 @@
 import { Clock, Effect } from 'effect';
+import { SITE } from '@/config/site';
 import type { Lang } from '@/domain/lang';
 import type { Project, ProjectsSnapshot } from '@/domain/project';
-import { newestUpdatedFirst } from '@/lib/projects';
+import { newestUpdatedFirst, withOverrides } from '@/lib/projects';
 import { BuildConfig } from './build-config';
 import { ContentRepository } from './content-repository';
 import { GithubClient } from './github-client';
@@ -15,7 +16,7 @@ const CONCURRENCY = 4;
  */
 export const loadProjects = (lang: Lang) =>
   Effect.gen(function* () {
-    const { featured } = yield* (yield* ContentRepository).projectsConfig(lang);
+    const { featured, descriptions } = yield* (yield* ContentRepository).projectsConfig(lang);
     const github = yield* GithubClient;
     const { strictData } = yield* BuildConfig;
 
@@ -29,6 +30,8 @@ export const loadProjects = (lang: Lang) =>
 
     const results = yield* Effect.forEach(featured, fetchOne, { concurrency: CONCURRENCY });
     const fetchedAt = new Date(yield* Clock.currentTimeMillis).toISOString();
-    const projects = newestUpdatedFirst(results.filter((project) => project !== null));
+    const overrides = { sites: SITE.projectSites, descriptions };
+    const found = results.filter((project) => project !== null);
+    const projects = newestUpdatedFirst(found.map((project) => withOverrides(project, overrides)));
     return { projects, fetchedAt } satisfies ProjectsSnapshot;
   }).pipe(Effect.withSpan('loadProjects', { attributes: { lang } }));

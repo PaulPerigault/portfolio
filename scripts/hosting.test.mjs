@@ -1,4 +1,4 @@
-// Hébergement : plus de Docker ni de nginx (ADR-0008) ; les en-têtes vivent dans public/_headers.
+// Hébergement : plus de Docker ni de nginx ; les en-têtes vivent dans public/_headers.
 // Plus aucun script shell : tout l'outillage est en Node, identique sous Windows, macOS et Linux.
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';

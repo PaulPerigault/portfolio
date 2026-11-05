@@ -1,6 +1,6 @@
 # ADR-0006 — Identité visuelle « CV d'abord »
 
-- **Statut** : accepté (2026-09-30)
+- **Statut** : remplacée par l'[ADR-0012](0012-charte-v2-design-system.md) (2026-11-04) ; acceptée le 2026-09-30
 - **Contexte** : la première charte (« papier et encre » : fond crème, titres serif système, accent sarcelle, étiquettes mono, sections numérotées « 01 — », pastilles-tags, fausse invite `paul@perigault`) évitait les défauts visibles des sites générés (dégradés, ombres, emoji) mais est devenue elle-même un gabarit reconnaissable. Sur la plupart des machines, `ui-serif` retombe sur Times : aucune identité typographique. La carte de partage, elle, était un dégradé sombre : le premier gabarit. Constats et preuves : `docs/audit-ia.md`, partie B1.
 - **Décision** : une page qui se lit comme un CV. Une seule famille auto-hébergée (Atkinson Hyperlegible Next), palette neutre et bleu outremer, titres de section à gauche, entrées séparées par des filets, technologies en texte simple, aucune numérotation, aucune étiquette mono ni majuscules espacées, feuille d'impression. Carte de partage et favicons générés depuis les mêmes sources (tokens, police, photo, `logo.svg`).
 - **Conséquences** :
