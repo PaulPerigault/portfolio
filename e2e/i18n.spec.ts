@@ -16,7 +16,8 @@ for (const [lang, expected] of Object.entries(EXPECTED)) {
         'content',
         expected.description,
       );
-      await expect(page.getByText(expected.role, { exact: true })).toBeVisible();
+      const hero = page.locator('section[aria-labelledby="hero-title"]');
+      await expect(hero.getByText(expected.role, { exact: true })).toBeVisible();
     });
 
     test("n'affiche aucun texte de l'autre langue", async ({ page }) => {

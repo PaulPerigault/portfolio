@@ -23,7 +23,8 @@ for (const lang of ['fr', 'en'] as const) {
 
     test('a un seul h1 : le nom, avec rôle et école dans la langue', async ({ page }) => {
       await expect(page.getByRole('heading', { level: 1 })).toHaveText('Paul Perigault');
-      await expect(page.getByText(COPY[lang].role, { exact: true })).toBeVisible();
+      const hero = page.locator('section[aria-labelledby="hero-title"]');
+      await expect(hero.getByText(COPY[lang].role, { exact: true })).toBeVisible();
       await expect(page.getByText(COPY[lang].school)).toBeVisible();
     });
 

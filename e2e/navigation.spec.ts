@@ -10,8 +10,16 @@ const SECTIONS = [
   'contact',
 ];
 const LABELS = {
-  fr: ['À propos', 'Expériences', 'Formation', 'Stack', 'Projets', 'Certifications', 'Contact'],
-  en: ['About', 'Experience', 'Education', 'Stack', 'Projects', 'Certifications', 'Contact'],
+  fr: [
+    'À propos',
+    'Expériences',
+    'Formation',
+    'Stack technique',
+    'Projets',
+    'Certifications',
+    'Contact',
+  ],
+  en: ['About', 'Experience', 'Education', 'Tech stack', 'Projects', 'Certifications', 'Contact'],
 } as const;
 const BACK_TO_TOP = { fr: 'Retour en haut', en: 'Back to top' } as const;
 const NAV_NAME = { fr: 'Navigation principale', en: 'Main navigation' } as const;

@@ -6,15 +6,15 @@
     "speciality": "Software Engineering major",
     "dateStart": "2024-09",
     "dateEnd": "2027-08",
-    "description": "Computer engineering degree, Software Engineering major."
+    "description": "Computer engineering programme, Software Engineering major."
   },
   {
     "id": "iut",
     "school": "IUT Paris Rives de Seine",
-    "degree": "Bachelor's degree in Computer Science (BUT)",
-    "speciality": "Secure application deployment",
+    "degree": "DUT in Computer Science",
+    "speciality": "Secure and communicating application deployment",
     "dateStart": "2022-09",
     "dateEnd": "2024-06",
-    "description": "Complete computer science training: web development, databases, networking, project management."
+    "description": "Two years of the BUT Computer Science curriculum, as an apprentice: web development, databases, networking, project management."
   }
 ]

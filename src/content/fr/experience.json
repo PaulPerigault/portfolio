@@ -2,11 +2,11 @@
   {
     "id": "wevii",
     "company": "WeVii",
-    "role": "Apprenti DevOps Cloud",
+    "role": "Alternant DevOps Cloud",
     "location": "Bordeaux (télétravail)",
     "dateStart": "2023-09",
     "dateEnd": null,
-    "description": "Développement d'applications RH en Java et Angular, R&D multicloud en Golang. Pipelines CI/CD, infrastructures Cloud AWS/GCP avec Terraform et Kubernetes. Sécurisation : Vault, SOPS, ArgoCD, monitoring Prometheus/Grafana.",
+    "description": "Développement d'applications RH en Java et Angular, R&D multicloud en Golang. Pipelines CI/CD, infrastructures Cloud AWS/GCP avec Terraform et Kubernetes. Déploiements GitOps avec ArgoCD, secrets avec Vault et SOPS, monitoring avec Prometheus et Grafana.",
     "tags": ["Go", "Angular", "Java", "Kubernetes", "Terraform", "AWS", "GCP", "ArgoCD"]
   },
   {
