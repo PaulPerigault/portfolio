@@ -53,6 +53,7 @@
     "@astrojs/sitemap": "^3.7.4",
     "@effect/platform": "^0.97.2",
     "@effect/platform-node": "^0.108.4",
+    "@paulperigault/astro": "0.1.0",
     "@paulperigault/css": "0.1.0",
     "@paulperigault/tokens": "0.1.0",
     "@tailwindcss/vite": "^4.3.3",

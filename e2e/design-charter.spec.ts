@@ -18,6 +18,7 @@ const allowedColors = (page: Page) =>
       '--pp-color-control',
       '--pp-color-accent',
       '--pp-color-on-accent',
+      '--pp-color-media-placeholder',
     ];
     const colors = ['rgba(0, 0, 0, 0)', ...tokens.map(resolve)];
     probe.remove();

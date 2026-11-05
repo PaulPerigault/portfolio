@@ -7,7 +7,7 @@ describe('FormField', () => {
     const html = await render(FormField, {
       props: { id: 'f-email', name: 'email', label: 'E-mail', type: 'email', maxlength: 254 },
     });
-    expect(html).toMatch(/<label for="f-email"[^>]*>E-mail<\/label>/);
+    expect(html).toMatch(/<label[^>]*for="f-email"[^>]*>E-mail<\/label>/);
     expect(html).toMatch(/<input[^>]*id="f-email"[^>]*type="email"/);
     expect(html).toContain('aria-describedby="f-email-error"');
     expect(html).toMatch(/<p id="f-email-error"[^>]*hidden/);
