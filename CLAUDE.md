@@ -192,7 +192,7 @@ Everything is in `.github/workflows/`; the site is **built once** and the **same
 
 - **No cookie, no analytics, nothing third-party when a page opens**; only `theme`/`lang` in `localStorage`, on user action (`e2e/privacy.spec.ts`).
 - **Single exception: the contact form** on `/fr/` and `/en/` — Turnstile on first `focusin`, then the Worker (`e2e/privacy-contact-form.spec.ts`: no cookie, site storage unchanged). Real-Turnstile measurement: `e2e/measure-turnstile.spec.ts`, opt-in `MEASURE_TURNSTILE=1`, never in CI.
-- Legal notice and privacy text: `src/content/{fr,en}/legal.json` (Schema `domain/legal.ts`, `LegalDocument.astro` on `/<lang>/legal/`, linked from the footer, `{email}`/`{domain}` filled by `lib/placeholders.ts`; same section ids in FR/EN). `e2e/legal.spec.ts` fails on any published `TODO`/`[À DÉCIDER]`/`[TO CHECK]`.
+- Legal notice and privacy text: `src/content/{fr,en}/legal.json` (Schema `domain/legal.ts`, `LegalDocument.astro` on `/<lang>/legal/`: title-left sections like `Section`, paragraphs in the design system `Prose`; linked from the footer, `{email}`/`{domain}` filled by `lib/placeholders.ts`; same section ids in FR/EN). `e2e/legal.spec.ts` fails on any published `TODO`/`[À DÉCIDER]`/`[TO CHECK]`.
 - Processors, measurements, retention, transfers, domain policy and processing register: `docs/compliance.md`. **Any tracker, form or third-party resource updates `legal.json`, the CSP and `docs/compliance.md` first.**
 
 ## SEO and AI visibility
