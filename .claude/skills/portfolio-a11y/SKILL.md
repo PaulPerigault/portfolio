@@ -11,7 +11,7 @@ Création ou modification d'un composant, d'un lien, d'un formulaire, d'un menu,
 
 ## Règles
 
-- Zéro violation axe sur `/fr/`, `/en/`, les styleguides et la 404, en clair et en sombre, mobile et bureau
+- Zéro violation axe sur `/fr/`, `/en/`, les mentions légales et la 404, en clair et en sombre, mobile et bureau
   (`e2e/accessibility.spec.ts`, étiquettes `wcag2a` à `wcag22aa`). Ajouter une page ou un état interactif à ce test.
 - Tout contrôle a un nom accessible : texte visible, `aria-label` ou texte masqué (`VisuallyHidden`). Le libellé
   existe dans les deux `ui.json`.

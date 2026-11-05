@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { expectedSecurityHeaders } from './lib/expected-headers.mjs';
 import { buildChecks, runChecks } from './lib/live-checks.mjs';
 
-// Les 8 en-têtes de sécurité exigés en production, valeurs exactes de public/_headers (#208).
+// Les 8 en-têtes de sécurité exigés en production, valeurs exactes de public/_headers.
 const EXPECTED = expectedSecurityHeaders(readFileSync('public/_headers', 'utf8'));
 const SITES = { domain: 'example.fr', alias: 'example.dev', expectedHeaders: EXPECTED };
 const SECURE = Object.fromEntries(EXPECTED);

@@ -1,7 +1,7 @@
 // GitHub refuse les noms de secrets Actions qui commencent par `GITHUB_` (HTTP 422). Seul
 // `GITHUB_TOKEN`, fourni par Actions, peut être référencé sous ce préfixe. Le jeton local de l'IaC
 // (`GITHUB_IAC_TOKEN`, fichier de secrets) n'est jamais un secret Actions ; celui de la CI se
-// nomme `IAC_GITHUB_READONLY_TOKEN` (#255).
+// nomme `IAC_GITHUB_READONLY_TOKEN`.
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';

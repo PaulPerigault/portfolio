@@ -61,7 +61,7 @@ describe('workflows GitHub Actions (DevSecOps)', () => {
       expect(text(name), name).toContain('uses: ./.github/workflows/build.yml');
     }
     expect(text('e2e.yml')).toContain('name: site');
-    // Seule cible de production : Cloudflare Pages, après les e2e (GitHub Pages retiré, #208).
+    // Seule cible de production : Cloudflare Pages, après les e2e.
     expect(text('deploy.yml')).toMatch(/needs: e2e[\s\S]*wrangler pages deploy dist/);
     expect(text('deploy.yml')).not.toMatch(/upload-pages-artifact|deploy-pages@|pages: write/);
     // Sans cette option, l'artefact `site` exclut `.well-known/` (security.txt en 404).

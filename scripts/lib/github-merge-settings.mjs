@@ -1,4 +1,4 @@
-// Faux écart du plan de infra/github en CI (#262, #268) : avec le jeton en lecture seule, l'API REST
+// Faux écart du plan de infra/github en CI : avec le jeton en lecture seule, l'API REST
 // lit vides les 8 réglages de fusion de chaque dépôt, et le plan veut les « remettre ». Ce module ne
 // qualifie de faux écart que le cas strict où les seuls changements du plan portent sur ces 8
 // attributs de `github_repository` (un ou plusieurs dépôts), et où GraphQL (lisible en lecture

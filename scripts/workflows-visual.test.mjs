@@ -1,4 +1,4 @@
-// Régression visuelle (#201) : le job CI `visual` et `npm run test:visual:update` utilisent la même
+// Régression visuelle : le job CI `visual` et `npm run test:visual:update` utilisent la même
 // image Playwright, épinglée par digest, dont la version suit @playwright/test (sinon les pixels et
 // le navigateur divergent, et toutes les captures cassent à la mise à jour suivante).
 import { readFileSync } from 'node:fs';
