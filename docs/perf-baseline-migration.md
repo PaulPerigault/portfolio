@@ -117,6 +117,27 @@ cherché l'origine de la hausse du CSS ni de la photo : la mesure ne l'établit 
 1 023–1 033 ms avant. FCP = LCP, comme avant. Scores, CLS et TBT sont inchangés ; le LCP varie de 6 à 7 ms, dans
 l'étendue des exécutions.
 
+### Relevé final (2026-11-05, `develop` au commit 807b55f)
+
+Après les corrections de textes (#328) et la carte « design-system » de la section Projets (#336). Mêmes machine, outils
+et méthode que le relevé précédent (build sans `PUBLIC_TURNSTILE_SITEKEY`, serveur local sans compression, 3 exécutions,
+médiane). Seul le HTML change : le CSS, le JS, la police, la photo et le logo sont identiques.
+
+| Mesure (`/fr/`) | Référence (5fce29c) | Après migration (2aec980) | Relevé final (807b55f) |
+| --- | ---: | ---: | ---: |
+| HTML, octets bruts / gzip | 44 525 / 11 099 | 60 295 / 13 805 | 61 730 / 13 995 |
+| dont JSON-LD | 3 562 / 1 299 | 3 562 / 1 299 | 3 848 / 1 334 |
+| Total, octets bruts / gzip | 86 181 / 51 005 | 104 650 / 56 410 | 106 085 / 56 600 |
+| Requêtes | 9 | 9 | 9 |
+| Poids transféré Lighthouse (octets) | 87 832 | 106 302 | 107 737 |
+| LCP médian (ms) | 1 030 | 1 037 | 1 029 |
+
+En EN : total 105 646 / 56 443 octets bruts / gzip, poids transféré 107 298 octets, LCP médian 1 044 ms. Lighthouse
+mobile : performance, accessibilité, bonnes pratiques et SEO à 100 en FR et en EN, CLS 0, TBT 0 ms. Étendue du LCP sur
+les 3 exécutions : 1 026–1 032 ms (FR), 1 042–1 044 ms (EN). Un écart de quelques millisecondes n'est pas significatif.
+La hausse du HTML (+1 435 octets bruts en FR) vient des textes de la PR #328 et de la carte de la PR #336 (+275 octets
+de JSON-LD : un projet de plus dans la liste). Je n'ai pas séparé les deux parts.
+
 ### Contrôles mobiles et bureau
 
 Aucun débordement horizontal et aucun texte coupé, en FR et EN, clair et sombre, 390 × 844 et 1280 × 800. Quatre
