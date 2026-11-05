@@ -138,6 +138,28 @@ les 3 exécutions : 1 026–1 032 ms (FR), 1 042–1 044 ms (EN). Un écart de q
 La hausse du HTML (+1 435 octets bruts en FR) vient des textes de la PR #328 et de la carte de la PR #336 (+275 octets
 de JSON-LD : un projet de plus dans la liste). Je n'ai pas séparé les deux parts.
 
+### Relevé après mises à jour des dépendances (2026-11-05, `develop` au commit e984e63)
+
+Après la ponctuation des contenus (#340) et les mises à jour mineures d'astro, tailwindcss, @eslint/js et knip (#344).
+Même méthode (build sans `PUBLIC_TURNSTILE_SITEKEY`, serveur local sans compression, 3 exécutions, médiane).
+
+| Mesure (`/fr/`) | Relevé final (807b55f) | Après mises à jour (e984e63) |
+| --- | ---: | ---: |
+| HTML, octets bruts / gzip | 61 730 / 13 995 | 61 838 / 14 013 |
+| dont CSS inliné | 31 052 / 6 794 | 31 110 / 6 796 |
+| dont JSON-LD | 3 848 / 1 334 | 3 850 / 1 334 |
+| Total, octets bruts / gzip | 106 085 / 56 600 | 106 193 / 56 618 |
+| Requêtes | 9 | 9 |
+| Poids transféré Lighthouse (octets) | 107 737 | 107 845 |
+| LCP médian (ms) | 1 029 | 1 044 |
+
+En EN : total 105 772 / 56 461 octets bruts / gzip, poids transféré 107 424 octets, LCP médian 1 054 ms. Performance,
+accessibilité, bonnes pratiques et SEO à 100, CLS 0, TBT 0 ms en FR et EN. Le CSS gagne 58 octets avec tailwindcss 4.3.4 ;
+le reste de la hausse vient des textes (titre en « | », apostrophes courbes). Étendue du LCP : 1 012-1 045 ms (FR),
+1 046-1 057 ms (EN) ; l'écart de 15 ms avec le relevé précédent reste dans l'étendue des exécutions. Aucun débordement
+horizontal ni texte coupé ; les mêmes quatre éléments de moins de 44 px qu'avant (lien d'évitement hors écran, trois liens
+dans un paragraphe).
+
 ### Contrôles mobiles et bureau
 
 Aucun débordement horizontal et aucun texte coupé, en FR et EN, clair et sombre, 390 × 844 et 1280 × 800. Quatre
