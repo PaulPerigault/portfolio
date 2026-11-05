@@ -2,6 +2,7 @@
 import type { Lang } from '@/domain/lang';
 import VisuallyHidden from '@/components/ui/VisuallyHidden.astro';
 import { useTranslations } from '@/lib/i18n';
+import { pathForLang } from '@/lib/seo';
 
 interface Props {
   lang: Lang;
@@ -10,7 +11,7 @@ interface Props {
 const { lang } = Astro.props;
 const other: Lang = lang === 'fr' ? 'en' : 'fr';
 const t = useTranslations(lang);
-const href = Astro.url.pathname.replace(`/${lang}/`, `/${other}/`);
+const href = pathForLang(Astro.url.pathname, lang, other);
 ---
 
 <a
