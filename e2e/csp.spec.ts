@@ -76,7 +76,7 @@ test.describe('politique CSP', () => {
 for (const lang of ['fr', 'en'] as const) {
   test.describe(`zéro violation CSP (${lang})`, () => {
     test('au chargement de chaque type de page', async ({ page }) => {
-      for (const path of [`/${lang}/`, `/${lang}/styleguide/`, '/introuvable/']) {
+      for (const path of [`/${lang}/`, `/${lang}/legal/`, '/introuvable/']) {
         await page.goto(path);
         await page.waitForLoadState('networkidle');
         expect(await violations(page), path).toEqual([]);
