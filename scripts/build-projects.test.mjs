@@ -89,7 +89,7 @@ describe('projets GitHub récupérés au build', () => {
       expect(result.status).toBe(0);
       expect(result.output).toContain('GitHub indisponible');
       expect(html(result.outDir, 'fr')).toContain('data-state="empty"');
-      expect(html(result.outDir, 'en')).toContain('No project to show right now.');
+      expect(html(result.outDir, 'en')).toContain('No project to show.');
     },
     BUILD_TIMEOUT_MS,
   );
