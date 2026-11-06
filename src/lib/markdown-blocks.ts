@@ -46,9 +46,15 @@ export const certificationLine = (cert: Certification, lang: Lang, t: T): string
   return `- **${cert.name}**, ${cert.issuer}${status ? ` (${status})` : ''}`;
 };
 
-/** Texte d'un dépôt GitHub sur une seule ligne, crochets échappés : une puce, un seul lien. */
+/**
+ * Texte d'un dépôt GitHub sur une seule ligne : une puce, un seul lien. L'antislash est échappé
+ * avec les crochets, dans la même passe, pour qu'un `\` du texte ne défasse pas l'échappement.
+ */
 export const inlineText = (value: string): string =>
-  value.replace(/\s+/g, ' ').trim().replace(/[[\]]/g, '\\$&');
+  value
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/[\\[\]]/g, '\\$&');
 
 export const projectLine = (project: ProjectsSnapshot['projects'][number]): string => {
   const details = [project.language, ...visibleTopics(project.topics)]

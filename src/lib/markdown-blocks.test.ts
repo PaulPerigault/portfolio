@@ -23,6 +23,11 @@ describe('inlineText', () => {
   it('échappe les crochets', () => {
     expect(inlineText('[lien](https://x.example)')).toBe('\\[lien\\](https://x.example)');
   });
+
+  it('échappe l’antislash, pour qu’il ne défasse pas l’échappement des crochets', () => {
+    expect(inlineText('a\\[b')).toBe('a\\\\\\[b');
+    expect(inlineText('fin\\')).toBe('fin\\\\');
+  });
 });
 
 describe('projectLine', () => {
