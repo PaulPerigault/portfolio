@@ -35,7 +35,8 @@ describe('lastmodFor', () => {
   });
 
   it('lit [lang] littéralement : src/pages/l/index.astro ne date pas l’accueil', () => {
-    // Sans :(literal), « [lang] » serait aussi un motif qui accepte le dossier « l ».
+    // Sans :(literal), « [lang] » serait aussi un motif qui accepte le dossier « l »
+    // (le commit de fixture de src/pages/l/index.astro date de 2026-05).
     for (const path of ['/fr/', '/en/']) expect(lastmodFor(path, repo)).not.toMatch(/^2026-05/);
   });
 

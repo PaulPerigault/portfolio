@@ -53,10 +53,10 @@ for (const lang of ['fr', 'en'] as const) {
         lang === 'fr' ? 'Alternant DevOps Cloud' : 'Cloud DevOps Apprentice',
       );
       await expect(titles.last()).toHaveText(
-        lang === 'fr' ? 'Piscine — formation intensive' : 'Piscine — intensive bootcamp',
+        lang === 'fr' ? 'Piscine : formation intensive' : 'Piscine: intensive bootcamp',
       );
       await expect(region.locator('li').first()).toContainText(
-        lang === 'fr' ? 'sept. 2023 — Présent' : 'Sep 2023 — Present',
+        lang === 'fr' ? 'sept. 2023 - Présent' : 'Sep 2023 - Present',
       );
       await expect(region.locator('time').first()).toHaveAttribute('datetime', '2023-09');
       const [latest] = source as unknown as { tags: string[] }[];
@@ -75,7 +75,7 @@ for (const lang of ['fr', 'en'] as const) {
           : 'ESIEA Paris · Software Engineering major',
       );
       await expect(region.locator('li').first()).toContainText(
-        lang === 'fr' ? 'sept. 2024 — août 2027' : 'Sep 2024 — Aug 2027',
+        lang === 'fr' ? 'sept. 2024 - août 2027' : 'Sep 2024 - Aug 2027',
       );
       await expect(titles).toHaveCount(loadContent<Entry[]>(lang, 'formation').length);
     });

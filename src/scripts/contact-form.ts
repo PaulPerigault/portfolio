@@ -42,10 +42,23 @@ async function submit(form: HTMLFormElement, messages: Messages, widget: Promise
   button.disabled = false;
 }
 
+/** Les liens « contact » du hero atteignent l'ancre, puis le focus va sur le premier champ. */
+function focusFormFromLinks(form: HTMLFormElement): void {
+  const first = form.querySelector<HTMLElement>('input, textarea');
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('[data-focus-contact]')) {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      window.location.hash = link.hash;
+      first?.focus();
+    });
+  }
+}
+
 export const initContactForm = (): void => {
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
   const container = form?.querySelector<HTMLElement>('[data-turnstile-container]');
   if (!form || !container) return;
+  focusFormFromLinks(form);
   const { turnstileSrc = '', sitekey = '', lang = 'fr', messages = '{}' } = form.dataset;
   let widget: Promise<Widget | null> = Promise.resolve(null);
   // Turnstile seulement quand le visiteur commence à remplir le formulaire, jamais au chargement.

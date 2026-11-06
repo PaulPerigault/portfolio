@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-const NEW_TAB = { fr: "s'ouvre dans un nouvel onglet", en: 'opens in a new tab' } as const;
+const NEW_TAB = { fr: 's’ouvre dans un nouvel onglet', en: 'opens in a new tab' } as const;
 
 // Les primitives n'ont plus de vitrine : leurs contrats sont vérifiés sur les vraies pages.
 for (const lang of ['fr', 'en'] as const) {

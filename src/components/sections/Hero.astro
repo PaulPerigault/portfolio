@@ -12,7 +12,8 @@ interface Props {
   lang: Lang;
 }
 
-const t = useTranslations(Astro.props.lang);
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 const newTab = t('a11y.new_tab');
 ---
 
@@ -34,7 +35,9 @@ const newTab = t('a11y.new_tab');
         >
           {t('hero.cta_cv')}
         </ButtonLink>
-        <ButtonLink href={`mailto:${SITE.email}`}>{t('hero.cta_contact')}</ButtonLink>
+        <ButtonLink href={`/${lang}/#contact`} focusContact>
+          {t('hero.cta_contact')}
+        </ButtonLink>
         <ButtonLink href={SITE.githubUrl} newTabLabel={newTab}>
           {t('hero.cta_github')}
         </ButtonLink>

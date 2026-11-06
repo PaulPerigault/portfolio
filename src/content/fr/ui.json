@@ -1,7 +1,7 @@
 {
   "seo": {
-    "title": "Paul Perigault — Alternant DevOps Cloud, ESIEA Paris",
-    "description": "Paul Perigault, alternant DevOps Cloud chez WeVii, étudiant ingénieur (Software Engineering) à l'ESIEA Paris. CI/CD, Terraform, Kubernetes, ArgoCD, AWS, GCP."
+    "title": "Paul Perigault | Alternant DevOps Cloud, ESIEA Paris",
+    "description": "Paul Perigault, alternant DevOps Cloud chez WeVii, étudiant ingénieur (Software Engineering) à l’ESIEA Paris. CI/CD, Terraform, Kubernetes, ArgoCD, AWS, GCP."
   },
   "nav": {
     "about": "À propos",
@@ -24,11 +24,11 @@
     "cta_contact": "Me contacter",
     "cta_github": "GitHub",
     "cta_linkedin": "LinkedIn",
-    "summary": "Je suis Paul Perigault, alternant DevOps Cloud chez WeVii et étudiant en cycle ingénieur à l'ESIEA Paris, majeure Software Engineering. Je développe des applications RH en Java et Angular, je fais de la R&D multicloud en Go et je travaille sur les pipelines CI/CD et les déploiements AWS et GCP."
+    "summary": "Je suis Paul Perigault, alternant DevOps Cloud chez WeVii et étudiant en cycle ingénieur à l’ESIEA Paris, majeure Software Engineering. Je développe des applications RH en Java et Angular, je fais de la R&D multicloud en Go et je travaille sur les pipelines CI/CD et les déploiements AWS et GCP."
   },
   "about": {
     "title": "À propos",
-    "body": "En alternance chez WeVii depuis septembre 2023, en parallèle du cycle ingénieur à l'ESIEA Paris. Je n'interviens pas encore en école et je souhaite le faire.",
+    "body": "En alternance chez WeVii depuis septembre 2023, en parallèle du cycle ingénieur à l’ESIEA Paris. Je n’interviens pas encore en école et je souhaite le faire.",
     "location": "Paris, France",
     "location_label": "Lieu"
   },
@@ -47,8 +47,8 @@
     "view_code": "Code",
     "view_site": "Site du projet",
     "updated": "Mis à jour",
-    "fetched_at": "Données GitHub —",
-    "empty": "Aucun projet à afficher pour le moment."
+    "fetched_at": "Données GitHub de",
+    "empty": "Aucun projet à afficher."
   },
   "certifications": {
     "title": "Certifications",
@@ -94,7 +94,7 @@
     "en": "English"
   },
   "a11y": {
-    "new_tab": "s'ouvre dans un nouvel onglet"
+    "new_tab": "s’ouvre dans un nouvel onglet"
   },
   "footer": {
     "design_system": "Design system",

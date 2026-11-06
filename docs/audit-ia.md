@@ -1,5 +1,7 @@
 # Audit : les défauts des sites « vibe codés » par IA, puis analyse de ce site
 
+> Statut : actif. La partie A (défauts typiques) sert de critères aux skills `portfolio-*` et à l'ADR-0006 ; l'analyse du site (partie B) décrit l'état du 2026-09-30, avant l'ADR-0012.
+
 > Rapport du 2026-09-30, fait sur le site tel que construit depuis `develop` (captures Chromium en clair, sombre et mobile ; HTML, JSON-LD, sitemap et `robots.txt` lus dans `dist/`). Le site en ligne n'est pas joignable depuis l'environnement d'audit : rien ici n'a été mesuré sur `paulperigault.fr` lui-même. Les jugements de design sont des jugements ; les mesures sont données comme telles.
 
 ## Verdict en cinq lignes

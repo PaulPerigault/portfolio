@@ -12,15 +12,26 @@ interface Props {
   newTabLabel?: string;
   /** Nom du fichier proposé au téléchargement (lien vers un fichier du même site). */
   download?: string;
+  /** Lien vers le formulaire de contact : le script y place le focus quand le formulaire existe. */
+  focusContact?: boolean;
   class?: string;
 }
 
-const { href, variant = 'secondary', icon, newTabLabel, download, class: className } = Astro.props;
+const {
+  href,
+  variant = 'secondary',
+  icon,
+  newTabLabel,
+  download,
+  focusContact,
+  class: className,
+} = Astro.props;
 ---
 
 <a
   href={href}
   download={download}
+  data-focus-contact={focusContact ? '' : undefined}
   {...linkAttributes(href)}
   class:list={[BUTTON_BASE, BUTTON_VARIANT[variant], className]}
 >

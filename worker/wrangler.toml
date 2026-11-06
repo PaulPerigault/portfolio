@@ -15,7 +15,8 @@ preview_urls = false
 enabled = false
 
 # Limitation de débit par adresse IP, dans le Worker (worker/src/rate-limit.ts) : 5 envois par
-# minute (RATE_LIMIT, worker/src/limits.ts). Complète la règle de limitation de la zone, sans la remplacer.
+# minute (RATE_LIMIT, worker/src/limits.ts). Complète la règle de limitation de la zone, sans
+# la remplacer.
 [[ratelimits]]
 name = "CONTACT_RATE_LIMITER"
 namespace_id = "1001"

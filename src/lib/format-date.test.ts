@@ -16,12 +16,12 @@ describe('formatYearMonth', () => {
 
 describe('formatPeriod', () => {
   it('affiche « Présent » pour une période en cours', () => {
-    expect(formatPeriod('2023-09', null, 'fr', 'Présent')).toBe('sept. 2023 — Présent');
-    expect(formatPeriod('2023-09', null, 'en', 'Present')).toBe('Sep 2023 — Present');
+    expect(formatPeriod('2023-09', null, 'fr', 'Présent')).toBe('sept. 2023 - Présent');
+    expect(formatPeriod('2023-09', null, 'en', 'Present')).toBe('Sep 2023 - Present');
   });
 
   it('affiche une plage bornée', () => {
-    expect(formatPeriod('2022-09', '2024-06', 'en', 'Present')).toBe('Sep 2022 — Jun 2024');
+    expect(formatPeriod('2022-09', '2024-06', 'en', 'Present')).toBe('Sep 2022 - Jun 2024');
   });
 
   it('affiche une seule date quand début et fin coïncident', () => {

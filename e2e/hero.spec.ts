@@ -34,7 +34,7 @@ for (const lang of ['fr', 'en'] as const) {
       await expect(cv).toHaveAttribute('download', 'cv-paul-perigault.pdf');
 
       const contact = page.getByRole('link', { name: COPY[lang].contact });
-      await expect(contact).toHaveAttribute('href', 'mailto:contact@paulperigault.fr');
+      await expect(contact).toHaveAttribute('href', `/${lang}/#contact`);
       await expect(contact).not.toHaveAttribute('target', /.+/);
 
       await expect(page.getByRole('link', { name: /^GitHub/ }).first()).toHaveAttribute(
@@ -70,7 +70,7 @@ for (const lang of ['fr', 'en'] as const) {
         await page.keyboard.press('Tab');
         order.push(await page.evaluate(() => (document.activeElement as HTMLAnchorElement).href));
       }
-      expect(order[0]).toMatch(/^mailto:/);
+      expect(order[0]).toMatch(new RegExp(`/${lang}/#contact$`));
       expect(order[1]).toContain('github.com');
       expect(order[2]).toContain('linkedin.com');
     });

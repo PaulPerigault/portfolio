@@ -1,5 +1,7 @@
 # Audit de sécurité (lot 8, #178)
 
+> Statut : actif. Journal des constats et des raisons des décisions (par exemple W2, S5), conservé comme référence.
+
 Audit du 2026-10-19, de bout en bout : Worker du formulaire, CSP et en-têtes, garde-fous de secrets et de l'assistant, workflows, dépendances. Méthode : deux audits en lecture seule par des sous-agents distincts (Worker ; site, garde-fous et chaîne d'approvisionnement), puis **chaque constat contre-vérifié par un troisième sous-agent qui ne l'a pas produit**, avec sondes exécutées. Un constat confirmé dans le code donne d'abord un test qui échoue, puis le correctif.
 
 ## Constats

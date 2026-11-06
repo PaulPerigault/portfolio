@@ -16,6 +16,7 @@ Brique autonome : un Worker Cloudflare joignable sur `contact.paulperigault.dev`
 | Preflight `OPTIONS` d'une origine autorisée                  | 204    | —                                                          |
 | JSON invalide, flux du corps interrompu ou champs invalides  | 400    | `{ "ok": false, "error": "invalid", "fields": ["email"] }` |
 | Origine absente ou non autorisée                             | 403    | `{ "ok": false, "error": "forbidden" }`                    |
+| Chemin autre que `/`                                         | 404    | `{ "ok": false, "error": "not_found" }`                    |
 | Jeton Turnstile refusé                                       | 403    | `{ "ok": false, "error": "challenge" }`                    |
 | Autre méthode                                                | 405    | `{ "ok": false, "error": "method" }` + `Allow`             |
 | Corps > 32 Ko                                                | 413    | `{ "ok": false, "error": "too_large" }`                    |
@@ -28,8 +29,8 @@ Les erreurs sont génériques : un code stable que le formulaire traduit, jamais
 ## Choix
 
 - **CORS strict** : origines exactes lues dans `ALLOWED_ORIGINS` (`wrangler.toml`), jamais `*` (une valeur `*` est ignorée). `www.paulperigault.fr` redirige vers l'apex : non autorisé. `localhost` seulement via `.dev.vars`.
-- **Ordre des contrôles** (`src/handler.ts`) : méthode, origine, débit (binding `CONTACT_RATE_LIMITER`, 5 envois par minute et par IP, `src/rate-limit.ts` ; sans binding, sans IP ou en erreur, rien n'est bloqué), type, taille (en flux, sans faire confiance à `Content-Length`), JSON, piège, champs, Turnstile, envoi. Le piège répond 200 pour ne rien apprendre au robot.
-- **Champs** : aucun caractère de contrôle (Unicode Cc) dans le nom ni dans l'adresse ; le nom, repris dans le sujet, refuse aussi les caractères de mise en forme invisibles (Cf : inversion de sens, largeur nulle) et les séparateurs Unicode de ligne ou de paragraphe.
+- **Ordre des contrôles** (`src/handler.ts`) : chemin (`/` seulement), méthode, origine, débit (binding `CONTACT_RATE_LIMITER`, 5 envois par minute et par IP, préfixe /64 pour une adresse IPv6, `src/rate-limit.ts` ; sans binding, sans IP ou en erreur, rien n'est bloqué), type, taille (en flux, sans faire confiance à `Content-Length`), JSON, piège, champs, Turnstile, envoi. Le piège répond 200 pour ne rien apprendre au robot.
+- **Champs** : aucun caractère de contrôle (Unicode Cc) dans le nom ni dans l'adresse ; le nom (repris dans le sujet) et l'adresse (`reply_to`) refusent aussi les caractères de mise en forme invisibles (Cf : inversion de sens, largeur nulle) et les séparateurs Unicode de ligne ou de paragraphe. Type de contenu : `application/json` exactement (paramètre `charset` admis).
 - **Turnstile** : seul un refus explicite (`success: false`) donne `challenge` ; une erreur HTTP de `siteverify` est un service indisponible (502). Appels sortants bornés à 5 s (`UPSTREAM_TIMEOUT_MS`).
 - **Minimisation** : `siteverify` sans `remoteip` ; message en texte brut (rien à échapper) ; `reply_to` = visiteur ; `observability` désactivée ; aucun `console`.
 - **Dépendances injectées** : `createHandler({ fetch })` ; seul `src/index.ts` branche le vrai `fetch`. Les tests utilisent un faux `fetch` (`src/test/fakes.ts`), sans réseau.
@@ -46,7 +47,7 @@ Développement local : copier `.dev.vars.example` en `.dev.vars` et le remplir (
 
 ## Secrets et déploiement
 
-Secrets : `RESEND_API_KEY`, `TURNSTILE_SECRET`. Jamais dans `wrangler.toml` ni dans le dépôt. Le domaine personnalisé, le widget Turnstile et la répartition Terraform / Wrangler sont décrits dans `infra/` (issue #138) ; le déploiement CI dans #139.
+Secrets : `RESEND_API_KEY`, `TURNSTILE_SECRET`. Jamais dans `wrangler.toml` ni dans le dépôt. Le domaine personnalisé, le widget Turnstile et la répartition Terraform / Wrangler sont décrits dans `infra/` ; le déploiement CI est `.github/workflows/deploy-worker.yml`.
 
 ## Supprimer cette brique
 

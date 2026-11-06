@@ -15,8 +15,7 @@ Dès qu'un changement doit aboutir dans `develop` : code, contenu, documentation
   `feat|fix|chore|docs|ci|test/<n°>-<slug>` depuis `develop` à jour (`CLAUDE.md`, « Git workflow »).
 - Une PR par lot, vers `develop`, avec `Closes #n` (ou `Refs #n` si l'issue reste ouverte), selon
   `.github/PULL_REQUEST_TEMPLATE.md`.
-- Corps de PR de 90 colonnes au plus, mesuré avant l'ouverture : corriger après coup oblige à fermer puis rouvrir
-  (`docs/passation-portfolio.md`).
+- Corps de PR de 90 colonnes au plus, mesuré avant l'ouverture : corriger après coup oblige à fermer puis rouvrir.
 - Commits Conventional Commits, sujet en minuscules, 72 caractères au plus (`commitlint.config.mjs`).
 - Fichiers stagés un par un avec `git add <fichier>`.
 - Toute fonctionnalité apporte un test Playwright et une ligne dans `docs/test-matrix.md` (`npm run check:matrix`).
@@ -42,7 +41,7 @@ Dès qu'un changement doit aboutir dans `develop` : code, contenu, documentation
 
 ## Procédure
 
-1. Lire l'issue, `CLAUDE.md` et le document de passation du lot.
+1. Lire l'issue et `CLAUDE.md`.
 2. Créer la branche, écrire le changement, ajouter la ligne de matrice si une fonctionnalité naît.
 3. `npm run guard`, puis `npm run verify` avant le push (le hook `pre-push` le relance).
 4. Mesurer le corps de la PR (colonnes), vérifier qu'il ne cite aucun outil, ouvrir la PR vers `develop`.
@@ -51,6 +50,6 @@ Dès qu'un changement doit aboutir dans `develop` : code, contenu, documentation
 
 ## Sources du dépôt
 
-- `CLAUDE.md` (Git workflow, Working rules, CI/CD), `docs/passation-portfolio.md`
+- `CLAUDE.md` (Git workflow, Working rules, CI/CD)
 - `.github/PULL_REQUEST_TEMPLATE.md`, `.github/ISSUE_TEMPLATE/`
 - `docs/test-matrix.md`, `scripts/check-test-matrix.mjs`, `scripts/guard-pr-merge.mjs`

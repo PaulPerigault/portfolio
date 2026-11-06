@@ -21,6 +21,7 @@ describe('CORS', () => {
     expect(response.headers.get('Access-Control-Allow-Origin')).toBe(SITE_ORIGIN);
     expect(response.headers.get('Access-Control-Allow-Methods')).toBe('POST, OPTIONS');
     expect(response.headers.get('Vary')).toBe('Origin');
+    expect(response.headers.get('Access-Control-Max-Age')).toBe('7200');
   });
 
   it.each([

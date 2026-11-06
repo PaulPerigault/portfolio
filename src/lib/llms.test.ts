@@ -38,7 +38,7 @@ beforeAll(async () => {
 
 describe('profileMarkdown', () => {
   it("énonce l'entité en tête : nom, métier, employeur, école", () => {
-    expect(fr.split('\n')[0]).toBe('# Paul Perigault — Alternant DevOps Cloud');
+    expect(fr.split('\n')[0]).toBe('# Paul Perigault | Alternant DevOps Cloud');
     expect(fr).toContain('> Je suis Paul Perigault, alternant DevOps Cloud chez WeVii');
     expect(fr).toContain('ESIEA Paris');
   });
@@ -60,9 +60,9 @@ describe('profileMarkdown', () => {
   });
 
   it('localise dates, statuts et typographie', () => {
-    expect(fr).toContain('*sept. 2023 — Présent*');
+    expect(fr).toContain('*sept. 2023 - Présent*');
     expect(fr).toContain('(En cours)');
-    expect(en).toContain('*Sep 2023 — Present*');
+    expect(en).toContain('*Sep 2023 - Present*');
     expect(en).toContain('- Email: contact@paulperigault.fr');
     expect(fr).toContain('- E-mail : contact@paulperigault.fr');
   });
@@ -85,7 +85,7 @@ describe('llms', () => {
 
   it('llms-full contient les deux profils', async () => {
     const both = llmsFull([content, await profile('en', [])]);
-    expect(both).toContain('# Paul Perigault — Alternant DevOps Cloud');
-    expect(both).toContain('# Paul Perigault — Cloud DevOps Apprentice');
+    expect(both).toContain('# Paul Perigault | Alternant DevOps Cloud');
+    expect(both).toContain('# Paul Perigault | Cloud DevOps Apprentice');
   });
 });

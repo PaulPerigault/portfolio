@@ -50,7 +50,7 @@ for (const lang of ['fr', 'en'] as const) {
 
     test('le titre, la description et le résumé désignent la même personne', async ({ page }) => {
       await page.goto(`/${lang}/`);
-      await expect(page).toHaveTitle(new RegExp(`Paul Perigault — ${ROLE[lang]}`));
+      await expect(page).toHaveTitle(new RegExp(`Paul Perigault | ${ROLE[lang]}`));
       const description = await page.locator('meta[name="description"]').getAttribute('content');
       expect(description).toContain('Paul Perigault');
       expect(description).toContain('WeVii');

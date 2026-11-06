@@ -87,3 +87,11 @@ describe('workflow gitleaks-watch.yml', () => {
     );
   });
 });
+
+describe('format de version', () => {
+  it('refuse une étiquette qui n’est pas x.y.z, sans rien écrire', async () => {
+    const { calls, deps } = fakeGithub({ latest: '9.0.0](x)\n```' });
+    await expect(watchGitleaks(deps)).rejects.toThrow(/x\.y\.z/);
+    expect(calls.some((call) => call.method === 'POST')).toBe(false);
+  });
+});

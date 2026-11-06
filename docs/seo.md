@@ -5,9 +5,8 @@ Cible : Google Search (indexation, résultats enrichis, Core Web Vitals). Régla
 ## 1. Domaines et canonicalisation
 
 - **Domaine canonique : `https://paulperigault.fr`**, sans `www`, défini une fois dans `astro.config.mjs` (`site`) et `src/config/site.ts` (`SITE.domain`). Chaque page indexable porte un `<link rel="canonical">` absolu vers ce domaine, calculé à partir du chemin (jamais de `window.location`).
-- **Limite de GitHub Pages** : un site n'a qu'un domaine personnalisé. La documentation de GitHub indique : « The CNAME file can contain only one domain. To point multiple domains to your site, you must set up a redirect through your DNS provider », avec une seule exception, `www`, redirigé automatiquement vers l'apex quand ses enregistrements DNS existent ([dépannage des domaines](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/troubleshooting-custom-domains-and-github-pages), [domaines personnalisés](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages)).
-- **Solution retenue** : aucun autre domaine ne sert le contenu, donc pas de contenu dupliqué entre domaines.
-  - `www.paulperigault.fr` → apex : redirection native de GitHub Pages.
+- **Un seul hôte** : Cloudflare Pages sert le contenu sur `paulperigault.fr` seulement ; les autres noms redirigent en 301 (ci-dessous), ce qui évite tout contenu dupliqué entre domaines.
+  - `www.paulperigault.fr` → apex en **301** : règle de redirection Cloudflare (module `canonical-redirect`, `docs/infra.md`).
   - `paulperigault.dev` et `www.paulperigault.dev` → `https://paulperigault.fr` en **301**, chemin et paramètres conservés, par une _Redirect Rule_ Cloudflare. Un redirecteur HTTP de registrar ne suffit pas : `.dev` est préchargé en HSTS, les navigateurs n'y vont qu'en HTTPS (procédure : `docs/infra.md`, section 2).
   - `paulperigault.github.io` : plus servi depuis le renommage du dépôt en `portfolio` et la désactivation de GitHub Pages ; `npm run check:live` exige un 404 (aucune copie du site sur un autre hôte).
   - `npm run check:live` contrôle en production HTTP → HTTPS, `www` → apex et `.dev` → `.fr`.
@@ -62,3 +61,7 @@ Un seul `h1` par page, landmarks (`header`, `main#content`, `footer`), lien d'é
 ## 8. i18n
 
 Deux langues, préfixées (`/fr/`, `/en/`). Chaque page indexable déclare ses hreflang `fr`, `en` et `x-default` (= `fr`), réciproques ; le sitemap les reprend (`xhtml:link`).
+
+## 9. noindex : liste blanche
+
+Seule la 404 est en `noindex`, et elle n'est pas au sitemap. `robots.txt` ne bloque rien (un `noindex` doit pouvoir être lu). Les adresses `*.pages.dev` reçoivent `X-Robots-Tag: noindex` par `public/_headers` : ce sont des doublons du site, le domaine canonique n'est pas concerné. La liste blanche est `scripts/lib/noindex-allowlist.mjs`, vérifiée par `scripts/noindex-allowlist.test.mjs` (sources) et `e2e/indexability.spec.ts` (pages construites, URL du sitemap).
