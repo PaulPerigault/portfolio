@@ -29,6 +29,17 @@ describe('infra/github', () => {
     expect(protections).not.toMatch(/required_reviewers|require_code_owner_reviews?\s*=\s*true/);
   });
 
+  it('protège develop comme main : PR, checks, aucun contournement', () => {
+    const re = /resource "github_repository_ruleset" "develop" \{[\s\S]*?\r?\n\}\r?\n/;
+    const block = re.exec(protections)?.[0] ?? '';
+    expect(block).toMatch(/pull_request \{/);
+    expect(block).toMatch(/for_each = local\.required_checks/);
+    expect(block).toMatch(/non_fast_forward\s*=\s*true/);
+    expect(block).not.toMatch(/bypass_actors|allowed_merge_methods/);
+    expect(protections).toMatch(/enforce_admins\s*=\s*each\.key == "develop"/);
+    expect(protections).toMatch(/allows_force_pushes\s*=\s*false/);
+  });
+
   it('garde les checks ci et commitlint sur les deux branches', () => {
     expect(protections).toMatch(/required_checks = \["ci", "commitlint"\]/);
     expect(protections).toMatch(/for_each = toset\(\["develop", "main"\]\)/);
