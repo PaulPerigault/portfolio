@@ -1,5 +1,7 @@
 # Baseline de performance (2026-10-14)
 
+> Statut : actif. Référence de `docs/perf-report.md` et des commandes de `npm run bench`.
+
 État mesuré **avant** les chantiers outillage, SEO et sitemap, sur `develop` au commit `b03c115`. Comparaison après les changements : `docs/perf-report.md`.
 
 ## Conditions

@@ -1,5 +1,7 @@
 # Pistes Rust et Go : évaluation mesurée
 
+> Statut : actif. Mesures de départ de l'évaluation de Biome et d'Oxlint citées par `docs/tooling.md` et l'ADR-0007.
+
 > Suite (2026-10-14) : outils natifs retenus ou écartés et procédure de retrait dans `docs/tooling.md`.
 
 > Signalement, pas une décision : rien n'est implémenté. Le site est du HTML statique servi par GitHub Pages ; à l'exécution, il n'y a rien à accélérer. Les seuls temps qui comptent sont ceux de l'outillage (lint, garde-fous, tests, build) et la maintenance.

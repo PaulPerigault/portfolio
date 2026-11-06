@@ -42,10 +42,10 @@ projet ou d'une certification.
 
 ## Hors périmètre
 
-Le récit, les résultats et le CV ne se rédigent pas ici : ce sont les faits de Paul (`docs/passation-portfolio.md`,
-mission). Ce skill relit, il n'invente pas.
+Le récit, les résultats et le CV ne se rédigent pas ici : ce sont les faits de Paul, hors de la migration visuelle.
+Ce skill relit, il n'invente pas.
 
 ## Sources du dépôt
 
-- `docs/audit-ia.md` (A2, A3, B2), `docs/design-charter.md`, `docs/passation-portfolio.md`
+- `docs/audit-ia.md` (A2, A3, B2), `docs/design-charter.md`
 - `docs/perf-baseline-migration.md`, `scripts/lib/generic-phrases.mjs`, `src/content/{fr,en}/ui.json`
