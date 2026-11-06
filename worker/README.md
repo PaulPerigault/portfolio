@@ -47,7 +47,7 @@ Développement local : copier `.dev.vars.example` en `.dev.vars` et le remplir (
 
 ## Secrets et déploiement
 
-Secrets : `RESEND_API_KEY`, `TURNSTILE_SECRET`. Jamais dans `wrangler.toml` ni dans le dépôt. Le domaine personnalisé, le widget Turnstile et la répartition Terraform / Wrangler sont décrits dans `infra/` (issue #138) ; le déploiement CI dans #139.
+Secrets : `RESEND_API_KEY`, `TURNSTILE_SECRET`. Jamais dans `wrangler.toml` ni dans le dépôt. Le domaine personnalisé, le widget Turnstile et la répartition Terraform / Wrangler sont décrits dans `infra/` ; le déploiement CI est `.github/workflows/deploy-worker.yml`.
 
 ## Supprimer cette brique
 
