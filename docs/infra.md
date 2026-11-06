@@ -44,6 +44,8 @@ Contrôle : HTTP → HTTPS, `www` → apex, `.dev` → `.fr` (301, chemin et par
 
 Décrits en OpenTofu (un module par service, state dans R2) : formulaire de contact (Worker `contact.paulperigault.dev`, widget Turnstile, limitation de débit), enregistrements Resend importés, projet Cloudflare Pages, redirections `.dev` → `.fr` et `www.fr` → apex, zone `paulperigault.fr` (DNS, DNSSEC). Lecture seule des rulesets et de leurs identifiants d'import : `npm run infra:rulesets`. Répartition Terraform / Wrangler, scripts npm `infra:*`, séquence de premier déploiement et rotation des tokens : `infra/README.md` ; décision : `docs/adr/0007-formulaire-de-contact-worker-terraform.md`. Aucun `apply` en CI : le propriétaire applique lui-même après lecture du `plan`.
 
+Secrets Actions : `CLOUDFLARE_API_TOKEN_DEPLOY` (déploiement du code du Worker, `deploy-worker.yml`) et `TOKEN` (release-please, `release.yml`) vivent dans l'environnement GitHub `production`, limité à la branche `main` (`infra/github/actions.tf`) ; les autres secrets restent au niveau dépôt. Un lancement manuel du déploiement du Worker depuis une autre branche que `main` est refusé par la règle de l'environnement : c'est le comportement voulu.
+
 Relevé du 2026-10-13 (lecture seule, relevé DNS aujourd'hui `npm run infra:dns`) : l'état réel des enregistrements `A`/`www` du `.dev` est décrit à l'étape 2 de la section 2. L'enregistrement `_dmarc` (`p=none`, rapports vers `contact@paulperigault.fr`) est géré par Terraform (module `resend-domain`) ; son durcissement est prévu dans `ROADMAP.md`. Le bucket R2 du state ne doit avoir aucun accès public : contrôle dans `infra/README.md` (« Accès au state »).
 
 ## 7. Dépôt design-system et documentation `design.paulperigault.dev` (ADR-0011, #268)

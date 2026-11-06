@@ -131,3 +131,4 @@ Permissions du token « terraform-portfolio » (nom conservé, utilisé par Open
 - Turnstile, Workers Scripts et Pages sont des permissions **de compte** : le token doit inclure le compte, pas seulement la zone.
 - Token en lecture seule de la CI (`CLOUDFLARE_API_TOKEN_READONLY`, job `tofu-plan`) : les mêmes en _Read_, sur _All zones from an account_.
 - Le déploiement du code en CI utilise un token distinct, limité à _Workers Scripts : Edit_ (`CLOUDFLARE_API_TOKEN_DEPLOY`).
+- `CLOUDFLARE_API_TOKEN_DEPLOY` (job `deploy` de `deploy-worker.yml`) et `TOKEN` (job `release` de `release.yml`) sont des secrets de l'environnement GitHub `production`, limité à `main` (`infra/github/actions.tf`) ; les autres secrets restent au niveau dépôt. Un secret d'environnement se pose avec `gh secret set <nom> --env production`. Un lancement manuel de `deploy-worker.yml` depuis une autre branche que `main` est refusé par la règle de l'environnement : c'est voulu.
