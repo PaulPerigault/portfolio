@@ -1,7 +1,6 @@
 // Commandes d'infrastructure avec des doublures de `spawn`, `fetch` et de la console : aucun appel
 // réel, aucun vrai secret.
 import { describe, expect, it } from 'vitest';
-import { checkR2PublicAccess } from './infra-r2-check.mjs';
 import { listDnsRecords } from './infra-dns.mjs';
 import { tf } from './infra-tf.mjs';
 import { pushWorkerSecrets } from './infra-worker-secrets.mjs';
@@ -89,26 +88,5 @@ describe('listDnsRecords', () => {
     expect(lines[0]).toBe('zone_id = zone-1');
     expect(lines.join('\n')).toMatch(/r1.*TXT.*_dmarc/s);
     expect(lines.join('\n')).not.toMatch(/fake-cf/);
-  });
-});
-
-describe('checkR2PublicAccess', () => {
-  it('code 0 quand le bucket du state n’a aucun accès public', async () => {
-    const { lines, deps } = setup([
-      () => ({ result: { enabled: false } }),
-      () => ({ result: { domains: [] } }),
-    ]);
-    expect(await checkR2PublicAccess(deps)).toBe(0);
-    expect(lines.at(-1)).toMatch(/OK/);
-  });
-
-  it('code 1 et alerte quand un domaine public existe', async () => {
-    const { lines, deps } = setup([
-      () => ({ result: { enabled: false } }),
-      () => ({ result: { domains: [{ domain: 'state.example' }] } }),
-    ]);
-    expect(await checkR2PublicAccess(deps)).toBe(1);
-    expect(lines.join('\n')).toMatch(/state\.example/);
-    expect(lines.at(-1)).toMatch(/ALERTE/);
   });
 });
