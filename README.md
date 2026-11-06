@@ -63,5 +63,5 @@ Module OpenTofu `infra/modules/pages-site` et en-têtes `public/_headers` ; proc
 
 ## Licence
 
-Le code est sous licence MIT : voir [LICENSE](LICENSE). Les contenus personnels (textes,
+Le code, `docs/` et `ROADMAP.md` sont sous licence MIT : voir [LICENSE](LICENSE). Les contenus personnels (textes,
 photo, CV, images) restent tous droits réservés : voir [CONTENT-LICENSE.md](CONTENT-LICENSE.md).

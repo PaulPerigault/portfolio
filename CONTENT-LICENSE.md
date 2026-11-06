@@ -13,8 +13,9 @@ Chemins concernés :
 - `src/assets/photo.jpg` : photo de Paul ;
 - le CV (PDF), copié depuis le dépôt `cv-latex` au build vers `public/cv-paul-perigault.pdf` ;
 - `public/image/` (logo, carte de partage), `public/favicon*`, `public/apple-touch-icon.png` ;
-- `e2e/__snapshots__/` : captures du site ;
-- `docs/` et `ROADMAP.md` : documents de travail personnels.
+- `e2e/__snapshots__/` : captures du site.
+
+`docs/` et `ROADMAP.md` (documentation technique) sont sous licence MIT, comme le code.
 
 Les ressources tierces (polices, bibliothèques et paquets installés par npm) gardent leur
 licence d'origine et ne passent pas sous MIT.
@@ -36,8 +37,9 @@ Paths concerned:
 - the CV (PDF), copied from the `cv-latex` repository at build time to
   `public/cv-paul-perigault.pdf`;
 - `public/image/` (logo, share card), `public/favicon*`, `public/apple-touch-icon.png`;
-- `e2e/__snapshots__/`: screenshots of the site;
-- `docs/` and `ROADMAP.md`: personal working documents.
+- `e2e/__snapshots__/`: screenshots of the site.
+
+`docs/` and `ROADMAP.md` (technical documentation) are licensed under MIT, like the code.
 
 Third-party resources (fonts, libraries and packages installed by npm) keep their original
 license and are not relicensed under MIT.
