@@ -21,7 +21,12 @@ const output = (deps, env, name) => {
   if (result.status !== 0 || !result.stdout) {
     throw new Error(`Sortie ${name} indisponible : appliquer d'abord infra/identity/.`);
   }
-  return JSON.parse(result.stdout);
+  try {
+    return JSON.parse(result.stdout);
+  } catch {
+    // Message fixe : un extrait de la sortie, sensible, ne doit jamais figurer dans l'erreur.
+    throw new Error(`Sortie ${name} illisible : relancer la lecture de infra/identity/.`);
+  }
 };
 
 /** @returns {number} */
