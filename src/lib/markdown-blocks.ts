@@ -46,8 +46,15 @@ export const certificationLine = (cert: Certification, lang: Lang, t: T): string
   return `- **${cert.name}**, ${cert.issuer}${status ? ` (${status})` : ''}`;
 };
 
+/** Texte d'un dépôt GitHub sur une seule ligne, crochets échappés : une puce, un seul lien. */
+export const inlineText = (value: string): string =>
+  value.replace(/\s+/g, ' ').trim().replace(/[[\]]/g, '\\$&');
+
 export const projectLine = (project: ProjectsSnapshot['projects'][number]): string => {
-  const details = [project.language, ...visibleTopics(project.topics)].filter(Boolean).join(', ');
-  const description = project.description ? `: ${project.description}` : '';
+  const details = [project.language, ...visibleTopics(project.topics)]
+    .filter(Boolean)
+    .map((detail) => inlineText(String(detail)))
+    .join(', ');
+  const description = project.description ? `: ${inlineText(project.description)}` : '';
   return `- [${project.name}](${project.html_url})${description}${details ? ` (${details})` : ''}`;
 };
