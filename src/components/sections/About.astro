@@ -12,7 +12,7 @@ const t = useTranslations(Astro.props.lang);
 ---
 
 <Section id="about" title={t('about.title')}>
-  <p class="max-w-prose text-lg">{t('about.body')}</p>
+  <p class="max-w-measure text-base">{t('about.body')}</p>
   <div class="mt-8">
     <DescriptionList
       items={[{ term: t('about.location_label'), description: t('about.location') }]}

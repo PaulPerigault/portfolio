@@ -13,7 +13,7 @@ test.describe('impression (le CV papier est la page)', () => {
     const background = await page.evaluate(
       () => getComputedStyle(document.documentElement).backgroundColor,
     );
-    expect(background).toBe('rgb(252, 252, 253)');
+    expect(background).toBe('oklch(0.985 0.004 270.7)');
     const link = await page.evaluate(
       () =>
         getComputedStyle(document.querySelector('main a[href^="http"]') as Element, '::after')

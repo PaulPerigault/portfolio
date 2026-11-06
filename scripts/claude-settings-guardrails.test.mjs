@@ -1,4 +1,4 @@
-// Partage des garde-fous entre les règles `deny` et le code testé (#181). Refusés en Bash et en
+// Partage des garde-fous entre les règles `deny` et le code testé. Refusés en Bash et en
 // PowerShell : OpenTofu et Wrangler appelés directement, tout `apply` (même d'un plan enregistré,
 // par les scripts npm), toute destruction (`destroy`, `-destroy`, suppression de zone ou de
 // domaine), les chemins OVH de transfert, authInfo, owner et contacts, l'affichage d'un secret,

@@ -1,0 +1,9 @@
+{
+  "ci": {
+    "collect": {
+      "staticDistDir": "./dist",
+      "url": ["/fr/", "/en/", "/fr/legal/", "/en/legal/"],
+      "numberOfRuns": 3
+    }
+  }
+}

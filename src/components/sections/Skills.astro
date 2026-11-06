@@ -15,11 +15,11 @@ const t = useTranslations(lang);
 ---
 
 <Section id="skills" title={t('skills.title')}>
-  <dl class="divide-line divide-y">
+  <dl class="divide-line border-line bg-surface rounded-surface divide-y border px-5 sm:px-6">
     {categories.map(({ category, items }) => (
-      <div class="grid gap-1 py-4 first:pt-0 last:pb-0 sm:grid-cols-[11rem_1fr] sm:gap-6">
-        <dt class="font-semibold">{category}</dt>
-        <dd>{items.join(SEPARATOR)}</dd>
+      <div class="grid gap-1 py-4 sm:grid-cols-[11rem_1fr] sm:gap-6">
+        <dt class="text-fg text-base font-semibold">{category}</dt>
+        <dd class="text-fg">{items.join(SEPARATOR)}</dd>
       </div>
     ))}
   </dl>

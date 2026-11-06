@@ -33,5 +33,5 @@ export const buildHumansTxt = (): string =>
     '',
     '/* SITE */',
     'Stack: Astro, Effect, Tailwind CSS, TypeScript',
-    `Source: ${SITE.githubUrl}/${SITE.githubUser}.github.io`,
+    `Source: ${SITE.githubUrl}/${SITE.githubRepo}`,
   ].join('\n') + '\n';

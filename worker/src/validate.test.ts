@@ -63,6 +63,12 @@ describe('validate', () => {
     },
   );
 
+  it('refuse les caractères de mise en forme invisibles dans l’adresse (reply_to)', () => {
+    for (const hidden of ['‮', '​', ' ']) {
+      expect(fieldsOf({ ...validBody, email: `ada${hidden}@example.org` })).toEqual(['email']);
+    }
+  });
+
   it('refuse un retour à la ligne dans le nom (en-tête de sujet), l’accepte dans le message', () => {
     expect(fieldsOf({ ...validBody, name: 'Ada\r\nBcc: x@y.z' })).toEqual(['name']);
     expect(fieldsOf({ ...validBody, message: 'ligne 1\r\nligne 2\ttab' })).toEqual([]);

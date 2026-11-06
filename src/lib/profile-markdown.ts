@@ -64,7 +64,7 @@ export const profileMarkdown = (data: ProfileData): string => {
   const { lang } = data;
   const t = useTranslations(lang);
   return [
-    `# ${SITE.name} — ${t('hero.role')}`,
+    `# ${SITE.name} | ${t('hero.role')}`,
     `> ${t('hero.summary')}`,
     `${t('hero.school')}. ${SITE.domain}/${lang}/`,
     section(t('about.title'), [t('about.body')]),

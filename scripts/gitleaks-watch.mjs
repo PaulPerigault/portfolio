@@ -1,4 +1,4 @@
-// Ouvre une issue quand une version de gitleaks plus récente que celle épinglée sort (#204).
+// Ouvre une issue quand une version de gitleaks plus récente que celle épinglée sort.
 // Lancé chaque semaine par .github/workflows/gitleaks-watch.yml (GITHUB_TOKEN, `issues: write`).
 //   node scripts/gitleaks-watch.mjs     (GITHUB_TOKEN et GITHUB_REPOSITORY requis)
 import { readFileSync } from 'node:fs';
@@ -8,6 +8,7 @@ import {
   issueBody,
   issueTitle,
   pinnedVersion,
+  releaseVersion,
 } from './lib/gitleaks-watch.mjs';
 
 const API = 'https://api.github.com';
@@ -25,7 +26,7 @@ export async function watchGitleaks({ fetch: fetchFn, token, repo, workflow, log
   const current = pinnedVersion(workflow);
   if (!current) throw new Error('GITLEAKS_VERSION introuvable dans security.yml');
   const release = await getJson(fetchFn, `${API}/repos/gitleaks/gitleaks/releases/latest`, token);
-  const version = String(release.tag_name).replace(/^v/, '');
+  const version = releaseVersion(release.tag_name);
   if (!isNewer(version, current)) return (log(`gitleaks ${current} est à jour.`), 'up-to-date');
   const asset = release.assets.find((a) => a.name === `gitleaks_${version}_checksums.txt`);
   const sums = await (await fetchFn(asset?.browser_download_url ?? '')).text();

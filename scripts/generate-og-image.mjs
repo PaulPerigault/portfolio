@@ -1,6 +1,7 @@
 // Génère public/image/og-cover.png (1200×630) à partir des tokens de design, de la police
 // auto-hébergée et de la photo du site : aucune valeur de couleur ni de texte n'est dupliquée ici.
 // Usage : node scripts/generate-og-image.mjs   (PW_CHROMIUM_PATH pour un Chromium déjà installé)
+import { parseOklch, toHex } from '@paulperigault/tokens/color';
 import { chromium } from '@playwright/test';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -8,8 +9,13 @@ import { join } from 'node:path';
 const root = join(import.meta.dirname, '..');
 const read = (path, encoding) => readFileSync(join(root, path), encoding);
 
-const tokens = read('src/styles/tokens.css', 'utf8');
-const light = (name) => tokens.match(new RegExp(`--pp-${name}:\\s*light-dark\\((#[0-9a-f]{6})`))[1];
+const tokens = read('node_modules/@paulperigault/tokens/generated/tokens.css', 'utf8');
+const light = (name) => {
+  const [, oklch] = tokens.match(
+    new RegExp(`--pp-color-${name}:\\s*light-dark\\((oklch\\([^)]*\\))`),
+  );
+  return toHex(parseOklch(oklch));
+};
 
 const fr = JSON.parse(read('src/content/fr/ui.json', 'utf8'));
 const FONT =

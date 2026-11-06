@@ -1,9 +1,24 @@
 import { expect, test, type Locator } from '@playwright/test';
+import { SITE } from '../src/config/site';
 import { loadContent } from './helpers/content';
 
 const COPY = {
-  fr: { title: 'Projets', updated: 'Mis à jour', fetched: 'Données GitHub' },
-  en: { title: 'Projects', updated: 'Updated', fetched: 'GitHub data' },
+  fr: {
+    title: 'Projets',
+    updated: 'Mis à jour',
+    fetched: 'Données GitHub',
+    site: 'Site du projet',
+    packages: 'Neuf paquets npm',
+    newTab: /nouvel onglet/,
+  },
+  en: {
+    title: 'Projects',
+    updated: 'Updated',
+    fetched: 'GitHub data',
+    site: 'Project site',
+    packages: 'Nine npm packages',
+    newTab: /new tab/,
+  },
 } as const;
 const MAX_TOPICS = 4;
 const GITHUB_API_HOST = 'api.github.com';
@@ -39,6 +54,24 @@ for (const lang of ['fr', 'en'] as const) {
         await expect(card).toContainText(COPY[lang].updated);
       }
       await expect(region).toContainText(COPY[lang].fetched);
+    });
+
+    test('la carte design-system renvoie vers sa documentation, en nouvel onglet', async ({
+      page,
+    }) => {
+      await page.goto(`/${lang}/`);
+      const region = page.getByRole('region', { name: COPY[lang].title });
+      await requireData(region);
+      const card = region.locator('li', {
+        has: page.getByRole('heading', { level: 3, name: /design-system/ }),
+      });
+      await expect(card.locator('h3 a')).toHaveAttribute('href', `${SITE.githubUrl}/design-system`);
+      await expect(card).toContainText(COPY[lang].packages);
+      const site = card.getByRole('link', { name: new RegExp(COPY[lang].site) });
+      await expect(site).toHaveAttribute('href', SITE.projectSites['design-system'] as string);
+      await expect(site).toHaveAttribute('rel', 'noopener noreferrer');
+      await expect(site).toHaveAttribute('target', '_blank');
+      await expect(site).toHaveAccessibleName(COPY[lang].newTab);
     });
 
     test('ne contacte jamais l’API GitHub depuis le navigateur', async ({ page }) => {

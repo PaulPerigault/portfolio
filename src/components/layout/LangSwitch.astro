@@ -2,6 +2,7 @@
 import type { Lang } from '@/domain/lang';
 import VisuallyHidden from '@/components/ui/VisuallyHidden.astro';
 import { useTranslations } from '@/lib/i18n';
+import { pathForLang } from '@/lib/seo';
 
 interface Props {
   lang: Lang;
@@ -10,7 +11,7 @@ interface Props {
 const { lang } = Astro.props;
 const other: Lang = lang === 'fr' ? 'en' : 'fr';
 const t = useTranslations(lang);
-const href = Astro.url.pathname.replace(`/${lang}/`, `/${other}/`);
+const href = pathForLang(Astro.url.pathname, lang, other);
 ---
 
 <a
@@ -18,11 +19,14 @@ const href = Astro.url.pathname.replace(`/${lang}/`, `/${other}/`);
   hreflang={other}
   lang={other}
   data-lang-switch={other}
-  class="border-control hover:border-accent hover:text-accent rounded-sm border px-2 py-1 text-sm font-semibold uppercase transition-colors duration-(--pp-duration)"
+  class="border-control hover:border-accent hover:text-accent inline-flex min-h-(--pp-size-control-height) min-w-(--pp-size-control-height) items-center justify-center rounded-control border px-2 text-sm font-semibold no-underline transition-colors duration-(--pp-duration-base)"
 >
-  <!-- Nom accessible « en English » : il commence par le texte visible (WCAG 2.5.3). -->
-  <span>{other}</span>
-  <VisuallyHidden>{t(`lang.${other}`)}</VisuallyHidden>
+  <!--
+    Code affiché en capitales dans le texte (aucun text-transform, ADR-0012). Nom accessible
+    « en English » inchangé : il commence par le texte visible, à la casse près (WCAG 2.5.3).
+  -->
+  <span aria-hidden="true">{other.toUpperCase()}</span>
+  <VisuallyHidden>{`${other} ${t(`lang.${other}`)}`}</VisuallyHidden>
 </a>
 
 <script>

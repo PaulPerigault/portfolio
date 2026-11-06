@@ -16,8 +16,8 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: { defaultLocale: 'fr', locales: { fr: 'fr', en: 'en' } },
-      // Ni la racine (redirection) ni les pages techniques ne sont listées.
-      filter: (page) => new URL(page).pathname !== '/' && !page.includes('/styleguide/'),
+      // La racine (redirection) n'est pas listée.
+      filter: (page) => new URL(page).pathname !== '/',
       // `lastmod` par URL = dernier commit qui touche SON contenu (scripts/lib/sitemap-lastmod.mjs),
       // jamais la date du build : le redéploiement hebdomadaire la changerait sans contenu nouveau,
       // et Google ignore un lastmod peu fiable. Ni changefreq ni priority : Google les ignore.

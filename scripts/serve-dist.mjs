@@ -24,7 +24,7 @@ const MIME = {
 };
 
 function resolveFile(urlPath) {
-  const safe = normalize(decodeURIComponent(urlPath)).replace(/^(\.\.[/\\])+/, '');
+  const safe = normalize(urlPath).replace(/^(\.\.[/\\])+/, '');
   const target = join(ROOT, safe);
   if (existsSync(target) && statSync(target).isDirectory()) return join(target, 'index.html');
   return target;
@@ -32,7 +32,14 @@ function resolveFile(urlPath) {
 
 createServer((req, res) => {
   const { pathname } = new URL(req.url ?? '/', 'http://localhost');
-  let file = resolveFile(pathname);
+  let decoded;
+  try {
+    decoded = decodeURIComponent(pathname);
+  } catch {
+    res.writeHead(400, { 'content-type': 'text/plain' }).end('Bad request');
+    return;
+  }
+  let file = resolveFile(decoded);
   let status = 200;
   if (!existsSync(file) || statSync(file).isDirectory()) {
     file = join(ROOT, '404.html');
@@ -44,4 +51,6 @@ createServer((req, res) => {
   }
   res.writeHead(status, { 'content-type': MIME[extname(file)] ?? 'application/octet-stream' });
   createReadStream(file).pipe(res);
-}).listen(PORT, () => process.stdout.write(`dist servi sur http://localhost:${PORT}\n`));
+}).listen(PORT, 'localhost', () =>
+  process.stdout.write(`dist servi sur http://localhost:${PORT}\n`),
+);

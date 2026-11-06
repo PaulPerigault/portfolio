@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createHandler } from './handler';
-import { isRateLimited, type RateLimiter } from './rate-limit';
+import { isRateLimited, rateLimitKey, type RateLimiter } from './rate-limit';
 import { env, fakeFetch, post, SITE_ORIGIN, validBody } from './test/fakes';
 
 const IP = '198.51.100.7';
@@ -30,6 +30,29 @@ describe('isRateLimited', () => {
     expect(await isRateLimited(undefined, fromIp(validBody))).toBe(false);
     expect(await isRateLimited(limiter(false), post(validBody))).toBe(false);
     expect(await isRateLimited(broken, fromIp(validBody))).toBe(false);
+  });
+});
+
+describe('rateLimitKey', () => {
+  it('garde une adresse IPv4 telle quelle', () => {
+    expect(rateLimitKey('198.51.100.7')).toBe('198.51.100.7');
+  });
+
+  it.each([
+    ['2001:db8:1:2:aaaa:bbbb:cccc:dddd', '2001:0db8:0001:0002::/64'],
+    ['2001:DB8:1:2::7', '2001:0db8:0001:0002::/64'],
+    ['2001:db8::1', '2001:0db8:0000:0000::/64'],
+    ['::1', '0000:0000:0000:0000::/64'],
+  ])('regroupe %s sur son préfixe /64', (ip, key) => {
+    expect(rateLimitKey(ip)).toBe(key);
+  });
+
+  it('met deux adresses d’un même /64 sous la même clé', () => {
+    expect(rateLimitKey('2001:db8:1:2::1')).toBe(rateLimitKey('2001:db8:1:2:ffff::9'));
+  });
+
+  it('ne lève pas sur une adresse mal formée', () => {
+    expect(() => rateLimitKey('1:2:3:4:5:6:7:8:9::')).not.toThrow();
   });
 });
 

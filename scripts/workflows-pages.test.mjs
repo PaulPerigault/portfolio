@@ -1,4 +1,4 @@
-// Déploiement Cloudflare Pages (#207) : même artefact que les e2e, Wrangler du lockfile du Worker,
+// Déploiement Cloudflare Pages : même artefact que les e2e, Wrangler du lockfile du Worker,
 // secret par l'environnement seulement, sauté proprement tant que le secret n'existe pas.
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';

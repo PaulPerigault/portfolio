@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import Photo from '@paulperigault/astro/Photo.astro';
 import photo from '@/assets/photo.jpg';
 import ButtonLink from '@/components/ui/ButtonLink.astro';
 import Container from '@/components/ui/Container.astro';
@@ -12,7 +12,8 @@ interface Props {
   lang: Lang;
 }
 
-const t = useTranslations(Astro.props.lang);
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 const newTab = t('a11y.new_tab');
 ---
 
@@ -24,7 +25,7 @@ const newTab = t('a11y.new_tab');
       </Heading>
       <p class="text-accent mt-5 text-2xl font-bold tracking-tight">{t('hero.role')}</p>
       <p class="text-muted mt-1">{t('hero.school')}</p>
-      <p class="mt-6 max-w-prose">{t('hero.summary')}</p>
+      <p class="mt-6 max-w-measure">{t('hero.summary')}</p>
       <div class="mt-10 flex flex-wrap gap-3">
         <ButtonLink
           href={SITE.cvPath}
@@ -34,7 +35,9 @@ const newTab = t('a11y.new_tab');
         >
           {t('hero.cta_cv')}
         </ButtonLink>
-        <ButtonLink href={`mailto:${SITE.email}`}>{t('hero.cta_contact')}</ButtonLink>
+        <ButtonLink href={`/${lang}/#contact`} focusContact>
+          {t('hero.cta_contact')}
+        </ButtonLink>
         <ButtonLink href={SITE.githubUrl} newTabLabel={newTab}>
           {t('hero.cta_github')}
         </ButtonLink>
@@ -43,16 +46,14 @@ const newTab = t('a11y.new_tab');
         </ButtonLink>
       </div>
     </div>
-    <Picture
+    <Photo
       src={photo}
       alt={SITE.name}
-      width={200}
-      height={200}
-      formats={['avif']}
-      fallbackFormat="webp"
-      loading="eager"
-      fetchpriority="high"
-      class="border-line size-40 border object-cover md:size-52"
+      ratio="square"
+      layout="avatar"
+      sizes="(min-width: 48rem) 13rem, 10rem"
+      priority
+      class="size-40 md:size-52"
     />
   </Container>
 </section>

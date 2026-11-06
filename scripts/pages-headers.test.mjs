@@ -1,5 +1,4 @@
-// En-têtes HTTP du futur hébergement Cloudflare Pages (`public/_headers`, ADR-0008) : reprend ce
-// que vérifiait l'image Docker (scripts/check-container.sh, retiré) et le complète (HSTS, CORP).
+// En-têtes HTTP servis par Cloudflare Pages (`public/_headers`), dont HSTS et CORP.
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { headersFor, parseHeaders } from './lib/pages-headers.mjs';
@@ -48,6 +47,12 @@ describe('public/_headers (Cloudflare Pages)', () => {
       expect(at(path).get('content-type')).toBe('text/markdown; charset=utf-8');
     }
     expect(at('/fr/').has('content-type')).toBe(false);
+  });
+
+  it('déclare llms.txt et llms-full.txt en text/plain UTF-8', () => {
+    for (const path of ['/llms.txt', '/llms-full.txt']) {
+      expect(at(path).get('content-type')).toBe('text/plain; charset=utf-8');
+    }
   });
 });
 

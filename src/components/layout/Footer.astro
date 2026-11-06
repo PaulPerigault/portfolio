@@ -1,5 +1,6 @@
 ---
 import Container from '@/components/ui/Container.astro';
+import ExternalLink from '@/components/ui/ExternalLink.astro';
 import { SITE } from '@/config/site';
 import type { Lang } from '@/domain/lang';
 import { useTranslations } from '@/lib/i18n';
@@ -17,14 +18,24 @@ const year = new Date().getFullYear();
     <p>
       © {year} {SITE.name}
     </p>
+    <ExternalLink
+      href={SITE.designSystemUrl}
+      newTabLabel={t('a11y.new_tab')}
+      class="hover:text-accent inline-flex min-h-(--pp-size-control-height) items-center"
+    >
+      {t('footer.design_system')}
+    </ExternalLink>
     <nav aria-label={t('footer.legal')} class="flex flex-wrap gap-x-6 gap-y-2">
       <a
         href={`/${Astro.props.lang}/legal/`}
-        class="hover:text-accent underline underline-offset-4"
+        class="hover:text-accent inline-flex min-h-(--pp-size-control-height) items-center underline underline-offset-4"
       >
         {t('footer.legal')}
       </a>
-      <a href="#top" class="hover:text-accent underline underline-offset-4">
+      <a
+        href="#top"
+        class="hover:text-accent inline-flex min-h-(--pp-size-control-height) items-center underline underline-offset-4"
+      >
         {t('footer.back_to_top')}
       </a>
     </nav>

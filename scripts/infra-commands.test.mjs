@@ -1,5 +1,5 @@
 // Commandes d'infrastructure avec des doublures de `spawn`, `fetch` et de la console : aucun appel
-// réel, aucun vrai secret. Reprend les cas de l'ancien infra/tests/contact-form-secrets.test.ps1.
+// réel, aucun vrai secret.
 import { describe, expect, it } from 'vitest';
 import { checkR2PublicAccess } from './infra-r2-check.mjs';
 import { listDnsRecords } from './infra-dns.mjs';

@@ -31,5 +31,7 @@ export const parseJson = (text: string): unknown => {
   }
 };
 
+/** Type de contenu `application/json`, paramètres (`charset`) admis, rien d'autre. */
 export const isJsonRequest = (request: Request): boolean =>
-  (request.headers.get('Content-Type') ?? '').toLowerCase().startsWith('application/json');
+  (request.headers.get('Content-Type') ?? '').split(';')[0]?.trim().toLowerCase() ===
+  'application/json';

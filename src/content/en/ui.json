@@ -1,11 +1,11 @@
 {
   "seo": {
-    "title": "Paul Perigault — Cloud DevOps Apprentice, ESIEA Paris",
+    "title": "Paul Perigault | Cloud DevOps Apprentice, ESIEA Paris",
     "description": "Paul Perigault, cloud DevOps apprentice at WeVii, engineering student (Software Engineering) at ESIEA Paris. CI/CD, Terraform, Kubernetes, ArgoCD, AWS, GCP."
   },
   "nav": {
     "about": "About",
-    "skills": "Stack",
+    "skills": "Tech stack",
     "experience": "Experience",
     "formation": "Education",
     "projects": "Projects",
@@ -24,11 +24,11 @@
     "cta_contact": "Get in touch",
     "cta_github": "GitHub",
     "cta_linkedin": "LinkedIn",
-    "summary": "I'm Paul Perigault, a cloud DevOps apprentice at WeVii and an engineering student at ESIEA Paris, Software Engineering major. I build HR applications in Java and Angular, do multicloud R&D in Go and work on CI/CD pipelines and AWS and GCP deployments."
+    "summary": "I’m Paul Perigault, a cloud DevOps apprentice at WeVii and an engineering student at ESIEA Paris, Software Engineering major. I build HR applications in Java and Angular, do multicloud R&D in Go and work on CI/CD pipelines and AWS and GCP deployments."
   },
   "about": {
     "title": "About",
-    "body": "Apprenticed at WeVii since September 2023, alongside the engineering cycle at ESIEA Paris. I don't speak at schools yet, but I'm available to mentor student projects and hackathons.",
+    "body": "Apprenticed at WeVii since September 2023, alongside the engineering cycle at ESIEA Paris. I don’t speak at schools yet, and I would like to.",
     "location": "Paris, France",
     "location_label": "Location"
   },
@@ -45,10 +45,10 @@
   "projects": {
     "title": "Projects",
     "view_code": "Code",
-    "view_demo": "Demo",
+    "view_site": "Project site",
     "updated": "Updated",
-    "fetched_at": "GitHub data —",
-    "empty": "No project to show right now."
+    "fetched_at": "GitHub data as of",
+    "empty": "No project to show."
   },
   "certifications": {
     "title": "Certifications",
@@ -57,20 +57,20 @@
   },
   "contact": {
     "title": "Contact",
-    "subtitle": "I'm available to speak at schools and to mentor student projects and hackathons.",
+    "subtitle": "I would like to speak at schools.",
     "email_label": "Email",
     "linkedin_label": "LinkedIn",
     "github_label": "GitHub",
     "form": {
       "heading": "Send a message",
       "intro": "Your message reaches me by email and I reply to the address you give.",
-      "name": "Name",
+      "name": "Your name",
       "email": "Your email",
       "message": "Message",
       "honeypot": "Leave this field empty",
       "submit": "Send",
       "sending": "Sending…",
-      "privacy": "Your name, email and message are only used to reply to you; they are not kept anywhere but my inbox. A Cloudflare Turnstile bot check loads when you start typing.",
+      "privacy": "Your name, email and message are only used to reply to you. They go through Resend, which keeps them for 30 days, then stay in my inbox for 12 months. A Cloudflare Turnstile bot check loads when you start typing.",
       "privacy_link": "Details on the privacy page",
       "error_required": "This field is required.",
       "error_email": "Enter a full email address, for example name@example.com.",
@@ -97,6 +97,7 @@
     "new_tab": "opens in a new tab"
   },
   "footer": {
+    "design_system": "Design system",
     "back_to_top": "Back to top",
     "legal": "Legal notice and privacy"
   },

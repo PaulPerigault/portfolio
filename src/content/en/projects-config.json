@@ -1,3 +1,6 @@
 {
-  "featured": ["GetUrlCloudRun"]
+  "featured": ["GetUrlCloudRun", "design-system"],
+  "descriptions": {
+    "design-system": "Design system of paulperigault.fr: DTCG design tokens, CSS, Astro components, guards and CLI. Nine npm packages published under the @paulperigault scope."
+  }
 }

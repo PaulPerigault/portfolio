@@ -1,4 +1,4 @@
-// Configuration Lighthouse pour une preview Cloudflare Pages (#207) : mêmes budgets que
+// Configuration Lighthouse pour une preview Cloudflare Pages : mêmes budgets que
 // `.lighthouserc.json` (source unique), mais pages servies par l'URL de preview au lieu de `dist/`.
 // Cloudflare sert toute preview avec `X-Robots-Tag: noindex` : l'audit `is-crawlable` y est sauté
 // (il resterait à 0 et ferait tomber le SEO), la production est mesurée avec lui (check:live).

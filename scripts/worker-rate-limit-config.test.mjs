@@ -1,4 +1,4 @@
-// Limite de débit du Worker (#206) : le binding de wrangler.toml et la constante RATE_LIMIT de
+// Limite de débit du Worker : le binding de wrangler.toml et la constante RATE_LIMIT de
 // worker/src/limits.ts doivent rester identiques. Test côté racine : le Worker n'a pas les types
 // de Node (il tourne sur workerd), il ne lit donc pas de fichiers dans ses propres tests.
 import { readFileSync } from 'node:fs';

@@ -24,7 +24,7 @@ const EMAIL = /^[^\s@<>()[\]",;:]+@[^\s@<>()[\]",;:]+\.[^\s@<>()[\]",;:]+$/;
 // Caractères de contrôle (catégorie Unicode Cc) interdits ; le message garde retours à la ligne
 // et tabulations.
 const CONTROL = /\p{Cc}/u;
-// Le nom va dans le sujet du message : ni caractère de mise en forme invisible (Cf : inversion de
+// Le nom va dans le sujet du message, l'adresse dans `reply_to` : ni caractère de mise en forme invisible (Cf : inversion de
 // sens, largeur nulle) ni séparateur de ligne ou de paragraphe Unicode.
 const FORMATTING = /[\p{Cf}\p{Zl}\p{Zp}]/u;
 const LINE_BREAKS_AND_TABS = /[\n\r\t]/g;
@@ -44,6 +44,12 @@ const text = (data: Fields, key: string): string => {
 
 const fits = (value: string, max: number): boolean => value.length > 0 && value.length <= max;
 
+const isValidEmail = (email: string): boolean =>
+  fits(email, FIELD_LIMITS.email) &&
+  EMAIL.test(email) &&
+  !hasControl(email) &&
+  !FORMATTING.test(email);
+
 export const isHoneypotFilled = (raw: unknown): boolean =>
   isRecord(raw) && text(raw, HONEYPOT_FIELD) !== '';
 
@@ -55,7 +61,7 @@ export function validate(raw: unknown): Validation {
   const turnstileToken = text(raw, 'turnstileToken');
   const checks: ReadonlyArray<readonly [string, boolean]> = [
     ['name', fits(name, FIELD_LIMITS.name) && !hasControl(name) && !FORMATTING.test(name)],
-    ['email', fits(email, FIELD_LIMITS.email) && EMAIL.test(email) && !hasControl(email)],
+    ['email', isValidEmail(email)],
     ['message', fits(message, FIELD_LIMITS.message) && !hasControlInText(message)],
     ['turnstileToken', fits(turnstileToken, FIELD_LIMITS.turnstileToken)],
   ];

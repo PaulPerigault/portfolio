@@ -17,6 +17,15 @@ describe('corps de requête', () => {
     expect(response.status).toBe(415);
   });
 
+  it('accepte application/json avec charset, refuse un type voisin', async () => {
+    const withCharset = await run(
+      post(validBody, { 'Content-Type': 'application/json; charset=utf-8' }),
+    );
+    expect(withCharset.response.status).toBe(200);
+    const neighbour = await run(post(validBody, { 'Content-Type': 'application/jsonx' }));
+    expect(neighbour.response.status).toBe(415);
+  });
+
   it('refuse un JSON invalide (400)', async () => {
     const { response, body } = await run(post('{pas du json'));
     expect(response.status).toBe(400);

@@ -2,7 +2,7 @@
 
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/PaulPerigault/portfolio/badge)](https://scorecard.dev/viewer/?uri=github.com/PaulPerigault/portfolio)
 
-Portfolio personnel — Paul Perigault, Alternant DevOps Cloud.
+Portfolio personnel de Paul Perigault, alternant DevOps Cloud.
 
 ## Stack
 
@@ -32,13 +32,13 @@ Portfolio personnel — Paul Perigault, Alternant DevOps Cloud.
       services/        # services Effect : contenu, GitHub, projets, runtime
       lib/             # fonctions pures : i18n, dates, SEO, JSON-LD, llms, robots…
       components/
-        ui/            # primitives réutilisables (docs/ui.md)
+        ui/            # primitives du portfolio ; composants @paulperigault/astro : docs/ui.md
         layout/        # navbar, menu mobile, footer, SeoHead
         sections/      # hero, à propos, compétences, projets…
       layouts/ pages/  # BaseLayout ; /fr/, /en/, .md, robots, llms, 404
       content/{fr,en}/ # contenu bilingue validé au build
       scripts/         # scripts client minuscules (menu, thème, langue)
-      styles/          # tokens de design + Tailwind
+      styles/          # entrée Tailwind (jetons et feuilles de @paulperigault/*)
     e2e/               # tests Playwright (matrice : docs/test-matrix.md)
     scripts/           # garde-fous, serveur e2e, IndexNow, génération OG
     docs/              # ui, charte de design, matrice de tests, GEO, ADR

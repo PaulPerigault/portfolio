@@ -1,11 +1,11 @@
 {
   "seo": {
-    "title": "Paul Perigault — Alternant DevOps Cloud, ESIEA Paris",
-    "description": "Paul Perigault, alternant DevOps Cloud chez WeVii, étudiant ingénieur (Software Engineering) à l'ESIEA Paris. CI/CD, Terraform, Kubernetes, ArgoCD, AWS, GCP."
+    "title": "Paul Perigault | Alternant DevOps Cloud, ESIEA Paris",
+    "description": "Paul Perigault, alternant DevOps Cloud chez WeVii, étudiant ingénieur (Software Engineering) à l’ESIEA Paris. CI/CD, Terraform, Kubernetes, ArgoCD, AWS, GCP."
   },
   "nav": {
     "about": "À propos",
-    "skills": "Stack",
+    "skills": "Stack technique",
     "experience": "Expériences",
     "formation": "Formation",
     "projects": "Projets",
@@ -24,11 +24,11 @@
     "cta_contact": "Me contacter",
     "cta_github": "GitHub",
     "cta_linkedin": "LinkedIn",
-    "summary": "Je suis Paul Perigault, alternant DevOps Cloud chez WeVii et étudiant en cycle ingénieur à l'ESIEA Paris, majeure Software Engineering. Je développe des applications RH en Java et Angular, je fais de la R&D multicloud en Go et je travaille sur les pipelines CI/CD et les déploiements AWS et GCP."
+    "summary": "Je suis Paul Perigault, alternant DevOps Cloud chez WeVii et étudiant en cycle ingénieur à l’ESIEA Paris, majeure Software Engineering. Je développe des applications RH en Java et Angular, je fais de la R&D multicloud en Go et je travaille sur les pipelines CI/CD et les déploiements AWS et GCP."
   },
   "about": {
     "title": "À propos",
-    "body": "En alternance chez WeVii depuis septembre 2023, en parallèle du cycle ingénieur à l'ESIEA Paris. Je n'interviens pas encore en école, mais je suis disponible pour encadrer des projets étudiants et des hackathons.",
+    "body": "En alternance chez WeVii depuis septembre 2023, en parallèle du cycle ingénieur à l’ESIEA Paris. Je n’interviens pas encore en école et je souhaite le faire.",
     "location": "Paris, France",
     "location_label": "Lieu"
   },
@@ -45,10 +45,10 @@
   "projects": {
     "title": "Projets",
     "view_code": "Code",
-    "view_demo": "Demo",
+    "view_site": "Site du projet",
     "updated": "Mis à jour",
-    "fetched_at": "Données GitHub —",
-    "empty": "Aucun projet à afficher pour le moment."
+    "fetched_at": "Données GitHub de",
+    "empty": "Aucun projet à afficher."
   },
   "certifications": {
     "title": "Certifications",
@@ -57,20 +57,20 @@
   },
   "contact": {
     "title": "Contact",
-    "subtitle": "Je suis disponible pour intervenir en école, encadrer des projets étudiants et des hackathons.",
+    "subtitle": "Je souhaite intervenir en école.",
     "email_label": "E-mail",
     "linkedin_label": "LinkedIn",
     "github_label": "GitHub",
     "form": {
       "heading": "Écrire un message",
       "intro": "Le message m’arrive par e-mail et je réponds à l’adresse que vous indiquez.",
-      "name": "Nom",
+      "name": "Votre nom",
       "email": "Votre e-mail",
       "message": "Message",
       "honeypot": "Laisser ce champ vide",
       "submit": "Envoyer",
       "sending": "Envoi en cours…",
-      "privacy": "Nom, e-mail et message servent uniquement à vous répondre ; ils ne sont pas conservés ailleurs que dans ma boîte de réception. Une vérification anti-robot Cloudflare Turnstile se charge quand vous commencez à écrire.",
+      "privacy": "Nom, e-mail et message servent uniquement à vous répondre. Ils transitent par Resend, qui les conserve 30 jours, puis restent 12 mois dans ma boîte de réception. Une vérification anti-robot Cloudflare Turnstile se charge quand vous commencez à écrire.",
       "privacy_link": "Détails dans la page de confidentialité",
       "error_required": "Ce champ est obligatoire.",
       "error_email": "Indiquez une adresse e-mail complète, par exemple nom@domaine.fr.",
@@ -94,9 +94,10 @@
     "en": "English"
   },
   "a11y": {
-    "new_tab": "s'ouvre dans un nouvel onglet"
+    "new_tab": "s’ouvre dans un nouvel onglet"
   },
   "footer": {
+    "design_system": "Design system",
     "back_to_top": "Retour en haut",
     "legal": "Mentions légales et confidentialité"
   },

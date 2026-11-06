@@ -14,14 +14,12 @@ interface Props {
   lang: Lang;
   title: string;
   description: string;
-  /** Pages techniques (styleguide) : exclues des moteurs de recherche. */
-  noindex?: boolean;
   jsonLd?: object | undefined;
   /** Voir SeoHead : la page a une version Markdown. */
   markdown?: boolean;
 }
 
-const { lang, title, description, noindex = false, jsonLd, markdown } = Astro.props;
+const { lang, title, description, jsonLd, markdown } = Astro.props;
 const t = useTranslations(lang);
 
 // Le script inline du <head> est autorisé par son empreinte, pas par 'unsafe-inline'.
@@ -35,17 +33,13 @@ Astro.csp?.insertScriptHash(scriptHash(HEAD_INIT_SCRIPT));
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script is:inline set:html={HEAD_INIT_SCRIPT} />
     <link rel="preload" href={latinFont} as="font" type="font/woff2" crossorigin />
-    {noindex ? (
-      <SeoHead kind="noindex" title={title} description={description} />
-    ) : (
-      <SeoHead
-        lang={lang}
-        title={title}
-        description={description}
-        jsonLd={jsonLd}
-        markdown={markdown}
-      />
-    )}
+    <SeoHead
+      lang={lang}
+      title={title}
+      description={description}
+      jsonLd={jsonLd}
+      markdown={markdown}
+    />
   </head>
   <body class="bg-bg text-fg font-sans">
     <div id="top"></div>

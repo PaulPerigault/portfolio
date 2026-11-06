@@ -7,7 +7,7 @@ const VIEWPORTS = {
   desktop: { width: 1280, height: 800 },
   mobile: { width: 375, height: 700 },
 } as const;
-const PAGES = ['/fr/', '/en/', '/fr/styleguide/', '/en/styleguide/', '/introuvable/'] as const;
+const PAGES = ['/fr/', '/en/', '/fr/legal/', '/en/legal/', '/introuvable/'] as const;
 
 /**
  * Rapport lisible : règle, impact, éléments fautifs. On attend d'abord la fin des transitions de

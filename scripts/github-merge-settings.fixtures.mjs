@@ -1,4 +1,4 @@
-// Données de test partagées du faux écart de infra/github (#262) : valeurs du code, lecture vide du
+// Données de test partagées du faux écart de infra/github : valeurs du code, lecture vide du
 // jeton en lecture seule, réponse GraphQL, plans et doublure de fetch. Aucun vrai jeton.
 import { checkGithubPlan } from './check-github-plan.mjs';
 

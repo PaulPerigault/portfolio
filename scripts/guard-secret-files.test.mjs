@@ -47,7 +47,7 @@ describe('secretFilesIn : fichiers de secrets cités par une commande', () => {
     'git status --short',
     'terraform -chdir=infra validate',
     'vi .envrc-notes.md',
-    // Décomposition JavaScript (#227) : `...env` est une variable, pas un fichier.
+    // Décomposition JavaScript : `...env` est une variable, pas un fichier.
     'node -e "f({ ...env, CI: 1 })"',
     'node -e "spawn(cmd, { env: {...process.env} })"',
   ])('laisse passer « %s »', (command) => {

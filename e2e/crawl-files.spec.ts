@@ -13,7 +13,6 @@ test.describe('fichiers destinés aux robots', () => {
       expect(sitemap).toContain(`<loc>https://paulperigault.fr/${lang}/</loc>`);
       expect(sitemap).toContain(`hreflang="${lang}" href="https://paulperigault.fr/${lang}/"`);
     }
-    expect(sitemap).not.toContain('styleguide');
     expect(sitemap).not.toContain('<loc>https://paulperigault.fr/</loc>');
   });
 

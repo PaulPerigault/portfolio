@@ -1,7 +1,10 @@
 import { expect, test, type Page } from '@playwright/test';
 
-// Valeurs de tokens.css, vues par le navigateur (rgb) : elles doivent changer avec le thème.
-const BACKGROUND = { light: 'rgb(252, 252, 253)', dark: 'rgb(14, 16, 21)' } as const;
+// Valeurs de --pp-color-bg (@paulperigault/tokens), vues par le navigateur (oklch) : elles doivent changer avec le thème.
+const BACKGROUND = {
+  light: 'oklch(0.985 0.004 270.7)',
+  dark: 'oklch(0.201 0.0124 270.7)',
+} as const;
 
 const backgroundOf = (page: Page) =>
   page

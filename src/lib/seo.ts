@@ -21,9 +21,11 @@ export interface Alternate {
 /** URL absolue sur le domaine canonique (`/fr/` → `https://…/fr/`). */
 export const absoluteUrl = (path: string): string => `${SITE.domain}${path}`;
 
-/** Chemin de la même page dans une autre langue (`/fr/a/` → `/en/a/`). */
-export const pathForLang = (path: string, from: Lang, to: Lang): string =>
-  path.replace(`/${from}/`, `/${to}/`);
+/** Chemin de la même page dans une autre langue (`/fr/a/` → `/en/a/`) ; seul le préfixe change. */
+export const pathForLang = (path: string, from: Lang, to: Lang): string => {
+  const prefix = `/${from}/`;
+  return path.startsWith(prefix) ? `/${to}/${path.slice(prefix.length)}` : path;
+};
 
 /** Toutes les versions linguistiques + `x-default` (français). */
 export const alternates = (path: string, lang: Lang): Alternate[] => [
@@ -60,7 +62,7 @@ export const socialTags = ({ lang, path, title, description }: SeoInput) => {
 export const canonicalUrl = (path: string): string => absoluteUrl(path);
 
 /**
- * Directive des pages hors index (styleguide, 404). Sans `nofollow` : leurs liens mènent à des
+ * Directive des pages hors index (404). Sans `nofollow` : leurs liens mènent à des
  * pages indexables que les moteurs peuvent suivre.
  */
 export const NOINDEX = 'noindex';

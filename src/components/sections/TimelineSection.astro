@@ -24,7 +24,7 @@ const { id, title, entries } = Astro.props;
         dateTime={entry.dateTime}
       >
         <p>{entry.description}</p>
-        {entry.tags.length > 0 && <p class="text-muted mt-3 text-sm">{entry.tags.join(', ')}</p>}
+        {entry.tags.length > 0 && <p class="text-muted mt-xs text-sm">{entry.tags.join(', ')}</p>}
       </TimelineItem>
     ))}
   </Timeline>
