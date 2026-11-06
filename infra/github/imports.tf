@@ -64,3 +64,14 @@ import {
   to       = github_branch_default.design_system[each.key]
   id       = each.key
 }
+
+# Réglages Actions du portfolio (A14) : existent toujours côté GitHub, importés par le nom du dépôt.
+import {
+  to = github_workflow_repository_permissions.portfolio
+  id = "portfolio"
+}
+
+import {
+  to = github_actions_repository_permissions.portfolio
+  id = "portfolio"
+}
