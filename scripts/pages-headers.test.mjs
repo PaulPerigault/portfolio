@@ -1,5 +1,4 @@
-// En-têtes HTTP de l'hébergement Cloudflare Pages (`public/_headers`) : couvre ce
-// que contrôlerait un serveur classique, et ajoute HSTS et CORP.
+// En-têtes HTTP servis par Cloudflare Pages (`public/_headers`), dont HSTS et CORP.
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { headersFor, parseHeaders } from './lib/pages-headers.mjs';
