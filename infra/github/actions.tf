@@ -8,22 +8,11 @@ resource "github_actions_variable" "turnstile_sitekey" {
   value         = "0x4AAAAAAFV0gKQ19VAmo-K2"
 }
 
-# `copilot` est créé par GitHub ; `github-pages` reste de l'ancien déploiement Pages (ADR-0010).
+# `copilot` est créé par GitHub, conservé tel quel.
 resource "github_repository_environment" "copilot" {
   repository        = github_repository.portfolio.name
   environment       = "copilot"
   can_admins_bypass = true
-}
-
-resource "github_repository_environment" "github_pages" {
-  repository        = github_repository.portfolio.name
-  environment       = "github-pages"
-  can_admins_bypass = true
-
-  deployment_branch_policy {
-    protected_branches     = true
-    custom_branch_policies = false
-  }
 }
 
 # Environnement des secrets posés à la main (CLOUDFLARE_API_TOKEN_DEPLOY, TOKEN) : déployable depuis

@@ -46,11 +46,6 @@ import {
   id = "portfolio:copilot"
 }
 
-import {
-  to = github_repository_environment.github_pages
-  id = "portfolio:github-pages"
-}
-
 # Dépôt design-system créé par `gh repo create` le 2026-10-20 (#268) : importé, jamais recréé.
 # Sauté avec lui quand `design_system = false` (plan CI sans accès au dépôt).
 import {
