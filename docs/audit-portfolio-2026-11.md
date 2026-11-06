@@ -6,7 +6,7 @@ dossier temporaire neutre, après `npm i @paulperigault/{astro,css,tokens,datavi
 
 Niveaux de preuve : **[P]** prouvé (fichier lu ou mesure faite pendant l'audit), **[D]** déduit de
 sources lues, **[À VÉRIFIER]** non lisible ici. Le plan de migration est dans la section 7, les
-décisions à prendre dans la section 8. Passation : `docs/passation-portfolio.md`.
+décisions à prendre dans la section 8.
 
 ## 1. Synthèse
 
@@ -123,7 +123,7 @@ décisions à prendre dans la section 8. Passation : `docs/passation-portfolio.m
 | Secret `TOKEN` (2026-09-17) | Nom générique, usage inconnu | [À VÉRIFIER] |
 | Réglages de fusion | API : fusion simple et rebase autorisés, message `COMMIT_MESSAGES` ; `CLAUDE.md` annonce squash seul avec `PR_BODY` | Plan IaC à lire par Paul (§5 des commandes) |
 | Test Vitest intermittent | 1 échec sur 3 exécutions, nom non capturé | À surveiller [À VÉRIFIER] |
-| `CLAUDE.md` | Décrit `docs/design-system-inventaire.md` (#182, mesuré le 2026-10-19) comme base du cadrage | À remplacer par ce rapport après le lot 1 |
+| `CLAUDE.md` | Décrivait l'ancien inventaire du design system (#182, mesuré le 2026-10-19) comme base du cadrage | Remplacé par ce rapport |
 
 ## 7. Plan de migration (un lot = une PR, mobile d'abord)
 
@@ -146,8 +146,7 @@ Risques propres : lot 1 (collision de jetons, utilitaires retirés, poids des po
 ### Prompt-type donné à Claude Code (à adapter par lot)
 
 ```
-Lot <n> du plan docs/audit-portfolio-2026-11.md : <titre>. Lis docs/passation-portfolio.md et
-CLAUDE.md. Branche feat|chore/<issue>-<slug> depuis develop, PR vers develop (Closes #<issue>).
+Lot <n> du plan docs/audit-portfolio-2026-11.md : <titre>. Lis CLAUDE.md. Branche feat|chore/<issue>-<slug> depuis develop, PR vers develop (Closes #<issue>).
 1) Relève l'avant : captures mobile (390 px) et bureau, poids, Lighthouse mobile. 2) Implémente
 seulement le périmètre du lot avec @paulperigault/<paquet> ; ne cite un composant que s'il est
 dans node_modules. 3) Garde URL, ancres, JSON-LD, favicon et CSP intacts. 4) Tests : vitest + e2e
