@@ -61,3 +61,7 @@ Un seul `h1` par page, landmarks (`header`, `main#content`, `footer`), lien d'é
 ## 8. i18n
 
 Deux langues, préfixées (`/fr/`, `/en/`). Chaque page indexable déclare ses hreflang `fr`, `en` et `x-default` (= `fr`), réciproques ; le sitemap les reprend (`xhtml:link`).
+
+## 9. noindex : liste blanche
+
+Seule la 404 est en `noindex`, et elle n'est pas au sitemap. `robots.txt` ne bloque rien (un `noindex` doit pouvoir être lu). Les adresses `*.pages.dev` reçoivent `X-Robots-Tag: noindex` par `public/_headers` : ce sont des doublons du site, le domaine canonique n'est pas concerné. La liste blanche est `scripts/lib/noindex-allowlist.mjs`, vérifiée par `scripts/noindex-allowlist.test.mjs` (sources) et `e2e/indexability.spec.ts` (pages construites, URL du sitemap).
