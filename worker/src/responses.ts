@@ -6,6 +6,7 @@ export type ErrorCode =
   | 'invalid'
   | 'forbidden'
   | 'challenge'
+  | 'not_found'
   | 'method'
   | 'too_large'
   | 'unsupported'
@@ -16,6 +17,7 @@ const STATUS: Record<ErrorCode, number> = {
   invalid: 400,
   forbidden: 403,
   challenge: 403,
+  not_found: 404,
   method: 405,
   too_large: 413,
   unsupported: 415,

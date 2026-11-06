@@ -16,14 +16,17 @@ export interface Deps {
 type ResponseHeaders = Record<string, string>;
 
 const ALLOWED_METHODS = 'POST, OPTIONS';
+// Le formulaire n'appelle que la racine : tout autre chemin n'existe pas.
+const ENDPOINT_PATH = '/';
 
 /**
- * Ordre des contrôles : méthode, origine, débit, type, taille, JSON, piège, champs, Turnstile, envoi.
+ * Ordre des contrôles : chemin, méthode, origine, débit, type, taille, JSON, piège, champs, Turnstile, envoi.
  * Rien n'est journalisé ni stocké ; les erreurs du réseau deviennent « service indisponible ».
  */
 export const createHandler =
   (deps: Deps) =>
   async (request: Request, env: Env): Promise<Response> => {
+    if (new URL(request.url).pathname !== ENDPOINT_PATH) return fail('not_found');
     if (request.method !== 'POST' && request.method !== 'OPTIONS') {
       return fail('method', { Allow: ALLOWED_METHODS });
     }
