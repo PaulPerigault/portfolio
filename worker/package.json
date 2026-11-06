@@ -2,6 +2,7 @@
   "name": "contact-worker",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "Worker Cloudflare du formulaire de contact : Turnstile, puis envoi par Resend.",
   "engines": {

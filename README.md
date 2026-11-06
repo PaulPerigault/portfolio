@@ -60,3 +60,8 @@ Le site est construit **une seule fois** (`build.yml`) ; cet artefact est testé
 ## Hébergement Cloudflare
 
 Module OpenTofu `infra/modules/pages-site` et en-têtes `public/_headers` ; procédure de bascule : `docs/runbook-cloudflare.md`.
+
+## Licence
+
+Le code est sous licence MIT : voir [LICENSE](LICENSE). Les contenus personnels (textes,
+photo, CV, images) restent tous droits réservés : voir [CONTENT-LICENSE.md](CONTENT-LICENSE.md).

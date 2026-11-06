@@ -2,6 +2,7 @@
   "name": "paul-portfolio",
   "version": "2.2.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "packageManager": "npm@11.6.1",
   "engines": {
