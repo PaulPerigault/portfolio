@@ -1,4 +1,5 @@
-const PREFLIGHT_CACHE_SECONDS = 86_400;
+// Chromium plafonne la mémorisation du preflight à 2 heures.
+const PREFLIGHT_CACHE_SECONDS = 7_200;
 
 /** L'origine de la requête si elle est autorisée, sinon `null` (comparaison exacte, jamais `*`). */
 export const allowedOrigin = (request: Request, allowed: ReadonlySet<string>): string | null => {
