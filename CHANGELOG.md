@@ -1,5 +1,39 @@
 # Changelog
 
+## [2.3.0](https://github.com/PaulPerigault/portfolio/compare/v2.2.0...v2.3.0) (2026-11-06)
+
+
+### Features
+
+* **design:** garde-fous de la charte v2 et cible du lien de navigation ([07a9d6d](https://github.com/PaulPerigault/portfolio/commit/07a9d6da1fda8dd9328d7253839778aba72e4394)), closes [#296](https://github.com/PaulPerigault/portfolio/issues/296)
+* **design:** socle jetons et css du design system ([44d658d](https://github.com/PaulPerigault/portfolio/commit/44d658def56f4627903861f9e97e42da78fedc4d))
+* **infra:** brique github, dépôt et protections en opentofu ([#259](https://github.com/PaulPerigault/portfolio/issues/259)) ([6825db3](https://github.com/PaulPerigault/portfolio/commit/6825db3c7077cc2537a946eda6906d25dab1fa02)), closes [#255](https://github.com/PaulPerigault/portfolio/issues/255)
+* **infra:** clés r2 du state en lecture seule pour la ci ([#253](https://github.com/PaulPerigault/portfolio/issues/253)) ([fa19090](https://github.com/PaulPerigault/portfolio/commit/fa1909003903e0d0a07c511a58ef8e6d26bb35ef))
+* **infra:** dépôt design-system en iac, pages et dns des docs ([#269](https://github.com/PaulPerigault/portfolio/issues/269)) ([e34c22b](https://github.com/PaulPerigault/portfolio/commit/e34c22b23473c5da14fa5d8b51a9f5d0969677fc)), closes [#268](https://github.com/PaulPerigault/portfolio/issues/268)
+* **infra:** paulperigault.fr servi par cloudflare pages ([#248](https://github.com/PaulPerigault/portfolio/issues/248)) ([f89b669](https://github.com/PaulPerigault/portfolio/commit/f89b669069cd637e334b7453beafb6d1f5cb1a18))
+* **infra:** source git et previews par pr pour les docs du design system ([fb9d1f0](https://github.com/PaulPerigault/portfolio/commit/fb9d1f05f60891afc9a7ac6234c7ac65aa85147e))
+* **layout:** coque aux jetons et lien vers le design system ([1b97d09](https://github.com/PaulPerigault/portfolio/commit/1b97d097f8b56226c06bc520f30ac78dd7a38f09))
+* **projects:** carte design system dans la section projets ([807b55f](https://github.com/PaulPerigault/portfolio/commit/807b55f63e6dec14bbce93d6db196b46311e28e7)), closes [#335](https://github.com/PaulPerigault/portfolio/issues/335)
+* **sections:** chronologies aux jetons du design system ([c1418d8](https://github.com/PaulPerigault/portfolio/commit/c1418d8b0350cfabb85537e2b12715bea0d3d421))
+* **sections:** competences et projets aux jetons du design system ([860404d](https://github.com/PaulPerigault/portfolio/commit/860404d4367ccda63eaed04c79784b2323d4947f))
+* **sections:** hero, contact et champs du design system ([6467c33](https://github.com/PaulPerigault/portfolio/commit/6467c33dd436d7269dfaf72eb35bd44ed7edc445))
+* **worker:** limitation de débit par adresse ip (binding cloudflare) ([#219](https://github.com/PaulPerigault/portfolio/issues/219)) ([ec353fb](https://github.com/PaulPerigault/portfolio/commit/ec353fb5afc9726d3a8bb5a4ad1e25ea482c1c1b))
+
+
+### Bug Fixes
+
+* **ci:** jeton github en lecture seule de la ci, nommé iac_github_readonly_token ([#260](https://github.com/PaulPerigault/portfolio/issues/260)) ([032ec1a](https://github.com/PaulPerigault/portfolio/commit/032ec1a849301607c53bb5adcc347d074eefa23c))
+* **content:** corrige les textes du site (hebergeur, ecole, iut, termes) ([991416e](https://github.com/PaulPerigault/portfolio/commit/991416ea355d07de4182201fd7f7676f60560586)), closes [#327](https://github.com/PaulPerigault/portfolio/issues/327)
+* **content:** etat vide des projets sans tournure de remplissage ([994da47](https://github.com/PaulPerigault/portfolio/commit/994da4735e51d8b15229f5540d2feb8d579dc9ea)), closes [#359](https://github.com/PaulPerigault/portfolio/issues/359)
+* **content:** objectif d'intervention en école, démo accentué ([69ad9a9](https://github.com/PaulPerigault/portfolio/commit/69ad9a9d68ad0013de65da86e7ada3df3b700a4a))
+* **deps:** minimatch 11.0.1 en override, lockfile avec libc ([#378](https://github.com/PaulPerigault/portfolio/issues/378)) ([e3bcc04](https://github.com/PaulPerigault/portfolio/commit/e3bcc04af9dc1e673bc1c8749d99456448aa9b90))
+* **deps:** vite 8.3.5, avis de sécurité de launch-editor ([#271](https://github.com/PaulPerigault/portfolio/issues/271)) ([8900cdd](https://github.com/PaulPerigault/portfolio/commit/8900cdd73d79c99150538718a14f2a197de0d072))
+* **hero:** le bouton contact amene au formulaire ([fae9f70](https://github.com/PaulPerigault/portfolio/commit/fae9f70604a8c2eee08a0c35eba04371efb882e1)), closes [#348](https://github.com/PaulPerigault/portfolio/issues/348)
+* **layout:** langswitch ne remplace que le prefixe de langue ([3dffdaa](https://github.com/PaulPerigault/portfolio/commit/3dffdaaf065b1e22cdccb47a83fa9b07742aba82)), closes [#321](https://github.com/PaulPerigault/portfolio/issues/321)
+* **seo:** echapper l'antislash dans le texte markdown des depots ([#371](https://github.com/PaulPerigault/portfolio/issues/371)) ([fe40ea5](https://github.com/PaulPerigault/portfolio/commit/fe40ea5e1b8b9647341f1ce7be87c7696e5208a1)), closes [#368](https://github.com/PaulPerigault/portfolio/issues/368)
+* **seo:** humans.txt cite le depot sous son nom actuel ([3101879](https://github.com/PaulPerigault/portfolio/commit/310187937b46f3b3c422968d4d097d7a19d444ea)), closes [#329](https://github.com/PaulPerigault/portfolio/issues/329)
+* **seo:** pathforlang ne remplace que le prefixe de langue ([8e637ab](https://github.com/PaulPerigault/portfolio/commit/8e637abcccdcc953a45b29ad1309665ab64e90eb))
+
 ## [2.2.0](https://github.com/PaulPerigault/PaulPerigault.github.io/compare/v2.1.1...v2.2.0) (2026-10-20)
 
 
