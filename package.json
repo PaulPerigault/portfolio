@@ -101,6 +101,7 @@
   "overrides": {
     "@effect/vitest": {
       "vitest": "$vitest"
-    }
+    },
+    "minimatch": "^11.0.1"
   }
 }
