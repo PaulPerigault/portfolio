@@ -1,6 +1,6 @@
 // Hook PreToolUse de Claude Code (Bash et PowerShell) : toute commande `gh pr merge` n'est acceptée
-// que si la base et la tête réelles de la PR, lues par `gh pr view`, sont admises (vers develop, ou
-// vers main depuis develop ou release-please : lib/pr-merge-policy.mjs). Code de sortie 2 = commande
+// que si la base réelle de la PR, lue par `gh pr view`, est `develop` (lib/pr-merge-policy.mjs) :
+// toute fusion vers main, release-please comprise, reste au propriétaire. Code de sortie 2 = commande
 // bloquée, avec la raison sur stderr. Entrée illisible ou PR illisible = blocage.
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';

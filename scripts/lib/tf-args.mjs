@@ -2,6 +2,8 @@
 // - celles qui afficheraient un secret du state (Turnstile, jetons de infra/identity/) : `show`,
 //   `console`, `state show|pull`, `output` sans nom, en JSON ou d'une sortie « secret », « token »
 //   ou « client » ;
+// - toute modification du state ou de ses verrous hors plan (`state rm|mv|push|replace-provider`,
+//   `import`, `taint`, `untaint`, `force-unlock`) ;
 // - toute destruction (`destroy`, `-destroy`) et tout `apply` sans plan enregistré (`*.tfplan`) ;
 // - l'`apply` d'un plan qui détruit ou remplace une ressource (planDestructionRefusal, qui lit le
 //   plan par `tofu show -json` sans jamais l'afficher).
@@ -33,6 +35,14 @@ export function secretOutputRefusal(args) {
   return leaks ? REFUSAL : null;
 }
 
+const STATE_EDITS = new Set(['import', 'taint', 'untaint', 'force-unlock']);
+const STATE_WRITES = new Set(['rm', 'mv', 'push', 'replace-provider']);
+const STATE_REFUSAL =
+  'Commande refusée : le state ne change que par un plan relu (`import`, `taint`, `force-unlock` et `state rm|mv|push` sont réservés au propriétaire, hors infra:*).';
+
+const editsState = (command, sub) =>
+  STATE_EDITS.has(command) || (command === 'state' && STATE_WRITES.has(sub));
+
 const DESTROY_REFUSAL =
   'Commande refusée : aucune destruction par les commandes infra:* (destroy, -destroy).';
 const APPLY_REFUSAL =
@@ -42,9 +52,11 @@ const PLAN_FILE = /\.tfplan$/;
 /** @param {string[]} args arguments passés à tofu @returns {string | null} raison du refus */
 export function changeRefusal(args) {
   const positional = args.filter((arg) => !arg.startsWith('-'));
-  if (positional[0] === 'destroy' || args.includes('-destroy')) return DESTROY_REFUSAL;
+  const [command, sub] = positional;
+  if (editsState(command, sub)) return STATE_REFUSAL;
+  if (command === 'destroy' || args.includes('-destroy')) return DESTROY_REFUSAL;
   const savedPlan = positional.length === 2 && PLAN_FILE.test(positional[1]);
-  if (positional[0] === 'apply' && !savedPlan) return APPLY_REFUSAL;
+  if (command === 'apply' && !savedPlan) return APPLY_REFUSAL;
   return null;
 }
 

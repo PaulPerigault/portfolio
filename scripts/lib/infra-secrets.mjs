@@ -1,6 +1,6 @@
 // Secrets locaux d'infrastructure (infra/.secrets.env, ignoré par Git) chargés dans l'environnement
 // d'un processus ENFANT uniquement : jamais dans le processus courant, jamais affichés, même dans
-// une erreur. Chaque commande déclare les variables dont elle a besoin.
+// une erreur. TF_LOG* (journaux) et TF_CLI_ARGS* (options ajoutées) hérités sont retirés.
 import { join } from 'node:path';
 
 // Jetons d'amorçage (droits larges, durée courte, IP du propriétaire) : ils ne servent qu'à créer
@@ -31,6 +31,7 @@ const KNOWN_SECRETS = new Set([
 ]);
 const isBootstrap = (name) => BOOTSTRAP_SECRETS.includes(name);
 const isGithub = (name) => GITHUB_SECRETS.includes(name);
+const isTfAmbient = (name) => /^TF_(?:LOG|CLI_ARGS)/.test(name);
 const COMMENT_OR_BLANK = /^\s*(?:#|$)/;
 const ASSIGNMENT = /^\s*([A-Za-z_]\w*)\s*=(.*)$/;
 const QUOTED = /^"(.*)"$|^'(.*)'$/;
@@ -93,7 +94,7 @@ const loadEnv = (names, { env, readFile, root }, reserved = () => false) => {
   }
   const text = readSecretsFile(secretsFilePath(env, root), readFile);
   const inherited = Object.fromEntries(
-    Object.entries(env).filter(([name]) => !isBootstrap(name) && !reserved(name)),
+    Object.entries(env).filter(([n]) => !isBootstrap(n) && !reserved(n) && !isTfAmbient(n)),
   );
   return { ...inherited, ...parseSecrets(text, names) };
 };
