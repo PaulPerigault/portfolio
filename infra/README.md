@@ -101,19 +101,30 @@ Ensuite, la CI déploie le code ; les secrets ne bougent qu'à une rotation (ét
 
 ## State
 
-Backend `s3` vers R2 (`backend.tf`) : bucket `tfstate-portfolio`, créé à la main et **non géré par OpenTofu**. Le state contient un secret, celui du widget Turnstile ; la clé Resend n'y entre pas. Il reste dans R2 et n'est jamais dans le dépôt. `*.tfstate*` et `*.tfplan` sont ignorés : un plan enregistré contient aussi les secrets en clair. Pas de verrou de state : un seul opérateur, aucun `apply` automatique.
+Backend `s3` vers R2 (`backend.tf`) : bucket `tfstate-portfolio`, créé à la main et **non géré par OpenTofu**. Le state contient un secret, celui du widget Turnstile ; la clé Resend n'y entre pas. Il reste dans R2 et n'est jamais dans le dépôt. Exception : le state de `infra/identity/` (valeurs des jetons créés) est dans le bucket dédié `tfstate-portfolio-identity`, même point d'accès, juridiction `default`, clé `identity/terraform.tfstate`, hors de la portée de la clé S3 en lecture seule de la CI (qui ne couvre que `tfstate-portfolio`). `*.tfstate*` et `*.tfplan` sont ignorés : un plan enregistré contient aussi les secrets en clair. Pas de verrou de state : un seul opérateur, aucun `apply` automatique.
 
 ### Accès au state (prérequis avant tout `apply`)
 
 Le state contient le secret Turnstile en clair : le bucket ne doit être joignable par **aucun accès public**.
 
-- Vérification automatique, en lecture seule : `npm run infra:r2-check` (code 1 si un accès public existe). Elle demande la permission _Workers R2 Storage : Read_ sur le compte. Le token « terraform-portfolio » ne l'avait pas au 2026-10-13 (`Authentication error`), d'où le contrôle manuel ci-dessous.
-- Contrôle manuel dans le dashboard Cloudflare, **R2 → `tfstate-portfolio` → Settings** :
+- Vérification automatique, en lecture seule : `npm run infra:r2-check` (code 1 si un accès public existe), sur les **deux** buckets de state. Elle demande la permission _Workers R2 Storage : Read_ sur le compte, donc aussi sur `tfstate-portfolio-identity`. Le token « terraform-portfolio » ne l'avait pas au 2026-10-13 (`Authentication error`), d'où le contrôle manuel ci-dessous.
+- Contrôle manuel dans le dashboard Cloudflare, **R2 → `tfstate-portfolio` puis `tfstate-portfolio-identity` → Settings** :
   1. **Public Development URL** (`r2.dev`) : **Disabled** ;
   2. **Custom Domains** : **aucun** domaine connecté ;
   3. **CORS Policy** : vide, puisque le bucket n'est lu que par OpenTofu via l'API S3 ;
-  4. **R2 → Manage API tokens** : les clés S3 du state sont limitées à ce bucket (_Object Read & Write_, bucket `tfstate-portfolio` seulement) ;
+  4. **R2 → Manage API tokens** : les clés S3 du state sont limitées à leur bucket (_Object Read & Write_ ; la clé en lecture seule de la CI, `tfstate-portfolio` seulement, ne doit jamais couvrir `tfstate-portfolio-identity`) ;
   5. facultatif : une **Bucket lock rule** ou le versionnement des objets, pour pouvoir revenir à un state précédent en cas de corruption.
+
+### State d'`infra/identity/` : bucket dédié
+
+Le bucket `tfstate-portfolio-identity` est créé à la main (non géré par OpenTofu), accès public coupé comme ci-dessus. La clé S3 qui sert à `npm run infra:identity` doit avoir _Object Read & Write_ sur ce bucket **et** sur `tfstate-portfolio` le temps de la migration. Un test (`scripts/infra-state-buckets.test.mjs`) échoue si le bucket du backend d'identity est celui d'un autre backend ou de `local.state_bucket` (`infra/identity/r2.tf`).
+
+Migration (une seule fois, depuis la branche qui change `infra/identity/backend.tf`) :
+
+1. `npm run infra:identity -- init -migrate-state` : copie le state vers le nouveau bucket.
+2. `npm run infra:identity -- plan` : doit afficher _No changes_. Sinon, ne rien supprimer.
+3. Supprimer l'ancien objet `identity/terraform.tfstate` du bucket `tfstate-portfolio` (dashboard R2 ou clé d'écriture). C'est cette étape, et elle seule, qui retire l'exposition : `init -migrate-state` copie sans effacer la source.
+4. `npm run infra:r2-check` : aucun accès public sur les deux buckets.
 
 ## Rotation des tokens
 

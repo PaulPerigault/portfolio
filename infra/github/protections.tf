@@ -18,9 +18,32 @@ resource "github_repository_ruleset" "develop" {
     }
   }
 
+  # Mêmes garanties que `main` : PR obligatoire, checks requis, aucun acteur de contournement.
+  # Les méthodes de fusion ne sont pas restreintes ici : develop garde celles du dépôt (squash
+  # pour les fonctionnalités, fusion pour les synchronisations depuis main).
   rules {
     deletion         = true
     non_fast_forward = true
+
+    pull_request {
+      dismiss_stale_reviews_on_push     = false
+      require_code_owner_review         = false
+      require_last_push_approval        = false
+      required_approving_review_count   = 0
+      required_review_thread_resolution = false
+    }
+
+    required_status_checks {
+      strict_required_status_checks_policy = false
+      do_not_enforce_on_create             = false
+
+      dynamic "required_check" {
+        for_each = local.required_checks
+        content {
+          context = required_check.value
+        }
+      }
+    }
   }
 }
 
@@ -67,7 +90,8 @@ resource "github_branch_protection" "branch" {
   repository_id = github_repository.portfolio.node_id
   pattern       = each.key
 
-  enforce_admins                  = false
+  # develop : les administrateurs n'ont pas de contournement ; main reste inchangée.
+  enforce_admins                  = each.key == "develop"
   allows_deletions                = false
   allows_force_pushes             = false
   lock_branch                     = false
@@ -80,13 +104,10 @@ resource "github_branch_protection" "branch" {
     contexts = local.required_checks
   }
 
-  dynamic "required_pull_request_reviews" {
-    for_each = each.key == "main" ? [1] : []
-    content {
-      dismiss_stale_reviews           = true
-      require_code_owner_reviews      = false
-      require_last_push_approval      = false
-      required_approving_review_count = 0
-    }
+  required_pull_request_reviews {
+    dismiss_stale_reviews           = true
+    require_code_owner_reviews      = false
+    require_last_push_approval      = false
+    required_approving_review_count = 0
   }
 }

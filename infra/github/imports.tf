@@ -46,11 +46,6 @@ import {
   id = "portfolio:copilot"
 }
 
-import {
-  to = github_repository_environment.github_pages
-  id = "portfolio:github-pages"
-}
-
 # Dépôt design-system créé par `gh repo create` le 2026-10-20 (#268) : importé, jamais recréé.
 # Sauté avec lui quand `design_system = false` (plan CI sans accès au dépôt).
 import {
@@ -63,4 +58,15 @@ import {
   for_each = local.ds
   to       = github_branch_default.design_system[each.key]
   id       = each.key
+}
+
+# Réglages Actions du portfolio (A14) : existent toujours côté GitHub, importés par le nom du dépôt.
+import {
+  to = github_workflow_repository_permissions.portfolio
+  id = "portfolio"
+}
+
+import {
+  to = github_actions_repository_permissions.portfolio
+  id = "portfolio"
 }

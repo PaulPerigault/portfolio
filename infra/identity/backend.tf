@@ -1,8 +1,9 @@
-# State propre à la brique, dans le même bucket R2 que infra/ (clé distincte). Il contient les
-# valeurs des jetons créés : il ne quitte jamais R2, comme celui de infra/ (infra/README.md, « State »).
+# State propre à la brique, dans le bucket R2 dédié `tfstate-portfolio-identity`, hors de la portée
+# de la clé S3 en lecture seule de la CI, qui ne couvre que `tfstate-portfolio`. Il contient les
+# valeurs des jetons créés : il ne quitte jamais R2 (infra/README.md, « State »).
 terraform {
   backend "s3" {
-    bucket = "tfstate-portfolio"
+    bucket = "tfstate-portfolio-identity"
     key    = "identity/terraform.tfstate"
     region = "auto"
 
