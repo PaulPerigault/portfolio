@@ -90,4 +90,10 @@ describe('pushIdentity', () => {
     expect(calls.filter((call) => call.command === 'gh')).toEqual([]);
     expect(lines.join('\n')).not.toMatch(/fake-/);
   });
+
+  it('une sortie illisible donne un message fixe, sans extrait de la sortie', () => {
+    const { deps } = setup(outputs);
+    deps.spawn = () => ({ status: 0, stdout: '{"fake-secret": oups' });
+    expect(() => pushIdentity(deps)).toThrow(/^(?!.*fake-secret).*illisible/);
+  });
 });
