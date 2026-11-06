@@ -25,3 +25,23 @@ resource "github_repository_environment" "github_pages" {
     custom_branch_policies = false
   }
 }
+
+# Environnement des secrets posés à la main (CLOUDFLARE_API_TOKEN_DEPLOY, TOKEN) : déployable depuis
+# `main` seulement, comme `npm-publish` et `docs-deploy` du design system. Ressource nouvelle, sans import.
+resource "github_repository_environment" "production" {
+  repository          = github_repository.portfolio.name
+  environment         = "production"
+  can_admins_bypass   = false
+  prevent_self_review = false
+
+  deployment_branch_policy {
+    protected_branches     = false
+    custom_branch_policies = true
+  }
+}
+
+resource "github_repository_environment_deployment_policy" "production" {
+  repository     = github_repository.portfolio.name
+  environment    = github_repository_environment.production.environment
+  branch_pattern = "main"
+}
