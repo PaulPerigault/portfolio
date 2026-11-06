@@ -2,6 +2,7 @@
 // (version + SHA-256), Dependabot ne le voit pas. Logique pure, réseau injecté par l'appelant.
 
 const VERSION_PIN = /GITLEAKS_VERSION:\s*([\d.]+)/;
+const VERSION_FORMAT = /^\d+\.\d+\.\d+$/;
 const ARCHIVE = (version) => `gitleaks_${version}_linux_x64.tar.gz`;
 
 /** Version épinglée dans le texte de security.yml, ou null. */
@@ -15,6 +16,14 @@ export function isNewer(candidate, current) {
     if ((a[i] ?? 0) !== (b[i] ?? 0)) return (a[i] ?? 0) > (b[i] ?? 0);
   }
   return false;
+}
+
+/** Version x.y.z d'une étiquette de release (`v8.31.0`) ; elle part dans le titre et le corps d'une issue. */
+export function releaseVersion(tag) {
+  const version = String(tag).replace(/^v/, '');
+  if (!VERSION_FORMAT.test(version))
+    throw new Error('Version de gitleaks inattendue (x.y.z requis)');
+  return version;
 }
 
 /** SHA-256 de l'archive linux_x64 dans le fichier checksums.txt de la release, ou null. */
