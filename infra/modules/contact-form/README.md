@@ -21,6 +21,10 @@ Le code est déployé par `wrangler deploy` (`worker/wrangler.toml`, même `name
 
 `turnstile_sitekey`, `turnstile_secret` (sensible), `endpoint`, `worker_name`.
 
+## Limites connues
+
+La règle de limitation de débit ne filtre que sur le chemin (contrainte de l'offre gratuite). Elle s'applique donc à tous les noms d'hôte de la zone `paulperigault.dev` dont le chemin est exactement `/`, y compris `design.paulperigault.dev`. Les seuils sont ceux de la brique (5 requêtes par 10 s et par IP) et le Worker garde sa propre limite. Si le chemin du Worker changeait un jour (par exemple `/contact`), la règle pourrait être restreinte à ce chemin.
+
 ## Supprimer ce service
 
 Retirer le bloc `module "contact_form"` de `infra/main.tf`, puis `plan` et `apply` par le propriétaire. Le site garde son repli `mailto:` : sans `PUBLIC_TURNSTILE_SITEKEY`, le formulaire n'est pas construit.
