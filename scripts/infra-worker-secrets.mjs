@@ -37,6 +37,13 @@ const turnstileSecret = (deps, env) => {
   return result.stdout;
 };
 
+// Environnement de Wrangler : l'hérité déjà filtré par `childEnv`, sans les secrets d'OpenTofu
+// (clé Resend, clés du backend) ; seul le jeton Cloudflare lui est transmis.
+const wranglerEnv = (env) => ({
+  ...Object.fromEntries(Object.entries(env).filter(([name]) => !NAMES.includes(name))),
+  CLOUDFLARE_API_TOKEN: env.TF_VAR_cloudflare_api_token,
+});
+
 /** @returns {number} code de sortie de Wrangler */
 export function pushWorkerSecrets(deps) {
   const env = childEnv(NAMES, deps);
@@ -49,7 +56,7 @@ export function pushWorkerSecrets(deps) {
   const wrangler = join(worker, 'node_modules', 'wrangler', 'bin', 'wrangler.js');
   const args = [wrangler, 'secret', 'bulk', '--config', join(worker, 'wrangler.toml')];
   const result = deps.spawn(process.execPath, args, {
-    env: { ...deps.env, CLOUDFLARE_API_TOKEN: env.TF_VAR_cloudflare_api_token },
+    env: wranglerEnv(env),
     input: payload,
     stdio: ['pipe', 'inherit', 'inherit'],
   });

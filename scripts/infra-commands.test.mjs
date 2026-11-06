@@ -63,6 +63,15 @@ describe('pushWorkerSecrets', () => {
     expect(process.env).toEqual(envBefore);
   });
 
+  it('ne passe à wrangler ni jeton d’amorçage ou GitHub hérité, ni secret OpenTofu', () => {
+    const { calls, deps } = setup([{ status: 0, stdout: 'fake-turnstile' }, { status: 0 }]);
+    deps.env = { ...deps.env, BOOTSTRAP_CLOUDFLARE: 'x', GITHUB_IAC_TOKEN: 'y', TF_LOG: 'trace' };
+    pushWorkerSecrets(deps);
+    const names = Object.keys(calls[1].options.env);
+    expect(names).toEqual(expect.arrayContaining(['PATH', 'CLOUDFLARE_API_TOKEN']));
+    expect(names.filter((name) => /^(BOOTSTRAP_|GITHUB_IAC|AWS_|TF_VAR_)/.test(name))).toEqual([]);
+  });
+
   it('s’arrête sans appeler wrangler si le secret Turnstile est indisponible', () => {
     const { calls, deps } = setup([{ status: 1, stdout: '' }]);
     expect(() => pushWorkerSecrets(deps)).toThrow(/Secret Turnstile indisponible/);
