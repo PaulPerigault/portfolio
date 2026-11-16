@@ -58,7 +58,7 @@
     "@paulperigault/css": "0.1.0",
     "@paulperigault/tokens": "0.1.0",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.4.2",
+    "astro": "^7.4.7",
     "effect": "^3.22.4",
     "tailwindcss": "^4.3.3"
   },
