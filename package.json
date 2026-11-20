@@ -51,7 +51,7 @@
     "infra:worker-secrets": "node scripts/infra-worker-secrets.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/sitemap": "^3.7.5",
     "@effect/platform": "^0.97.2",
     "@effect/platform-node": "^0.108.4",
     "@paulperigault/astro": "file:vendor/pp-tarballs/paulperigault-astro-0.4.0.tgz",
@@ -60,9 +60,9 @@
     "@paulperigault/milestones-3d": "file:vendor/pp-tarballs/paulperigault-milestones-3d-0.1.0.tgz",
     "@paulperigault/tokens": "0.2.1",
     "@tailwindcss/vite": "^4.3.5",
-    "astro": "^7.4.2",
+    "astro": "^7.4.12",
     "effect": "^3.22.4",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
