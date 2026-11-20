@@ -1,44 +1,32 @@
-import { defaultDeps, install } from '@paulperigault/astro/milestones-3d';
-
-/** Silence de défilement au bout duquel on considère que la page s'est arrêtée. */
-const QUIET_MS = 150;
-
-/** Résout quand plus aucun défilement n'a eu lieu pendant `QUIET_MS`. */
-const scrollSettled = (win: Window): Promise<void> =>
-  new Promise((resolve) => {
-    let timer = 0;
-    const arm = (): void => {
-      win.clearTimeout(timer);
-      timer = win.setTimeout(() => {
-        win.removeEventListener('scroll', arm);
-        resolve();
-      }, QUIET_MS);
-    };
-    win.addEventListener('scroll', arm, { passive: true });
-    arm();
-  });
-
-const nextScroll = (win: Window): Promise<void> =>
-  new Promise((resolve) => win.addEventListener('scroll', () => resolve(), { once: true }));
-
 /**
- * Charge la scène quand la section est proche et que la page est arrêtée, jamais pendant un
- * défilement ni quand la section est déjà passée au-dessus de l'écran : `html` défile en douceur
- * (`scroll-behavior: smooth`), et la scène insérée en cours de route repousserait la cible d'un lien
- * d'ancre (`#contact`) ou d'un focus programmatique hors de l'écran.
+ * Déclencheur de la scène 3D des certifications : ce fichier est le seul à partir avec la page, il
+ * reste donc minuscule (budget de JS Lighthouse). Il ne charge rien tant que la section n'est pas
+ * proche ; la suite (`certification-gate.ts`, puis le design system, le paquet 3D et son `.wasm`)
+ * est importée à la demande. La proximité reprend la règle du design system (`milestones-3d-gate`).
  */
-const readyWhenStable =
-  (base: (host: Element) => Promise<void>, win: Window = window) =>
-  async (host: Element): Promise<void> => {
-    await base(host);
-    await scrollSettled(win);
-    while (host.getBoundingClientRect().bottom <= 0) {
-      await nextScroll(win);
-      await scrollSettled(win);
-    }
-  };
+const HOST = '[data-pp-milestones]';
+/** La section est « proche » à cette distance du viewport. */
+const LOAD_MARGIN = '200px 0px';
+
+interface Connection {
+  saveData?: boolean;
+}
+
+/** Mouvement réduit ou économie de données : rien n'est jamais chargé. */
+const refused = (): boolean =>
+  matchMedia('(prefers-reduced-motion: reduce)').matches ||
+  (navigator as { connection?: Connection }).connection?.saveData === true;
 
 export function initCertificationPath(): void {
-  const deps = defaultDeps();
-  install(document, { ...deps, ready: readyWhenStable(deps.ready) });
+  const host = document.querySelector(HOST);
+  if (!host || refused()) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      observer.disconnect();
+      void import('@/scripts/certification-gate').then(({ start }) => start(host));
+    },
+    { rootMargin: LOAD_MARGIN },
+  );
+  observer.observe(host);
 }
