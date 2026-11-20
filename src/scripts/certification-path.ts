@@ -27,7 +27,7 @@ const nextScroll = (win: Window): Promise<void> =>
  * (`scroll-behavior: smooth`), et la scène insérée en cours de route repousserait la cible d'un lien
  * d'ancre (`#contact`) ou d'un focus programmatique hors de l'écran.
  */
-export const readyWhenStable =
+const readyWhenStable =
   (base: (host: Element) => Promise<void>, win: Window = window) =>
   async (host: Element): Promise<void> => {
     await base(host);
