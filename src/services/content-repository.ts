@@ -1,6 +1,6 @@
 import { FileSystem, Path } from '@effect/platform';
 import { Context, Effect, Layer, ParseResult, Schema } from 'effect';
-import { Certification } from '@/domain/certification';
+import { CertificationPath } from '@/domain/certification';
 import { ContentInvalid, ContentNotFound, type ContentError } from '@/domain/errors';
 import { Experience } from '@/domain/experience';
 import { Formation } from '@/domain/formation';
@@ -16,7 +16,7 @@ export interface ContentRepositoryShape {
   readonly skills: Read<ReadonlyArray<SkillCategory>>;
   readonly experience: Read<ReadonlyArray<Experience>>;
   readonly formation: Read<ReadonlyArray<Formation>>;
-  readonly certifications: Read<ReadonlyArray<Certification>>;
+  readonly certifications: Read<CertificationPath>;
   readonly projectsConfig: Read<ProjectsConfig>;
   readonly legal: Read<LegalDocument>;
 }
@@ -54,7 +54,7 @@ export class ContentRepository extends Context.Tag('ContentRepository')<
         skills: read('skills', Schema.Array(SkillCategory)),
         experience: read('experience', Schema.Array(Experience)),
         formation: read('formation', Schema.Array(Formation)),
-        certifications: read('certifications', Schema.Array(Certification)),
+        certifications: read('certifications', CertificationPath),
         projectsConfig: read('projects-config', ProjectsConfig),
         legal: read('legal', LegalDocument),
       };

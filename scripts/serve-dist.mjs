@@ -21,6 +21,7 @@ const MIME = {
   '.webp': 'image/webp',
   '.avif': 'image/avif',
   '.ico': 'image/x-icon',
+  '.wasm': 'application/wasm',
 };
 
 function resolveFile(urlPath) {

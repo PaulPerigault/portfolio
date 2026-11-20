@@ -1,4 +1,5 @@
 const ONGOING = '9999-12';
+const UNDATED = '9999-99';
 
 const compareDescending = (a: string, b: string): number => b.localeCompare(a);
 
@@ -16,9 +17,9 @@ export const newestFirst = <T extends Dated>(items: readonly T[]): T[] =>
   );
 
 interface Certified {
-  readonly dateIssued: string | null;
+  readonly date?: string | undefined;
 }
 
-/** Certifications en préparation d'abord, puis par date d'obtention décroissante. */
-export const certificationsNewestFirst = <T extends Certified>(items: readonly T[]): T[] =>
-  [...items].sort((a, b) => compareDescending(a.dateIssued ?? ONGOING, b.dateIssued ?? ONGOING));
+/** Ordre du parcours : date croissante (le plus ancien d'abord), sans date en dernier. */
+export const certificationsInOrder = <T extends Certified>(items: readonly T[]): T[] =>
+  [...items].sort((a, b) => (a.date ?? UNDATED).localeCompare(b.date ?? UNDATED));

@@ -1,0 +1,42 @@
+---
+/**
+ * Parcours de certifications : la liste ordonnée de `Milestones3D` est le rendu complet (sans
+ * JavaScript, sans WebGL, lecteurs d'écran). Le script y ajoute la scène 3D quand le mouvement
+ * n'est pas réduit, que les données ne sont pas économisées et que la section approche de l'écran
+ * sans que la page défile (`scripts/certification-path.ts`). Le paquet 3D et son `.wasm` ne sont
+ * chargés qu'à ce moment.
+ */
+import Milestones3D from '@paulperigault/astro/Milestones3D.astro';
+import type { CertificationPath } from '@/domain/certification';
+import type { Lang } from '@/domain/lang';
+import { toMilestones } from '@/lib/certifications';
+import { useTranslations } from '@/lib/i18n';
+
+interface Props {
+  lang: Lang;
+  path: CertificationPath;
+}
+
+const { lang, path } = Astro.props;
+const t = useTranslations(lang);
+const labels = {
+  achieved: t('certifications.achieved'),
+  planned: t('certifications.planned'),
+  goal: t('certifications.goal'),
+  open: t('certifications.verify'),
+  panel: t('certifications.panel'),
+};
+---
+
+<Milestones3D
+  milestones={toMilestones(path.items)}
+  goal={path.goal}
+  label={t('certifications.path_label')}
+  locale={lang}
+  labels={labels}
+/>
+
+<script>
+  import { initCertificationPath } from '@/scripts/certification-path';
+  initCertificationPath();
+</script>

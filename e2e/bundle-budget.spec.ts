@@ -10,9 +10,7 @@ for (const path of ['/fr/', '/en/']) {
     const sources = await page
       .locator('script[src]')
       .evaluateAll((nodes) => nodes.map((node) => (node as HTMLScriptElement).src));
-    const inline = await page
-      .locator('script:not([src]):not([type="application/ld+json"])')
-      .allTextContents();
+    const inline = await page.locator('script:not([src]):not([type$="json"])').allTextContents();
     const bodies = [
       ...inline,
       ...(await Promise.all(sources.map(async (src) => (await request.get(src)).text()))),

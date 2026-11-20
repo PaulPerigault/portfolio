@@ -17,6 +17,7 @@ import { buildJsonLd } from '@/lib/build-json-ld';
 import { allowContactForm } from '@/lib/contact-csp';
 import { turnstileSiteKey } from '@/lib/contact-form';
 import { absoluteUrl } from '@/lib/seo';
+import { allowWasm } from '@/lib/wasm-csp';
 import { getSiteData } from '@/services/site-data';
 
 export const getStaticPaths = (() =>
@@ -26,6 +27,8 @@ const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 // Le formulaire de contact (section Contact) n'existe que si une clé Turnstile est fournie au build.
 if (turnstileSiteKey(import.meta.env)) allowContactForm(Astro.csp);
+// La scène 3D des certifications instancie du WebAssembly (jamais eval).
+allowWasm(Astro.csp);
 
 // Charge et valide tout le contenu et les projets GitHub au build (erreur typée = build rouge).
 const { portfolio, projects } = await getSiteData(lang);
@@ -39,7 +42,7 @@ const jsonLd = buildJsonLd({
   summary: t('hero.summary'),
   imageUrl: absoluteUrl(image.src),
   skills: portfolio.skills.flatMap((category) => category.items),
-  certifications: portfolio.certifications,
+  certifications: portfolio.certifications.items,
   projectNames: projects.projects.map((project) => project.name),
 });
 ---
@@ -57,6 +60,6 @@ const jsonLd = buildJsonLd({
   <Formation lang={lang} items={portfolio.formation} />
   <Skills lang={lang} categories={portfolio.skills} />
   <Projects lang={lang} snapshot={projects} />
-  <Certifications lang={lang} items={portfolio.certifications} />
+  <Certifications lang={lang} path={portfolio.certifications} />
   <Contact lang={lang} />
 </BaseLayout>

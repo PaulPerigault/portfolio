@@ -47,7 +47,7 @@ describe('profileMarkdown', () => {
     for (const category of content.skills) expect(fr).toContain(category.category);
     for (const item of content.experience) expect(fr).toContain(item.company);
     for (const item of content.formation) expect(fr).toContain(item.school);
-    for (const item of content.certifications) expect(fr).toContain(item.name);
+    for (const item of content.certifications.items) expect(fr).toContain(item.name);
   });
 
   it('sépare chaque entrée par une ligne vide (Markdown valide)', () => {
@@ -61,7 +61,10 @@ describe('profileMarkdown', () => {
 
   it('localise dates, statuts et typographie', () => {
     expect(fr).toContain('*sept. 2023 - Présent*');
-    expect(fr).toContain('(En cours)');
+    expect(fr).toContain('(Obtenue, 18 nov. 2026)');
+    expect(fr).toContain('(Planifiée, 2 déc. 2026)');
+    expect(fr).toContain('(Planifiée)');
+    expect(en).toContain('(Planned, Dec 2, 2026)');
     expect(en).toContain('*Sep 2023 - Present*');
     expect(en).toContain('- Email: contact@paulperigault.fr');
     expect(fr).toContain('- E-mail : contact@paulperigault.fr');
