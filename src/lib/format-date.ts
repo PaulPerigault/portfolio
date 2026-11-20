@@ -13,6 +13,16 @@ export const formatYearMonth = (yearMonth: string, lang: Lang): string => {
   return formatter(lang).format(new Date(Date.UTC(year, month - MONTH_INDEX_OFFSET, DAY_OF_MONTH)));
 };
 
+/** `2026-11-18` → « 18 nov. 2026 » ; `2024-11` → « nov. 2024 ». */
+export const formatCalendarDate = (date: string, lang: Lang): string => {
+  const [year, month, day] = date.split('-').map(Number) as [number, number, number | undefined];
+  if (day === undefined) return formatYearMonth(date, lang);
+  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+  return new Intl.DateTimeFormat(lang, { ...options, timeZone: 'UTC' }).format(
+    new Date(Date.UTC(year, month - MONTH_INDEX_OFFSET, day)),
+  );
+};
+
 /** Période localisée : « sept. 2023 - Présent », « août 2022 » si début = fin. */
 export const formatPeriod = (
   start: string,

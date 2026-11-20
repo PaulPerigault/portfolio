@@ -34,3 +34,14 @@ const t = useTranslations(lang);
     </div>
   </Container>
 </header>
+
+<!-- Un seul script pour la coque du site : chaque fichier de script coûte une requête (en-têtes
+     compris, près de 1 Ko mesuré par Lighthouse sur l'aperçu), et le budget de JS les compte. -->
+<script>
+  import { initLangSwitch } from '@/scripts/lang-switch';
+  import { initMenu } from '@/scripts/menu';
+  import { initThemeToggle } from '@/scripts/theme-toggle';
+  initLangSwitch();
+  initThemeToggle();
+  initMenu();
+</script>

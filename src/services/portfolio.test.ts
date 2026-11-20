@@ -27,7 +27,13 @@ describe('contenu réel FR/EN', () => {
     const key = (e: { id: string; dateStart: string }) => [e.id, e.dateStart];
     expect(en.experience.map(key)).toEqual(fr.experience.map(key));
     expect(en.formation.map(key)).toEqual(fr.formation.map(key));
-    expect(en.certifications.map((c) => c.id)).toEqual(fr.certifications.map((c) => c.id));
+    const certKey = (c: { id: string; status: string; date?: string | undefined }) => [
+      c.id,
+      c.status,
+      c.date,
+    ];
+    expect(en.certifications.items.map(certKey)).toEqual(fr.certifications.items.map(certKey));
+    expect(en.certifications.goal.label).toBe(fr.certifications.goal.label);
     expect(en.projectsConfig.featured).toEqual(fr.projectsConfig.featured);
     expect(Object.keys(en.projectsConfig.descriptions)).toEqual(
       Object.keys(fr.projectsConfig.descriptions),

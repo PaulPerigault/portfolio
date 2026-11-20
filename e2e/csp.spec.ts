@@ -39,15 +39,25 @@ test.describe('politique CSP', () => {
       expect(policy).toContain(directive);
     }
     expect(policy).toMatch(/script-src 'self'/);
-    expect(policy).not.toMatch(/unsafe-inline|unsafe-eval/);
+    // Seul `wasm-unsafe-eval` (WebAssembly de la scène 3D) est admis : ni eval, ni inline.
+    expect(policy.replaceAll("'wasm-unsafe-eval'", '')).not.toMatch(/unsafe-inline|unsafe-eval/);
+  });
+
+  test("n'autorise WebAssembly que sur les pages qui portent la scène 3D", async ({ page }) => {
+    for (const path of ['/fr/', '/en/']) {
+      await page.goto(path);
+      expect(await policyOf(page), path).toContain("'wasm-unsafe-eval'");
+    }
+    for (const path of ['/fr/legal/', '/en/legal/', '/introuvable/']) {
+      await page.goto(path);
+      expect(await policyOf(page), path).not.toContain('wasm-unsafe-eval');
+    }
   });
 
   test('autorise chaque script inline exécutable par son empreinte exacte', async ({ page }) => {
     await page.goto('/fr/');
     const policy = await policyOf(page);
-    const inline = await page
-      .locator('script:not([src]):not([type="application/ld+json"])')
-      .allTextContents();
+    const inline = await page.locator('script:not([src]):not([type$="json"])').allTextContents();
     expect(inline.length).toBeGreaterThan(0);
     for (const source of inline) expect(policy).toContain(hash(source));
   });

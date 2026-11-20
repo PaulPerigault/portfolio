@@ -32,7 +32,10 @@ for (const lang of ['fr', 'en'] as const) {
       });
 
       test('les liens externes sont sûrs et annoncent le nouvel onglet', async ({ page }) => {
-        for (const link of await page.locator('a[href^="http"]').all()) {
+        // Les liens de vérification du parcours de certifications viennent du composant du design
+        // system : ils s'ouvrent dans l'onglet courant (contrôlés dans certification-path.spec.ts).
+        const external = page.locator('a[href^="http"]:not([data-pp-milestones] a)');
+        for (const link of await external.all()) {
           await expect(link).toHaveAttribute('target', '_blank');
           await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
           await expect(link).toContainText(NEW_TAB[lang]);

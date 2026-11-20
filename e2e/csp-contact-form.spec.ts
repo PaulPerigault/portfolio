@@ -38,7 +38,12 @@ test('la CSP ne s’ouvre qu’au Worker et à Turnstile, et seulement sur les p
   const directives = await directivesOf(page);
   expect(directives['connect-src']).toEqual(["'self'", WORKER_ORIGIN, SITE.turnstileOrigin]);
   expect(directives['frame-src']).toEqual([SITE.turnstileOrigin]);
-  expect(directives['script-src']).toEqual(["'self'", SITE.turnstileOrigin]);
+  // `'self'` est donné par chaque brique (contact, WebAssembly) : les sources sont comparées sans doublon.
+  expect([...new Set(directives['script-src'])]).toEqual([
+    "'self'",
+    SITE.turnstileOrigin,
+    "'wasm-unsafe-eval'",
+  ]);
   for (const path of ['/fr/legal/', '/en/legal/', '/introuvable/']) {
     await page.goto(path);
     expect(await policyOf(page), path).not.toMatch(/https?:/);
