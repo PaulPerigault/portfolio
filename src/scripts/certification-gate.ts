@@ -11,6 +11,15 @@ const GESTURES = ['pointerdown', 'keydown'] as const;
 /** Silence de défilement au bout duquel on considère que la page s'est arrêtée. */
 const QUIET_MS = 150;
 
+interface Connection {
+  saveData?: boolean;
+}
+
+/** Mouvement réduit ou économie de données : rien n'est jamais chargé. */
+const refused = (win: Win): boolean =>
+  win.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+  (win.navigator as { connection?: Connection }).connection?.saveData === true;
+
 const whenGesture = (win: Win): Promise<void> =>
   new Promise((resolve) => {
     const done = (): void => {
@@ -44,6 +53,7 @@ const nextScroll = (win: Win): Promise<void> =>
  * la cible d'un lien d'ancre (`#contact`) ou d'un focus programmatique hors de l'écran.
  */
 export async function start(host: Element, win: Win = window): Promise<void> {
+  if (refused(win)) return;
   const { top, bottom } = host.getBoundingClientRect();
   if (bottom > 0 && top < win.innerHeight) await whenGesture(win);
   await scrollSettled(win);

@@ -36,4 +36,7 @@ export const approach = async (page: Page): Promise<void> => {
   await page.locator('#certifications').scrollIntoViewIfNeeded();
   await page.waitForTimeout(300);
   await page.keyboard.press('Shift');
+  // Le premier geste arme l'observation ; le suivant, avec la section déjà à l'écran, charge la scène.
+  await page.waitForTimeout(300);
+  await page.keyboard.press('Shift');
 };
