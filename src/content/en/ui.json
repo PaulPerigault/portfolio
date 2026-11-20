@@ -52,7 +52,12 @@
   },
   "certifications": {
     "title": "Certifications",
-    "in_progress": "In progress",
+    "path_label": "Certification path",
+    "achieved": "Achieved",
+    "planned": "Planned",
+    "goal": "Goal",
+    "verify": "Verify",
+    "panel": "Certification details",
     "expires": "Expires"
   },
   "contact": {

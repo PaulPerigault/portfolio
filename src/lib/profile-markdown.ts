@@ -1,11 +1,11 @@
 import { SITE } from '@/config/site';
-import type { Certification } from '@/domain/certification';
+import type { CertificationPath } from '@/domain/certification';
 import type { Experience } from '@/domain/experience';
 import type { Formation } from '@/domain/formation';
 import type { Lang } from '@/domain/lang';
 import type { ProjectsSnapshot } from '@/domain/project';
 import type { SkillCategory } from '@/domain/skill';
-import { certificationsNewestFirst } from './chronology';
+import { certificationsInOrder } from './chronology';
 import { useTranslations } from './i18n';
 import {
   BLOCK,
@@ -23,7 +23,7 @@ export interface ProfileData {
   readonly skills: readonly SkillCategory[];
   readonly experience: readonly Experience[];
   readonly formation: readonly Formation[];
-  readonly certifications: readonly Certification[];
+  readonly certifications: CertificationPath;
   readonly projects: ProjectsSnapshot;
 }
 
@@ -42,12 +42,12 @@ const historySections = (data: ProfileData, t: T): string[] => {
       entryLines(formationEntries(data.formation, lang, present), tech, lang),
       BLOCK,
     ),
-    section(
-      t('certifications.title'),
-      certificationsNewestFirst(data.certifications).map((cert) =>
+    section(t('certifications.title'), [
+      ...certificationsInOrder(data.certifications.items).map((cert) =>
         certificationLine(cert, lang, t),
       ),
-    ),
+      `- ${t('certifications.goal')}${colon(lang)} ${data.certifications.goal.label}`,
+    ]),
   ];
 };
 

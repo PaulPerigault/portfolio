@@ -80,19 +80,16 @@ for (const lang of ['fr', 'en'] as const) {
       await expect(titles).toHaveCount(loadContent<Entry[]>(lang, 'formation').length);
     });
 
-    test('Certifications : en préparation d’abord, puis par date, avec expiration', async ({
+    test('Certifications : une ligne par certification des données, objectif compris', async ({
       page,
     }) => {
-      const items = page.getByRole('region', { name: NAMES[lang].certifications }).locator('li');
-      await expect(items).toHaveCount(3);
-      await expect(items.nth(0)).toContainText('Associate Cloud Engineer');
-      await expect(items.nth(0)).toContainText(lang === 'fr' ? 'En cours' : 'In progress');
-      await expect(items.nth(1)).toContainText('AWS Cloud Quest');
-      await expect(items.nth(1)).toContainText(lang === 'fr' ? 'mars 2026' : 'Mar 2026');
-      await expect(items.nth(2)).toContainText('Cloud Digital Leader');
-      await expect(items.nth(2)).toContainText(
-        lang === 'fr' ? 'Expire nov. 2027' : 'Expires Nov 2027',
+      const { items, goal } = loadContent<{ items: unknown[]; goal: { label: string } }>(
+        lang,
+        'certifications',
       );
+      const region = page.getByRole('region', { name: NAMES[lang].certifications, exact: true });
+      await expect(region.locator('li')).toHaveCount(items.length);
+      await expect(region).toContainText(goal.label);
     });
   });
 }

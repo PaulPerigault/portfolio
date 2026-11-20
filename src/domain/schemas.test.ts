@@ -26,22 +26,36 @@ describe('Lang', () => {
 
 describe('Certification', () => {
   const base = {
-    id: 'gcp-cdl',
-    name: 'Cloud Digital Leader',
-    issuer: 'Google Cloud',
-    issuerLogo: 'gcp',
-    dateIssued: '2024-11',
-    dateExpires: null,
-    inProgress: false,
+    id: 'aws-clf-c02',
+    name: 'AWS Certified Cloud Practitioner',
+    issuer: 'Amazon Web Services',
+    status: 'achieved',
+    date: '2026-11-18',
   };
 
-  it('accepte des dates nulles (certification en cours)', () => {
-    const result = decode(Certification)({ ...base, dateIssued: null, inProgress: true });
-    expect(Either.isRight(result)).toBe(true);
+  it('accepte une obtenue datée et une planifiée sans date', () => {
+    expect(Either.isRight(decode(Certification)(base))).toBe(true);
+    const planned = { ...base, status: 'planned', date: undefined };
+    expect(Either.isRight(decode(Certification)(planned))).toBe(true);
   });
 
-  it('refuse une date mal formée', () => {
-    expect(Either.isLeft(decode(Certification)({ ...base, dateIssued: 'nov 2024' }))).toBe(true);
+  it('refuse une obtenue sans date', () => {
+    expect(Either.isLeft(decode(Certification)({ ...base, date: undefined }))).toBe(true);
+  });
+
+  it.each(['nov 2024', '2026-02-30', '2026-13', '2026-11-1'])('refuse la date %s', (date) => {
+    expect(Either.isLeft(decode(Certification)({ ...base, date }))).toBe(true);
+  });
+
+  it.each(['http://credly.com/b', 'javascript:alert(1)', '//credly.com/b'])(
+    'refuse le lien %s',
+    (verifyUrl) => {
+      expect(Either.isLeft(decode(Certification)({ ...base, verifyUrl }))).toBe(true);
+    },
+  );
+
+  it('refuse un emblème hors du jeu fermé du paquet 3D', () => {
+    expect(Either.isLeft(decode(Certification)({ ...base, emblem: 'medal' }))).toBe(true);
   });
 });
 

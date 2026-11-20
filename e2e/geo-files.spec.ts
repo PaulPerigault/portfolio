@@ -53,7 +53,10 @@ test.describe('robots et fichiers pour les IA', () => {
       const experience = loadContent<{ company: string; role: string }[]>(lang, 'experience');
       const formation = loadContent<{ school: string; degree: string }[]>(lang, 'formation');
       const skills = loadContent<{ category: string; items: string[] }[]>(lang, 'skills');
-      const certifications = loadContent<{ name: string }[]>(lang, 'certifications');
+      const certifications = loadContent<{ items: { name: string }[] }>(
+        lang,
+        'certifications',
+      ).items;
       const expected = [
         ...experience.flatMap((item) => [item.company, item.role]),
         ...formation.flatMap((item) => [item.school, item.degree]),

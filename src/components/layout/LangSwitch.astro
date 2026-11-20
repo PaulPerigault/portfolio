@@ -28,8 +28,3 @@ const href = pathForLang(Astro.url.pathname, lang, other);
   <span aria-hidden="true">{other.toUpperCase()}</span>
   <VisuallyHidden>{`${other} ${t(`lang.${other}`)}`}</VisuallyHidden>
 </a>
-
-<script>
-  import { initLangSwitch } from '@/scripts/lang-switch';
-  initLangSwitch();
-</script>

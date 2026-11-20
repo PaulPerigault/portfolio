@@ -7,7 +7,15 @@ const certification = {
   id: 'gcp-cdl',
   name: 'Cloud Digital Leader',
   issuer: 'Google Cloud',
-  dateIssued: '2024-11',
+  status: 'achieved',
+  date: '2024-11',
+} as Certification;
+
+const plannedCertification = {
+  id: 'aws-aif-c01',
+  name: 'AWS Certified AI Practitioner',
+  issuer: 'Amazon Web Services',
+  status: 'planned',
 } as Certification;
 
 const input: JsonLdInput = {
@@ -19,7 +27,7 @@ const input: JsonLdInput = {
   summary: 'Paul Perigault est ingénieur DevOps chez WeVii.',
   imageUrl: 'https://paulperigault.fr/_astro/photo.webp',
   skills: ['Docker', 'Terraform'],
-  certifications: [certification],
+  certifications: [certification, plannedCertification],
   projectNames: ['GetUrlCloudRun'],
 };
 
@@ -48,6 +56,12 @@ const definedIds = (data: ReturnType<typeof buildJsonLd>): string[] => {
 
 describe('buildJsonLd', () => {
   const data = buildJsonLd(input);
+
+  it('ne déclare comme titre que les certifications obtenues', () => {
+    const json = JSON.stringify(data);
+    expect(json).toContain('Cloud Digital Leader');
+    expect(json).not.toContain('AWS Certified AI Practitioner');
+  });
 
   it('contient Person, WebSite, ProfilePage et les deux listes', () => {
     expect(types(data)).toEqual(['Person', 'WebSite', 'ProfilePage', 'ItemList', 'ItemList']);

@@ -1,7 +1,8 @@
 import type { Certification } from '@/domain/certification';
 import type { Lang } from '@/domain/lang';
 import type { ProjectsSnapshot } from '@/domain/project';
-import { formatYearMonth } from './format-date';
+import { certificationLabel } from './certifications';
+import { formatCalendarDate, formatYearMonth } from './format-date';
 import type { useTranslations } from './i18n';
 import { visibleTopics } from './projects';
 import type { TimelineEntryData } from './timeline';
@@ -34,16 +35,16 @@ export const entryLines = (
   );
 
 export const certificationLine = (cert: Certification, lang: Lang, t: T): string => {
-  const status = cert.inProgress
-    ? t('certifications.in_progress')
-    : [
-        cert.dateIssued && formatYearMonth(cert.dateIssued, lang),
-        cert.dateExpires &&
-          `${t('certifications.expires')} ${formatYearMonth(cert.dateExpires, lang)}`,
-      ]
-        .filter(Boolean)
-        .join(', ');
-  return `- **${cert.name}**, ${cert.issuer}${status ? ` (${status})` : ''}`;
+  const state =
+    cert.status === 'achieved' ? t('certifications.achieved') : t('certifications.planned');
+  const details = [
+    state,
+    cert.date && formatCalendarDate(cert.date, lang),
+    cert.dateExpires && `${t('certifications.expires')} ${formatYearMonth(cert.dateExpires, lang)}`,
+  ]
+    .filter(Boolean)
+    .join(', ');
+  return `- **${certificationLabel(cert)}**, ${cert.issuer} (${details})`;
 };
 
 /**
