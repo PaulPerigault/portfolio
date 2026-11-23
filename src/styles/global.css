@@ -45,6 +45,16 @@ main .pp-milestones[data-mode='scroll'] .pp-milestones__frame {
   block-size: calc(var(--milestones-screen) - var(--site-header-height));
 }
 
+/*
+ * Badges des émetteurs (143 Ko, octets d'origine) : la section des certifications n'est rendue, donc
+ * ses images chargées, qu'à l'approche de l'écran. Sans cela, `loading="lazy"` les charge dès
+ * l'ouverture de la page et le poids dépasse le budget Lighthouse. Hauteur estimée : celle de la liste.
+ */
+[data-new-tab] {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 42rem;
+}
+
 /* Impression : le CV papier est la page elle-même, sans navigation ni pied de page. */
 @media print {
   header,
