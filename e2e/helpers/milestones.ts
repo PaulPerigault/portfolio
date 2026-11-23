@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test';
 import { loadContent, type TestLang } from './content';
 
-export interface CertificationItem {
+interface CertificationItem {
   id: string;
   name: string;
   issuer: string;
