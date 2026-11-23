@@ -16,7 +16,7 @@ const achieved = {
   status: 'achieved',
   date: '2026-11-18',
   verifyUrl: 'https://example.org/badge',
-  emblem: 'check',
+  badge: { src: '/image/badges/clf.png', width: 600, height: 600 },
 } as Certification;
 
 describe('toMilestones', () => {
@@ -24,12 +24,13 @@ describe('toMilestones', () => {
     const [first, second] = toMilestones([planned as Certification, achieved]);
     expect(first).toEqual({
       id: 'clf',
-      label: 'Cloud Practitioner (CLF-C02)',
+      label: 'Cloud Practitioner',
       status: 'achieved',
       group: 'AWS',
       date: '2026-11-18',
+      code: 'CLF-C02',
+      badge: { src: '/image/badges/clf.png', width: 600, height: 600 },
       href: 'https://example.org/badge',
-      emblem: 'check',
     });
     expect(second).toEqual({
       id: 'saa',

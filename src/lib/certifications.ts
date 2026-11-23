@@ -8,11 +8,12 @@ export interface Milestone {
   status: Certification['status'];
   group: string;
   date?: string;
+  code?: string;
+  badge?: NonNullable<Certification['badge']>;
   href?: string;
-  emblem?: string;
 }
 
-/** Libellé d'un jalon : le nom de la certification suivi de son code d'examen. */
+/** Libellé écrit en toutes lettres : le nom de la certification suivi de son code d'examen. */
 export const certificationLabel = (cert: Certification): string =>
   cert.code ? `${cert.name} (${cert.code})` : cert.name;
 
@@ -20,10 +21,11 @@ export const certificationLabel = (cert: Certification): string =>
 export const toMilestones = (items: readonly Certification[]): Milestone[] =>
   certificationsInOrder(items).map((cert) => ({
     id: cert.id,
-    label: certificationLabel(cert),
+    label: cert.name,
     status: cert.status,
     group: cert.issuer,
     ...(cert.date ? { date: cert.date } : {}),
+    ...(cert.code ? { code: cert.code } : {}),
+    ...(cert.badge ? { badge: cert.badge } : {}),
     ...(cert.verifyUrl ? { href: cert.verifyUrl } : {}),
-    ...(cert.emblem ? { emblem: cert.emblem } : {}),
   }));
