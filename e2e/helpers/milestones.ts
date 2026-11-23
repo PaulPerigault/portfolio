@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test';
 import { loadContent, type TestLang } from './content';
 
-export interface CertificationItem {
+interface CertificationItem {
   id: string;
   name: string;
   issuer: string;
@@ -9,6 +9,7 @@ export interface CertificationItem {
   status: 'achieved' | 'planned';
   date?: string;
   verifyUrl?: string;
+  badge?: { src: string; width: number; height: number };
 }
 
 export interface CertificationContent {
@@ -28,8 +29,8 @@ export const certificationsOf = (lang: TestLang): CertificationContent => {
   return { ...content, items };
 };
 
-export const labelOf = (item: CertificationItem): string =>
-  item.code ? `${item.name} (${item.code})` : item.name;
+/** Étapes de la liste : les certifications, puis l'objectif. */
+export const stepCount = (content: CertificationContent): number => content.items.length + 1;
 
 /** Amène la section à l'écran puis fait le geste que le composant attend avant de charger la 3D. */
 export const approach = async (page: Page): Promise<void> => {

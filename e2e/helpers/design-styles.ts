@@ -21,6 +21,9 @@ export const allowedColors = (page: Page) =>
       '--pp-color-media-placeholder',
     ];
     const colors = ['rgba(0, 0, 0, 0)', ...tokens.map(resolve)];
+    // La pastille des badges garde le thème clair dans le thème sombre (ADR-0013, conditions des émetteurs).
+    probe.style.colorScheme = 'light';
+    colors.push(...tokens.map(resolve));
     probe.remove();
     return colors;
   });

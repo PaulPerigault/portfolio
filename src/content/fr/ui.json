@@ -56,7 +56,12 @@
     "achieved": "Obtenue",
     "planned": "Planifiée",
     "goal": "Objectif",
-    "verify": "Vérifier",
+    "verify": "Vérifier sur Credly",
+    "skip": "Passer cette section",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "steps": "Étapes du parcours",
+    "progress": "Étape {current} sur {total}",
     "panel": "Détail de la certification",
     "expires": "Expire"
   },

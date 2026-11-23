@@ -30,6 +30,12 @@ for (const { path, name } of PAGES) {
         await page.emulateMedia({ colorScheme: scheme, reducedMotion: 'reduce' });
         await page.goto(path);
         await page.evaluate(() => document.fonts.ready);
+        // Images différées (badges) : chargées et décodées avant la capture pleine page.
+        await page.evaluate(() => {
+          const images = [...document.images];
+          images.forEach((image) => (image.loading = 'eager'));
+          return Promise.all(images.map((image) => image.decode().catch(() => undefined)));
+        });
         await expect(page).toHaveScreenshot(`${name}-${device}-${scheme}.png`, {
           fullPage: true,
           animations: 'disabled',

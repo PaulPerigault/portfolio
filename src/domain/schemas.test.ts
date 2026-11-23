@@ -54,8 +54,15 @@ describe('Certification', () => {
     },
   );
 
-  it('refuse un emblème hors du jeu fermé du paquet 3D', () => {
-    expect(Either.isLeft(decode(Certification)({ ...base, emblem: 'medal' }))).toBe(true);
+  it('refuse un badge sur une certification planifiée', () => {
+    const badge = { src: '/image/badges/x.png', width: 600, height: 600 };
+    expect(Either.isLeft(decode(Certification)({ ...base, status: 'planned', badge }))).toBe(true);
+  });
+
+  it('refuse un badge hors du site ou sans dimensions', () => {
+    const remote = { src: 'https://example.org/x.png', width: 600, height: 600 };
+    expect(Either.isLeft(decode(Certification)({ ...base, badge: remote }))).toBe(true);
+    expect(Either.isLeft(decode(Certification)({ ...base, badge: { src: '/x.png' } }))).toBe(true);
   });
 });
 

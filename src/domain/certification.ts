@@ -2,18 +2,14 @@ import { Schema } from 'effect';
 import { CalendarDate } from './calendar-date';
 import { YearMonth } from './year-month';
 
-/** Jeu fermé d'emblèmes du paquet `@paulperigault/milestones-3d` : une clé inconnue y est une erreur. */
-const Emblem = Schema.Literal(
-  'disc',
-  'check',
-  'shield',
-  'cloud',
-  'network',
-  'database',
-  'code',
-  'key',
-  'gear',
-);
+/** Image du badge de l'émetteur, servie par le site : chemin relatif, dimensions réelles du fichier. */
+const Badge = Schema.Struct({
+  src: Schema.String.pipe(
+    Schema.pattern(/^\/[A-Za-z0-9._/-]+$/, { message: () => 'attendu : chemin relatif du site' }),
+  ),
+  width: Schema.Int.pipe(Schema.positive()),
+  height: Schema.Int.pipe(Schema.positive()),
+});
 
 const HTTPS_URL = /^https:\/\/[^\s]+$/;
 
@@ -31,13 +27,17 @@ export const Certification = Schema.Struct({
   verifyUrl: Schema.optional(
     Schema.String.pipe(Schema.pattern(HTTPS_URL, { message: () => 'attendu : https://…' })),
   ),
-  emblem: Schema.optional(Emblem),
+  /** Badge fourni par l'émetteur, jamais pour une certification planifiée. */
+  badge: Schema.optional(Badge),
 }).pipe(
-  Schema.filter((cert) =>
-    cert.status === 'achieved' && cert.date === undefined
-      ? 'une certification obtenue a une date'
-      : true,
-  ),
+  Schema.filter((cert) => {
+    if (cert.status === 'achieved' && cert.date === undefined) {
+      return 'une certification obtenue a une date';
+    }
+    return cert.status === 'planned' && cert.badge !== undefined
+      ? "une certification planifiée n'a pas de badge"
+      : true;
+  }),
 );
 export type Certification = typeof Certification.Type;
 

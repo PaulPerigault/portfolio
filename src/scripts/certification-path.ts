@@ -11,9 +11,24 @@ const HOST = '[data-pp-milestones]';
 const LOAD_MARGIN = '200px 0px';
 const SIGNS = ['scroll', 'pointerdown', 'keydown'];
 
+/**
+ * Liens de vérification en nouvel onglet : le composant du design system ne pose que `rel`. Sans
+ * JavaScript ils s'ouvrent dans l'onglet courant, sans perte (retour arrière).
+ */
+function openInNewTab(host: Element): void {
+  const hint = host.parentElement?.getAttribute('data-new-tab') ?? '';
+  host.querySelectorAll<HTMLAnchorElement>('a[href^="https:"]').forEach((link) => {
+    const name = link.getAttribute('aria-label') ?? link.textContent ?? '';
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.setAttribute('aria-label', `${name} (${hint})`);
+  });
+}
+
 export function initCertificationPath(): void {
   const host = document.querySelector(HOST);
   if (!host) return;
+  openInNewTab(host);
   const watch = (): void => {
     SIGNS.forEach((name) => removeEventListener(name, watch));
     const observer = new IntersectionObserver(

@@ -88,7 +88,7 @@ for (const lang of ['fr', 'en'] as const) {
         'certifications',
       );
       const region = page.getByRole('region', { name: NAMES[lang].certifications, exact: true });
-      await expect(region.locator('li')).toHaveCount(items.length);
+      await expect(region.locator('li')).toHaveCount(items.length + 1);
       await expect(region).toContainText(goal.label);
     });
   });
