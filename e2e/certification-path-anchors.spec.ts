@@ -29,6 +29,18 @@ const settled = async (page: Page): Promise<void> => {
   await page.waitForTimeout(750);
 };
 
+/**
+ * L'ancre a atterri : Contact est à l'écran, sous l'en-tête, et ne bouge plus (la piste haute de la
+ * scène, insérée en cours de route, le repousserait). La fin de page peut empêcher d'aller plus haut.
+ */
+const expectLanded = async (page: Page): Promise<void> => {
+  const top = await topOf(page, '#contact');
+  await page.waitForTimeout(1500);
+  expect(await topOf(page, '#contact')).toBe(top);
+  expect(top).toBeGreaterThanOrEqual(0);
+  await expect(page.locator('#contact')).toBeInViewport();
+};
+
 for (const lang of ['fr', 'en'] as const) {
   const ui = loadContent<{ certifications: Record<string, string> }>(lang, 'ui').certifications;
 
@@ -39,8 +51,7 @@ for (const lang of ['fr', 'en'] as const) {
       await page.goto(`/${lang}/`);
       await page.locator(`a[href="/${lang}/#contact"]`).first().click();
       await settled(page);
-      expect(await topOf(page, '#contact')).toBeLessThanOrEqual(await headerHeight(page));
-      expect(await topOf(page, '#contact')).toBeGreaterThanOrEqual(0);
+      await expectLanded(page);
       await expect(page.locator(HOST)).not.toHaveAttribute('data-state', /.+/);
     });
 
@@ -58,8 +69,7 @@ for (const lang of ['fr', 'en'] as const) {
       );
       await page.keyboard.press('Enter');
       await settled(page);
-      expect(await topOf(page, '#contact')).toBeLessThanOrEqual(await headerHeight(page));
-      await expect(page.locator('#contact')).toBeInViewport();
+      await expectLanded(page);
     });
 
     test('Suivant, Précédent et les flèches changent d’étape, le focus n’est pas piégé', async ({
@@ -77,6 +87,8 @@ for (const lang of ['fr', 'en'] as const) {
       await expect(position).toHaveText(text(1));
       await page.getByRole('button', { name: ui['next'] ?? '' }).click();
       await expect(position).toHaveText(text(2));
+      // Safari ne donne pas le focus au bouton cliqué : on le place, les flèches s'écoutent sur la section.
+      await page.getByRole('button', { name: ui['next'] ?? '' }).focus();
       await page.keyboard.press('ArrowRight');
       await expect(position).toHaveText(text(3));
       await page.keyboard.press('End');

@@ -59,11 +59,11 @@ const scrollSettled = (win: Win): Promise<void> =>
   });
 
 /**
- * Section dépassée : son bas est dans le quart supérieur de l'écran, sous l'en-tête fixe ou à
- * peine visible. Un défilement qui s'arrête là (ancre vers `#contact`, dernière section de la
+ * Section dépassée : son bas est dans la moitié supérieure de l'écran, sous l'en-tête fixe ou à
+ * peine visible (la queue d'une section qu'on quitte). Un défilement qui s'arrête là (ancre vers `#contact`, dernière section de la
  * page) ne doit pas déclencher la scène : la piste haute repousserait la cible hors de l'écran.
  */
-const PASSED_RATIO = 0.25;
+const PASSED_RATIO = 0.5;
 const passed = (host: Element, win: Win): boolean =>
   host.getBoundingClientRect().bottom <= win.innerHeight * PASSED_RATIO;
 

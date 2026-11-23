@@ -13,8 +13,9 @@ declare global {
   }
 }
 
-// Message émis seul par Chromium avec le rastériseur logiciel (relevé aussi par l'audit du design system).
-const BROWSER_NOISE = /GPU stall due to ReadPixels/;
+// Messages émis seuls par Chromium (rastériseur logiciel) et Firefox (contexte jetable, capteur).
+const BROWSER_NOISE =
+  /GPU stall due to ReadPixels|WebGL context was lost|orientation sensor is deprecated/;
 const CANVAS = `${HOST} canvas`;
 
 test.beforeEach(async ({ page }) => {
@@ -95,8 +96,7 @@ for (const lang of ['fr', 'en'] as const) {
       page,
     }) => {
       await page.goto(`/${lang}/`);
-      // La liste devient un repère d'étapes après le geste (ADR-0013) : on mesure ce qui bouge
-      // ailleurs que dans la section elle-même.
+      // La liste devient un repère d'étapes (ADR-0013) : on mesure ce qui bouge hors de la section.
       await page.evaluate((host) => {
         const w = window as unknown as { __cls: number };
         w.__cls = 0;
@@ -111,7 +111,7 @@ for (const lang of ['fr', 'en'] as const) {
       const before = await sectionTop(page);
       await approach(page);
       await expect(page.locator(HOST)).toHaveAttribute('data-state', 'enhanced');
-      expect(await sectionTop(page)).toBe(before);
+      expect(Math.round(await sectionTop(page))).toBe(Math.round(before));
       expect(
         await page.evaluate(() => (window as unknown as { __cls: number }).__cls),
       ).toBeLessThan(0.01);

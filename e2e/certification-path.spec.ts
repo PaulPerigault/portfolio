@@ -64,11 +64,11 @@ for (const lang of ['fr', 'en'] as const) {
         }
         await expect(image).toHaveAttribute('src', item.badge.src);
         await image.scrollIntoViewIfNeeded();
-        const natural = await image.evaluate((img: HTMLImageElement) => [
-          img.naturalWidth,
-          img.naturalHeight,
-        ]);
-        expect(natural).toEqual([item.badge.width, item.badge.height]);
+        await expect
+          .poll(() =>
+            image.evaluate((img: HTMLImageElement) => [img.naturalWidth, img.naturalHeight]),
+          )
+          .toEqual([item.badge.width, item.badge.height]);
       }
     });
   });
