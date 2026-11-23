@@ -15,9 +15,11 @@ interface Connection {
   saveData?: boolean;
 }
 
-/** Mouvement réduit ou économie de données : rien n'est jamais chargé. */
+/**
+ * Économie de données : rien n'est jamais chargé. Le mouvement réduit ne bloque plus (ADR-0013) :
+ * le composant passe en navigation par étapes, sans animation.
+ */
 const refused = (win: Win): boolean =>
-  win.matchMedia('(prefers-reduced-motion: reduce)').matches ||
   (win.navigator as { connection?: Connection }).connection?.saveData === true;
 
 const whenGesture = (win: Win): Promise<void> =>

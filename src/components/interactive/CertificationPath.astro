@@ -33,13 +33,15 @@ const labels = {
 };
 ---
 
-<Milestones3D
-  milestones={toMilestones(path.items)}
-  goal={path.goal}
-  label={t('certifications.path_label')}
-  locale={lang}
-  labels={labels}
-/>
+<div data-new-tab={t('a11y.new_tab')}>
+  <Milestones3D
+    milestones={toMilestones(path.items)}
+    goal={path.goal}
+    label={t('certifications.path_label')}
+    locale={lang}
+    labels={labels}
+  />
+</div>
 
 <script>
   import { initCertificationPath } from '@/scripts/certification-path';
