@@ -35,10 +35,11 @@ for (const lang of ['fr', 'en'] as const) {
           expect(family).toContain('Atkinson Hyperlegible Next Variable');
         }
         expect(state.loaded).toContain('Atkinson Hyperlegible Next Variable');
-        // Le mono du design system (ADR-0012) : code, identifiants, empreintes, métadonnées seulement.
+        // Le mono du design system (ADR-0012) : code, identifiants, empreintes, métadonnées seulement
+        // (le code d'examen d'une certification est un identifiant).
         const outsideCode = await page.evaluate(() =>
           [...document.querySelectorAll('body, body *')]
-            .filter((element) => !element.closest('code, kbd, samp, pre'))
+            .filter((element) => !element.closest('code, kbd, samp, pre, .pp-milestones__code'))
             .filter((element) => {
               const family = getComputedStyle(element).fontFamily.toLowerCase();
               return /mono|serif/.test(family.replace(/sans-serif/g, ''));

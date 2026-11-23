@@ -1,6 +1,12 @@
 import { expect, test, type Page } from '@playwright/test';
 import { certificationsOf, approach, HOST } from './helpers/milestones';
 
+interface LayoutShift {
+  value: number;
+  hadRecentInput: boolean;
+  sources: { node: Node | null }[];
+}
+
 declare global {
   interface Window {
     __cspViolations: string[];
@@ -85,21 +91,23 @@ for (const lang of ['fr', 'en'] as const) {
       await expect(page.locator(HOST)).toHaveAttribute('data-state', 'enhanced');
     });
 
-    test('la 3D ne déplace rien au-dessus : CLS nul, haut de la section inchangé', async ({
+    test('la 3D ne déplace rien hors de la section : CLS nul, haut de la section inchangé', async ({
       page,
     }) => {
       await page.goto(`/${lang}/`);
-      await page.evaluate(() => {
+      // La liste devient un repère d'étapes après le geste (ADR-0013) : on mesure ce qui bouge
+      // ailleurs que dans la section elle-même.
+      await page.evaluate((host) => {
         const w = window as unknown as { __cls: number };
         w.__cls = 0;
+        const inside = (node: Node | null) =>
+          !!node && !!document.querySelector(host)?.contains(node);
         new PerformanceObserver((list) => {
-          for (const e of list.getEntries() as unknown as {
-            value: number;
-            hadRecentInput: boolean;
-          }[])
-            if (!e.hadRecentInput) w.__cls += e.value;
+          for (const e of list.getEntries() as unknown as LayoutShift[])
+            if (!e.hadRecentInput && !e.sources.every((source) => inside(source.node)))
+              w.__cls += e.value;
         }).observe({ type: 'layout-shift', buffered: true });
-      });
+      }, HOST);
       const before = await sectionTop(page);
       await approach(page);
       await expect(page.locator(HOST)).toHaveAttribute('data-state', 'enhanced');

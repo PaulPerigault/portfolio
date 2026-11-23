@@ -42,6 +42,12 @@ describe('public/_headers (Cloudflare Pages)', () => {
     );
   });
 
+  it('garde une semaine les badges des émetteurs, sans cumul de Cache-Control', () => {
+    expect(at('/image/badges/aws-cloud-practitioner.png').get('cache-control')).toBe(
+      'public, max-age=604800',
+    );
+  });
+
   it('sert le Markdown des pages en text/markdown (alternate des pages, llms)', () => {
     for (const path of ['/fr/index.md', '/en/index.md']) {
       expect(at(path).get('content-type')).toBe('text/markdown; charset=utf-8');

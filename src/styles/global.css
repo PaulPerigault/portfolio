@@ -29,6 +29,22 @@
   }
 }
 
+/*
+ * Scène des certifications épinglée : le cadre du design system se colle en haut de l'écran, sous
+ * l'en-tête fixe du site (Navbar : une rangée de contrôles, deux marges de `py-4`, un filet). Sans
+ * ce décalage, le lien « Passer cette section » et le haut de la scène passent sous l'en-tête.
+ */
+:root {
+  --site-header-height: calc(
+    var(--pp-size-control-height) + 8 * var(--pp-space-3xs) + var(--pp-size-rule)
+  );
+}
+
+main .pp-milestones[data-mode='scroll'] .pp-milestones__frame {
+  inset-block-start: var(--site-header-height);
+  block-size: calc(var(--milestones-screen) - var(--site-header-height));
+}
+
 /* Impression : le CV papier est la page elle-même, sans navigation ni pied de page. */
 @media print {
   header,

@@ -18,6 +18,11 @@
   ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
 
+# Badges des émetteurs (noms stables, sans empreinte) : une semaine, puis revalidés.
+/image/badges/*
+  ! Cache-Control
+  Cache-Control: public, max-age=604800
+
 # Versions Markdown des pages (lien alternate, llms.txt).
 /*/index.md
   Content-Type: text/markdown; charset=utf-8
