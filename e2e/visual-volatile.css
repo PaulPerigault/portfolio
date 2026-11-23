@@ -3,3 +3,9 @@
 #projects {
   display: none !important;
 }
+
+/* Section des badges : `content-visibility: auto` la laisse vide hors écran, or une capture pleine
+   page n'en fait défiler aucune. */
+[data-new-tab] {
+  content-visibility: visible !important;
+}
