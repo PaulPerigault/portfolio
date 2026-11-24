@@ -81,17 +81,17 @@ de fond ou de distance n'est publiée pour eux. La règle des 25 px de marge app
 
 ### Comparaison avec l'affichage réel
 
-| Point                       | Affichage                                                                                                                                           | Verdict          |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| Usage personnel             | portfolio d'une personne, la certification est la sienne                                                                                            | conforme         |
-| Badge intact (octets)       | fichier Credly d'origine, aucun recadrage ni filtre                                                                                                 | conforme         |
-| Fond clair                  | pastille claire fixe, y compris en thème sombre                                                                                                     | conforme         |
-| Affiliation suggérée        | aucun logo Google hors du badge, texte « Vérifier sur Credly », pas de mention de partenariat                                                       | conforme         |
-| Lien                        | page Credly de l'émetteur, nouvel onglet                                                                                                            | conforme         |
-| Statut                      | « Obtenue novembre 2024 », certification de niveau Foundational valable 3 ans (section 1.c) : à retirer ou à renouveler avant novembre 2027         | à suivre         |
-| Badge dans la scène 3D      | texture posée sur une médaille en perspective, ombrée, rapetissée : le badge Google paraît pâle et son anneau de texte n'est pas lisible sur mobile | **point ouvert** |
-| Mention de marque           | aucune mention « Google Cloud est une marque de Google LLC »                                                                                        | **point ouvert** |
-| Permission écrite de Google | aucune demandée ; le texte de la section 4 des Exam Terms l'autorise pour la certification, pas pour d'autres Brand Features                        | **point ouvert** |
+| Point                       | Affichage                                                                                                                                                        | Verdict          |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| Usage personnel             | portfolio d'une personne, la certification est la sienne                                                                                                         | conforme         |
+| Badge intact (octets)       | fichier Credly d'origine, aucun recadrage ni filtre                                                                                                              | conforme         |
+| Fond clair                  | pastille claire fixe, y compris en thème sombre                                                                                                                  | conforme         |
+| Affiliation suggérée        | aucun logo Google hors du badge, texte « Vérifier sur Credly », pas de mention de partenariat                                                                    | conforme         |
+| Lien                        | page Credly de l'émetteur, nouvel onglet                                                                                                                         | conforme         |
+| Statut                      | « Obtenue novembre 2024 », certification de niveau Foundational valable 3 ans (section 1.c) : à retirer ou à renouveler avant novembre 2027                      | à suivre         |
+| Badge dans la scène 3D      | texture posée sur une médaille en perspective, ombrée, rapetissée : le badge Google paraît pâle et son anneau de texte n'est pas lisible sur mobile              | **point ouvert** |
+| Mention de marque           | mentions légales, section « Propriété intellectuelle » (FR et EN) : noms et badges propriété de Google LLC et d'Amazon Web Services, site ni affilié ni approuvé | conforme         |
+| Permission écrite de Google | aucune demandée ; le texte de la section 4 des Exam Terms l'autorise pour la certification, pas pour d'autres Brand Features                                     | **point ouvert** |
 
 ### Points ouverts
 
@@ -101,11 +101,12 @@ de fond ou de distance n'est publiée pour eux. La règle des 25 px de marge app
    représentée, le badge intact est à côté) ; ne montrer dans la scène que le nom et la date pour les
    badges Google ; demander l'avis de Google Cloud Certification
    (`support.google.com/cloud-certification/contact/cloud_certifications`).
-2. Ajouter une mention de marque (« Google Cloud est une marque de Google LLC ») dans les mentions
-   légales, au risque de suggérer plus qu'une simple certification.
-3. Calendrier : retirer ou renouveler la certification Google avant novembre 2027.
+2. Mention de marque : faite (#414), voir le tableau. Texte : « Les noms et badges de certification
+   appartiennent à leurs propriétaires (Google LLC, Amazon Web Services). Ce site n'est ni affilié ni
+   approuvé par eux. »
+3. Calendrier : retirer ou renouveler la certification Google avant novembre 2027 (issue #415).
 
-Aucune modification du site n'est faite pour ces points : décision du propriétaire.
+Seule la mention de marque (point 2) est faite sur le site ; les points 1 et 3 restent ouverts.
 
 ## Remplacer un badge
 
