@@ -178,7 +178,7 @@ Everything is in `.github/workflows/`; the site is **built once** and the **same
 - Every triggered workflow has `concurrency` (release never cancelled); Dependabot `cooldown` 7 days; the auto-merge job checks the PR **author** and head repo, never `github.actor`.
 - Required checks stay `ci` and `commitlint`; `scripts/workflows.test.mjs` asserts them, the single build, pinned actions, permissions, weekly redeploy.
 - Lighthouse budgets (`.lighthouserc.json`, desktop, `/fr/`, `/en/` and both legal pages): performance ≥ 0.98, accessibility = 1, best-practices = 1, SEO = 1, JS ≤ 6 KB, weight ≤ 90 KB, ≤ 12 requests, LCP ≤ 800 ms, TBT ≤ 50 ms, CLS ≤ 0.01 (measured 2026-10-19: 100 everywhere, LCP ≈ 370 ms, 59 KB, 4.3 KB JS). CSS is inlined in each page (`build.inlineStylesheets: always`, LCP −41 % on throttled mobile); Astro hashes it into the CSP.
-- Dependabot groups npm (astro, effect, tailwind, tooling), `/worker`, `/infra` (`opentofu`, never auto-merged), github-actions; npm majors are ignored.
+- Dependabot groups npm (astro, effect, tailwind, design-system = `@paulperigault/*`, tooling), `/worker`, `/infra` (`opentofu`, never auto-merged), github-actions; npm majors are ignored.
 - No Docker, no nginx, no shell script (ADR-0008, `scripts/hosting.test.mjs`).
 - Schedules run from the **default branch** (`develop`), hence `ref: main` in `deploy.yml`.
 
