@@ -41,7 +41,14 @@ export default defineConfig({
               ...devices['Desktop Firefox'],
               // Les runners Linux sans GPU sont sur la liste de blocage de Firefox (« AllowWebgl2:false ») :
               // sans cette préférence la scène 3D reste en liste et ses tests ne peuvent pas la voir.
-              launchOptions: { firefoxUserPrefs: { 'webgl.force-enabled': true } },
+              launchOptions: {
+                env: { ...process.env, LIBGL_ALWAYS_SOFTWARE: '1' },
+                firefoxUserPrefs: {
+                  'webgl.force-enabled': true,
+                  'gfx.webrender.software': true,
+                  'webgl.forbid-software': false,
+                },
+              },
             },
           },
           { name: 'webkit', use: { ...devices['Desktop Safari'] } },
