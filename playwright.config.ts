@@ -35,7 +35,15 @@ export default defineConfig({
     // Navigateurs supplémentaires : exécutés par le workflow planifié (PW_ALL_BROWSERS=1).
     ...(process.env['PW_ALL_BROWSERS'] === '1'
       ? [
-          { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+          {
+            name: 'firefox',
+            use: {
+              ...devices['Desktop Firefox'],
+              // Les runners Linux sans GPU sont sur la liste de blocage de Firefox (« AllowWebgl2:false ») :
+              // sans cette préférence la scène 3D reste en liste et ses tests ne peuvent pas la voir.
+              launchOptions: { firefoxUserPrefs: { 'webgl.force-enabled': true } },
+            },
+          },
           { name: 'webkit', use: { ...devices['Desktop Safari'] } },
         ]
       : []),
