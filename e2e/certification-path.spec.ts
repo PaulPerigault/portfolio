@@ -63,7 +63,8 @@ for (const lang of ['fr', 'en'] as const) {
           continue;
         }
         await expect(image).toHaveAttribute('src', item.badge.src);
-        await image.scrollIntoViewIfNeeded();
+        // Le défilement de Playwright est sans effet dans WebKit (html défile en douceur) : instantané.
+        await image.evaluate((img) => img.scrollIntoView({ block: 'center', behavior: 'instant' }));
         await expect
           .poll(() =>
             image.evaluate((img: HTMLImageElement) => [img.naturalWidth, img.naturalHeight]),

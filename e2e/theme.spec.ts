@@ -1,15 +1,17 @@
 import { expect, test, type Page } from '@playwright/test';
+import { normalizeColor } from './helpers/colors';
 
 // Valeurs de --pp-color-bg (@paulperigault/tokens), vues par le navigateur (oklch) : elles doivent changer avec le thème.
 const BACKGROUND = {
-  light: 'oklch(0.985 0.004 270.7)',
-  dark: 'oklch(0.201 0.0124 270.7)',
+  light: normalizeColor('oklch(0.985 0.004 270.7)'),
+  dark: normalizeColor('oklch(0.201 0.0124 270.7)'),
 } as const;
 
 const backgroundOf = (page: Page) =>
   page
     .locator('body')
-    .evaluate((body) => getComputedStyle(body.parentElement as Element).backgroundColor);
+    .evaluate((body) => getComputedStyle(body.parentElement as Element).backgroundColor)
+    .then(normalizeColor);
 
 for (const lang of ['fr', 'en'] as const) {
   test.describe(`thème ${lang}`, () => {
