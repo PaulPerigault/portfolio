@@ -39,16 +39,9 @@ export default defineConfig({
             name: 'firefox',
             use: {
               ...devices['Desktop Firefox'],
-              // Les runners Linux sans GPU sont sur la liste de blocage de Firefox (« AllowWebgl2:false ») :
-              // sans cette préférence la scène 3D reste en liste et ses tests ne peuvent pas la voir.
-              launchOptions: {
-                env: { ...process.env, LIBGL_ALWAYS_SOFTWARE: '1' },
-                firefoxUserPrefs: {
-                  'webgl.force-enabled': true,
-                  'gfx.webrender.software': true,
-                  'webgl.forbid-software': false,
-                },
-              },
+              // Firefox sans écran n'initialise aucun pilote GL : sur un runner sans GPU, le workflow
+              // le lance avec un écran virtuel et Mesa (xvfb-run) pour que la scène 3D ait WebGL2.
+              headless: process.env['FIREFOX_XVFB'] !== '1',
             },
           },
           { name: 'webkit', use: { ...devices['Desktop Safari'] } },
