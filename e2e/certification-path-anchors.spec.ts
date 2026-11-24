@@ -12,14 +12,18 @@ const headerHeight = (page: Page) =>
 const topOf = (page: Page, selector: string) =>
   page.locator(selector).evaluate((e) => Math.round(e.getBoundingClientRect().top));
 
-/** Attend que le défilement lissé d'une ancre soit terminé (position stable 1 s). */
-const settled = async (page: Page): Promise<void> => {
+/**
+ * Attend que le défilement lissé d'une ancre soit terminé : la page a quitté `from` (le défilement
+ * lissé démarre après le clic, un sondage trop tôt verrait deux fois la même position) puis la
+ * position reste stable 1 s.
+ */
+const settled = async (page: Page, from: number): Promise<void> => {
   let last = -1;
   await expect
     .poll(
       async () => {
         const y = await page.evaluate(() => Math.round(scrollY));
-        const same = y === last;
+        const same = y === last && y !== from;
         last = y;
         return same;
       },
@@ -28,6 +32,8 @@ const settled = async (page: Page): Promise<void> => {
     .toBe(true);
   await page.waitForTimeout(750);
 };
+
+const scrollOf = (page: Page) => page.evaluate(() => Math.round(scrollY));
 
 /**
  * L'ancre a atterri : Contact est à l'écran, sous l'en-tête, et ne bouge plus (la piste haute de la
@@ -49,8 +55,9 @@ for (const lang of ['fr', 'en'] as const) {
       page,
     }) => {
       await page.goto(`/${lang}/`);
+      const from = await scrollOf(page);
       await page.locator(`a[href="/${lang}/#contact"]`).first().click();
-      await settled(page);
+      await settled(page, from);
       await expectLanded(page);
       await expect(page.locator(HOST)).not.toHaveAttribute('data-state', /.+/);
     });
@@ -67,8 +74,9 @@ for (const lang of ['fr', 'en'] as const) {
       expect(await topOf(page, '.pp-milestones__skip')).toBeGreaterThanOrEqual(
         await headerHeight(page),
       );
+      const from = await scrollOf(page);
       await page.keyboard.press('Enter');
-      await settled(page);
+      await settled(page, from);
       await expectLanded(page);
     });
 
