@@ -35,7 +35,15 @@ export default defineConfig({
     // Navigateurs supplémentaires : exécutés par le workflow planifié (PW_ALL_BROWSERS=1).
     ...(process.env['PW_ALL_BROWSERS'] === '1'
       ? [
-          { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+          {
+            name: 'firefox',
+            use: {
+              ...devices['Desktop Firefox'],
+              // Firefox sans écran n'initialise aucun pilote GL : sur un runner sans GPU, le workflow
+              // le lance avec un écran virtuel et Mesa (xvfb-run) pour que la scène 3D ait WebGL2.
+              headless: process.env['FIREFOX_XVFB'] !== '1',
+            },
+          },
           { name: 'webkit', use: { ...devices['Desktop Safari'] } },
         ]
       : []),

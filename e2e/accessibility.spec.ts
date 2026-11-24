@@ -12,10 +12,13 @@ const PAGES = ['/fr/', '/en/', '/fr/legal/', '/en/legal/', '/introuvable/'] as c
 /**
  * Rapport lisible : règle, impact, éléments fautifs. On attend d'abord la fin des transitions de
  * couleur (basculement de thème) : axe lirait sinon une couleur intermédiaire, ce qui rend le
- * contraste aléatoire (constaté dans Firefox).
+ * contraste aléatoire (constaté dans Firefox). Une animation annulée (le formulaire retire la
+ * sienne en changeant d'état) rejette `finished` avec AbortError : elle est alors terminée aussi.
  */
 const audit = async (page: Page) => {
-  await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished)));
+  await page.evaluate(() =>
+    Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined))),
+  );
   const { violations } = await new AxeBuilder({ page }).withTags(WCAG_TAGS).analyze();
   return violations.map(
     (violation) =>
