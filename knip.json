@@ -5,7 +5,7 @@
     "scripts/generate-og-image.mjs",
     "scripts/guard-secret-files.mjs"
   ],
-  "ignoreDependencies": ["@secretlint/secretlint-rule-preset-recommend", "@paulperigault/dataviz"],
+  "ignoreDependencies": ["@secretlint/secretlint-rule-preset-recommend"],
   "ignoreBinaries": ["lychee", "hyperfine"],
   "project": ["src/**/*.{ts,astro}", "e2e/**/*.ts", "scripts/**/*.mjs", "src/**/*.css"]
 }
