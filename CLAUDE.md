@@ -99,7 +99,7 @@ npm run bench          # hyperfine medians of lint/format/check/knip/build/test 
 
 ### UI primitives
 
-`src/components/ui/`: logic-free typed primitives (`Container`, `Section`, `Heading`, `Card`, `ButtonLink`, `ExternalLink`, `Icon`, `DescriptionList`, `Timeline(Item)`, `VisuallyHidden`, `SkipLink`) — catalogue in `docs/ui.md`, which also lists the design system components actually imported (`Photo`, `Prose`, `Button`, `Field`, `Milestones3D` from `@paulperigault/astro` 0.4.0), no showcase page (the `/{fr,en}/styleguide/` pages were removed, #295): their contracts are checked on the real pages by `e2e/ui-primitives.spec.ts`. Repeated markup becomes a primitive; primitives take translated strings and import only `lib/` (links `lib/links.ts`, icons `lib/icons.ts`). Component tests: `src/test/render.ts` (Container API, Vitest via `getViteConfig`).
+`src/components/ui/`: logic-free typed primitives (`Container`, `Section`, `Heading`, `Card`, `ButtonLink`, `ExternalLink`, `Icon`, `DescriptionList`, `Timeline(Item)`, `VisuallyHidden`, `SkipLink`) — catalogue in `docs/ui.md`, which also lists the design system components actually imported (`Photo`, `Prose`, `Button`, `Field`, `Milestones3D` from `@paulperigault/astro` 0.5.0), no showcase page (the `/{fr,en}/styleguide/` pages were removed, #295): their contracts are checked on the real pages by `e2e/ui-primitives.spec.ts`. Repeated markup becomes a primitive; primitives take translated strings and import only `lib/` (links `lib/links.ts`, icons `lib/icons.ts`). Component tests: `src/test/render.ts` (Container API, Vitest via `getViteConfig`).
 
 ### Effect rules
 
@@ -128,9 +128,9 @@ Senior, maintainable code made of independent bricks.
   - `knip`: unused files, exports and dependencies fail.
 - **Design charter** (`docs/design-charter.md`; v2 = ADR-0012, direction A: design system tokens and CSS as published, no custom token build): one accent (hue 270.7), one self-hosted text typeface (Atkinson Hyperlegible Next; its Mono only for code, identifiers, fingerprints, metadata), title-left sections, hairline rules, radii `rounded-control` (0.25 rem) and `rounded-surface` (0.5 rem) only, print stylesheet (`e2e/print.spec.ts`). **Forbidden**: serif, mono on titles or labels (mono stays for code/identifiers/fingerprints/metadata), uppercase labels (with or without letter-spacing, no exception: `LangSwitch` writes its code in capitals in the text), other radii, section numbers, tag pills, gradients, decorative shadows, blur, emoji, hard-coded or Tailwind palette colours, arbitrary px/hex, filler phrases. Enforced by `scripts/check-design.mjs` (rules `scripts/lib/design-rules.mjs`: `font-mono` refused on headings, labels, buttons and `Heading`/`Button`/`ButtonLink`, matched on the whole file so a tag split over several lines is caught (`multiline` rule); `rayon`; any `uppercase` or `text-transform: uppercase`, no exception; no allow-list for a local token sheet) and `e2e/design-charter.spec.ts` (computed styles, FR/EN × light/dark; mono accepted on `code, kbd, samp, pre` only, no computed `text-transform: uppercase` anywhere, every corner radius 0 or a design system radius). Visual regression (#201, `docs/visual-regression.md`): `e2e/visual.spec.ts` compares 12 full-page references (`/fr/`, `/en/`, 404 × light/dark × desktop/mobile, projects masked) **only in the CI `visual` job**, inside the Playwright image pinned by digest (`scripts/lib/visual-image.mjs`, same as `npm run test:visual:update`); skipped elsewhere (fonts differ between machines).
 
-### Provisional design system tarballs
+### Design system packages
 
-`@paulperigault/astro`, `css`, `milestones-3d` and `dataviz` are `file:vendor/pp-tarballs/*.tgz` dependencies until the packages reach npm (follow-up issue #402); `tokens` comes from npm. `dataviz` is declared only so npm can resolve `astro`'s exact dependency (ignored by `knip.json`). Never edit the tarballs; the switch to npm removes `vendor/` and the `knip.json` entry.
+`@paulperigault/astro` 0.5.0, `css` 0.4.0, `milestones-3d` 0.2.0 and `tokens` 0.2.1 come from the public npm registry (exact versions, `@paulperigault:registry` in the project `.npmrc`). `dataviz` is an exact dependency of `astro`, resolved from npm and not declared. Always pass `--registry https://registry.npmjs.org/ --legacy-peer-deps=false` to npm commands that touch the lockfile: the user-level `~/.npmrc` of some machines points elsewhere.
 
 ## Git workflow
 
@@ -178,7 +178,7 @@ Everything is in `.github/workflows/`; the site is **built once** and the **same
 - Every triggered workflow has `concurrency` (release never cancelled); Dependabot `cooldown` 7 days; the auto-merge job checks the PR **author** and head repo, never `github.actor`.
 - Required checks stay `ci` and `commitlint`; `scripts/workflows.test.mjs` asserts them, the single build, pinned actions, permissions, weekly redeploy.
 - Lighthouse budgets (`.lighthouserc.json`, desktop, `/fr/`, `/en/` and both legal pages): performance ≥ 0.98, accessibility = 1, best-practices = 1, SEO = 1, JS ≤ 6 KB, weight ≤ 90 KB, ≤ 12 requests, LCP ≤ 800 ms, TBT ≤ 50 ms, CLS ≤ 0.01 (measured 2026-10-19: 100 everywhere, LCP ≈ 370 ms, 59 KB, 4.3 KB JS). CSS is inlined in each page (`build.inlineStylesheets: always`, LCP −41 % on throttled mobile); Astro hashes it into the CSP.
-- Dependabot groups npm (astro, effect, tailwind, tooling), `/worker`, `/infra` (`opentofu`, never auto-merged), github-actions; npm majors are ignored.
+- Dependabot groups npm (astro, effect, tailwind, design-system = `@paulperigault/*`, tooling), `/worker`, `/infra` (`opentofu`, never auto-merged), github-actions; npm majors are ignored.
 - No Docker, no nginx, no shell script (ADR-0008, `scripts/hosting.test.mjs`).
 - Schedules run from the **default branch** (`develop`), hence `ref: main` in `deploy.yml`.
 

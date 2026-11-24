@@ -21,7 +21,7 @@ Il n'y a plus de vitrine : les pages `/fr/styleguide/` et `/en/styleguide/` ont 
 
 ## Composants du design system utilisés
 
-Importés de `@paulperigault/astro` 0.4.0 (version de `package.json`). La liste vient des imports présents dans `src/` :
+Importés de `@paulperigault/astro` 0.5.0 (version de `package.json`). La liste vient des imports présents dans `src/` :
 
 | Composant      | Importé par                           | Usage                                                       |
 | -------------- | ------------------------------------- | ----------------------------------------------------------- |

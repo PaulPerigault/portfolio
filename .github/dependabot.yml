@@ -21,6 +21,9 @@ updates:
         patterns: ["effect", "@effect/*"]
       tailwind:
         patterns: ["tailwindcss", "@tailwindcss/*"]
+      # astro épingle css, tokens et dataviz en version exacte : une seule PR pour le design system.
+      design-system:
+        patterns: ["@paulperigault/*"]
       tooling:
         patterns:
           - "eslint*"
