@@ -17,13 +17,16 @@ const listNode = (name: string, pageUrl: string, key: string, items: Node[]): No
 
 export const certificationsNode = ({ path, certifications }: JsonLdInput): Node[] => {
   const pageUrl = absoluteUrl(path);
-  const items = certifications.map((cert) => ({
-    '@type': 'EducationalOccupationalCredential',
-    '@id': `${pageUrl}#certification-${cert.id}`,
-    name: cert.name,
-    credentialCategory: cert.issuer,
-    ...(cert.dateIssued ? { dateCreated: cert.dateIssued } : {}),
-  }));
+  // Seules les certifications obtenues sont des titres : une certification planifiée n'en est pas un.
+  const items = certifications
+    .filter((cert) => cert.status === 'achieved')
+    .map((cert) => ({
+      '@type': 'EducationalOccupationalCredential',
+      '@id': `${pageUrl}#certification-${cert.id}`,
+      name: cert.name,
+      credentialCategory: cert.issuer,
+      ...(cert.date ? { dateCreated: cert.date } : {}),
+    }));
   return items.length > 0 ? [listNode('Certifications', pageUrl, 'certifications', items)] : [];
 };
 

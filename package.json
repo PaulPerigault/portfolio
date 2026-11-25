@@ -2,6 +2,7 @@
   "name": "paul-portfolio",
   "version": "2.3.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "packageManager": "npm@11.6.1",
   "engines": {
@@ -50,16 +51,17 @@
     "infra:worker-secrets": "node scripts/infra-worker-secrets.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/sitemap": "^3.7.5",
     "@effect/platform": "^0.97.2",
     "@effect/platform-node": "^0.108.4",
-    "@paulperigault/astro": "0.1.0",
-    "@paulperigault/css": "0.1.0",
-    "@paulperigault/tokens": "0.1.0",
-    "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.4.2",
+    "@paulperigault/astro": "0.6.0",
+    "@paulperigault/css": "0.5.0",
+    "@paulperigault/milestones-3d": "0.3.0",
+    "@paulperigault/tokens": "0.2.1",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.12",
     "effect": "^3.22.4",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
@@ -70,20 +72,20 @@
     "@effect/vitest": "^0.30.1",
     "@eslint/js": "^10.0.0",
     "@fontsource-variable/atkinson-hyperlegible-next": "^5.3.0",
-    "@playwright/test": "^1.64.1",
+    "@playwright/test": "^1.65.1",
     "@secretlint/secretlint-rule-preset-recommend": "^13.1.0",
     "@types/node": "^24.19.2",
-    "eslint": "^10.13.0",
+    "eslint": "^10.15.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^3.2.1",
     "husky": "^9.1.7",
-    "knip": "^6.43.0",
+    "knip": "^6.45.1",
     "lint-staged": "^16.4.0",
-    "prettier": "^3.9.10",
+    "prettier": "^3.10.1",
     "prettier-plugin-astro": "^1.1.2",
     "secretlint": "^13.1.0",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.72.0",
+    "typescript-eslint": "^8.72.2",
     "vitest": "^4.1.12"
   },
   "lint-staged": {

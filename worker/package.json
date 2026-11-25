@@ -2,6 +2,7 @@
   "name": "contact-worker",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "Worker Cloudflare du formulaire de contact : Turnstile, puis envoi par Resend.",
   "engines": {
@@ -17,14 +18,14 @@
     "verify": "npm run lint && npm run format:check && npm run typecheck && npm test"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20261019.1",
+    "@cloudflare/workers-types": "^5.20261117.1",
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.13.0",
-    "prettier": "^3.9.9",
+    "eslint": "^10.15.0",
+    "prettier": "^3.10.1",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.71.2",
+    "typescript-eslint": "^8.73.0",
     "vitest": "^4.1.12",
-    "wrangler": "^4.151.1"
+    "wrangler": "^4.163.0"
   },
   "overrides": {
     "minimatch": "^11.0.1"

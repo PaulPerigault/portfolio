@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { certificationsNewestFirst, newestFirst } from './chronology';
+import { certificationsInOrder, newestFirst } from './chronology';
 
 const item = (id: string, dateStart: string, dateEnd: string | null) => ({
   id,
@@ -30,13 +30,14 @@ describe('newestFirst', () => {
   });
 });
 
-describe('certificationsNewestFirst', () => {
-  it('met les certifications en préparation en tête puis trie par obtention décroissante', () => {
-    const sorted = certificationsNewestFirst([
-      { id: 'cdl', dateIssued: '2024-11' },
-      { id: 'ace', dateIssued: null },
-      { id: 'quest', dateIssued: '2026-03' },
+describe('certificationsInOrder', () => {
+  it('trie par date croissante, mois avant jour, et met les certifications sans date en dernier', () => {
+    const sorted = certificationsInOrder([
+      { id: 'saa' },
+      { id: 'aif', date: '2026-12-02' },
+      { id: 'clf', date: '2026-11-18' },
+      { id: 'cdl', date: '2024-11' },
     ]);
-    expect(ids(sorted)).toEqual(['ace', 'quest', 'cdl']);
+    expect(ids(sorted)).toEqual(['cdl', 'clf', 'aif', 'saa']);
   });
 });

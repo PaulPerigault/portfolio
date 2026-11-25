@@ -1,14 +1,17 @@
 import { expect, test, type Page } from '@playwright/test';
+import { normalizeColor } from './helpers/colors';
 
 const LABELS = {
   fr: { toDark: 'Passer en mode sombre', toLight: 'Passer en mode clair' },
   en: { toDark: 'Switch to dark mode', toLight: 'Switch to light mode' },
 } as const;
-const DARK_BACKGROUND = 'oklch(0.201 0.0124 270.7)';
-const LIGHT_BACKGROUND = 'oklch(0.985 0.004 270.7)';
+const DARK_BACKGROUND = normalizeColor('oklch(0.201 0.0124 270.7)');
+const LIGHT_BACKGROUND = normalizeColor('oklch(0.985 0.004 270.7)');
 
 const backgroundOf = (page: Page) =>
-  page.evaluate(() => getComputedStyle(document.documentElement).backgroundColor);
+  page
+    .evaluate(() => getComputedStyle(document.documentElement).backgroundColor)
+    .then(normalizeColor);
 
 for (const lang of ['fr', 'en'] as const) {
   test.describe(`bouton de thème (${lang})`, () => {

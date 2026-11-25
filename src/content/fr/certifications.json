@@ -1,29 +1,50 @@
-[
-  {
-    "id": "gcp-cdl",
-    "name": "Cloud Digital Leader",
-    "issuer": "Google Cloud",
-    "issuerLogo": "gcp",
-    "dateIssued": "2024-11",
-    "dateExpires": "2027-11",
-    "inProgress": false
+{
+  "goal": {
+    "label": "Cloud Architect"
   },
-  {
-    "id": "aws-quest",
-    "name": "Formation AWS Cloud Quest : Cloud Practitioner",
-    "issuer": "Amazon Web Services",
-    "issuerLogo": "aws",
-    "dateIssued": "2026-03",
-    "dateExpires": null,
-    "inProgress": false
-  },
-  {
-    "id": "gcp-ace",
-    "name": "Associate Cloud Engineer",
-    "issuer": "Google Cloud",
-    "issuerLogo": "gcp",
-    "dateIssued": null,
-    "dateExpires": null,
-    "inProgress": true
-  }
-]
+  "items": [
+    {
+      "id": "gcp-cdl",
+      "name": "Cloud Digital Leader",
+      "issuer": "Google Cloud",
+      "status": "achieved",
+      "date": "2024-11",
+      "dateExpires": "2027-11",
+      "verifyUrl": "https://www.credly.com/badges/a81cf9bc-edf9-4859-a17d-431b3dafcfc6",
+      "badge": {
+        "src": "/image/badges/google-cloud-digital-leader.png",
+        "width": 1040,
+        "height": 1040
+      }
+    },
+    {
+      "id": "aws-clf-c02",
+      "name": "AWS Certified Cloud Practitioner",
+      "issuer": "Amazon Web Services",
+      "code": "CLF-C02",
+      "status": "achieved",
+      "date": "2026-11-18",
+      "verifyUrl": "https://www.credly.com/badges/1aa201ac-3fde-4114-ac05-54418c2e9b84",
+      "badge": {
+        "src": "/image/badges/aws-cloud-practitioner.png",
+        "width": 600,
+        "height": 600
+      }
+    },
+    {
+      "id": "aws-aif-c01",
+      "name": "AWS Certified AI Practitioner",
+      "issuer": "Amazon Web Services",
+      "code": "AIF-C01",
+      "status": "planned",
+      "date": "2026-12-02"
+    },
+    {
+      "id": "aws-saa-c03",
+      "name": "AWS Certified Solutions Architect Associate",
+      "issuer": "Amazon Web Services",
+      "code": "SAA-C03",
+      "status": "planned"
+    }
+  ]
+}
