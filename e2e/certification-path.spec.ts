@@ -54,6 +54,10 @@ for (const lang of ['fr', 'en'] as const) {
       page,
     }) => {
       const { items } = certificationsOf(lang);
+      // Liste classique (économie de données : empreinte levée) : c'est elle qui montre ces images.
+      await page.addInitScript(() => {
+        Object.defineProperty(navigator, 'connection', { value: { saveData: true } });
+      });
       await page.goto(`/${lang}/`);
       const rows = page.locator(`${HOST} [data-pp-item]`);
       for (const [index, item] of items.entries()) {

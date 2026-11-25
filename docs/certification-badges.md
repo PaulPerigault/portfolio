@@ -35,7 +35,9 @@ system) :
 - Google Cloud (Exam Terms and Conditions, section 4) : la certification indique que la personne est
   certifiée, selon les Google Brand Feature Guidelines en vigueur.
 
-Règles appliquées ici : badge intact sur une pastille claire fixe (y compris dans le thème sombre),
+Règles appliquées ici : badge intact sur une pastille claire fixe (y compris dans le thème sombre), de face
+sur la médaille de la scène (ADR-0014 du design system : image HTML posée par translation et échelle
+uniforme seulement, jamais de rotation, de biais, de filtre ni d'ombre sur l'image),
 rien posé dessus, nom complet de la certification écrit en HTML à côté, lien « Vérifier sur Credly »
 vers la page de l'émetteur (reflète une révocation), usage à titre personnel de la personne certifiée.
 
@@ -81,32 +83,38 @@ de fond ou de distance n'est publiée pour eux. La règle des 25 px de marge app
 
 ### Comparaison avec l'affichage réel
 
-| Point                       | Affichage                                                                                                                                                        | Verdict          |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| Usage personnel             | portfolio d'une personne, la certification est la sienne                                                                                                         | conforme         |
-| Badge intact (octets)       | fichier Credly d'origine, aucun recadrage ni filtre                                                                                                              | conforme         |
-| Fond clair                  | pastille claire fixe, y compris en thème sombre                                                                                                                  | conforme         |
-| Affiliation suggérée        | aucun logo Google hors du badge, texte « Vérifier sur Credly », pas de mention de partenariat                                                                    | conforme         |
-| Lien                        | page Credly de l'émetteur, nouvel onglet                                                                                                                         | conforme         |
-| Statut                      | « Obtenue novembre 2024 », certification de niveau Foundational valable 3 ans (section 1.c) : à retirer ou à renouveler avant novembre 2027                      | à suivre         |
-| Badge dans la scène 3D      | texture posée sur une médaille en perspective, ombrée, rapetissée : le badge Google paraît pâle et son anneau de texte n'est pas lisible sur mobile              | **point ouvert** |
-| Mention de marque           | mentions légales, section « Propriété intellectuelle » (FR et EN) : noms et badges propriété de Google LLC et d'Amazon Web Services, site ni affilié ni approuvé | conforme         |
-| Permission écrite de Google | aucune demandée ; le texte de la section 4 des Exam Terms l'autorise pour la certification, pas pour d'autres Brand Features                                     | **point ouvert** |
+| Point                       | Affichage                                                                                                                                                                                                               | Verdict                 |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| Usage personnel             | portfolio d'une personne, la certification est la sienne                                                                                                                                                                | conforme                |
+| Badge intact (octets)       | fichier Credly d'origine, aucun recadrage ni filtre                                                                                                                                                                     | conforme                |
+| Fond clair                  | pastille claire fixe, y compris en thème sombre                                                                                                                                                                         | conforme                |
+| Affiliation suggérée        | aucun logo Google hors du badge, texte « Vérifier sur Credly », pas de mention de partenariat                                                                                                                           | conforme                |
+| Lien                        | page Credly de l'émetteur, nouvel onglet                                                                                                                                                                                | conforme                |
+| Statut                      | « Obtenue novembre 2024 », certification de niveau Foundational valable 3 ans (section 1.c) : à retirer ou à renouveler avant novembre 2027                                                                             | à suivre                |
+| Badge dans la scène 3D      | image HTML intacte, de face, translation et échelle uniforme seulement (ADR-0014, `e2e/certification-badge-intact.spec.ts`) sur un disque clair fixe ; 179 px (Google) et 154 px (AWS) à 390 x 844, 222 px à 1440 x 900 | conforme (voir point 1) |
+| Mention de marque           | mentions légales, section « Propriété intellectuelle » (FR et EN) : noms et badges propriété de Google LLC et d'Amazon Web Services, site ni affilié ni approuvé                                                        | conforme                |
+| Permission écrite de Google | aucune demandée ; le texte de la section 4 des Exam Terms l'autorise pour la certification, pas pour d'autres Brand Features                                                                                            | **point ouvert**        |
 
 ### Points ouverts
 
-1. Dans la scène, le badge n'est pas affiché tel quel : mis en perspective, éclairé et réduit sur une
-   médaille. La règle « ne pas déformer ni altérer » peut s'appliquer. Le panneau de détail et la liste
-   montrent le badge intact. Options : laisser tel quel (lecture de bonne foi : la certification est
-   représentée, le badge intact est à côté) ; ne montrer dans la scène que le nom et la date pour les
-   badges Google ; demander l'avis de Google Cloud Certification
-   (`support.google.com/cloud-certification/contact/cloud_certifications`).
+1. Badge dans la scène : traité (2026-11-25, `@paulperigault/astro` 0.6.0, `milestones-3d` 0.3.0). Avant,
+   le badge était une texture mise en perspective, éclairée et réduite sur la médaille. Maintenant il est
+   une `<img>` HTML intacte (octets de l'émetteur, 1040 x 1040 et 600 x 600 pixels naturels, assez grands
+   pour l'affichage), posée de face sur un disque clair fixe. Preuve : `e2e/certification-badge-intact.spec.ts`
+   mesure, pour chaque badge actif en FR et EN, la matrice de transformation (aucune rotation ni biais,
+   échelle uniforme `a == d`), `filter: none`, opacité 1 et le rapport d'aspect naturel à 1 % ; contrôle
+   visuel du rendu réel (vrais badges) à 1440 x 900 et 390 x 844, clair et sombre. Lisibilité du texte en
+   arc du badge Google : à 390 x 844 le badge fait 179 px, l'arc du haut (« Cloud Digital Leader ») se lit,
+   l'arc du bas (« GOOGLE CLOUD CERTIFIED ») est petit mais lisible sur un écran 2x ; sous 390 px de large
+   ou 800 px de haut le badge tombe sous 150 px (94 px à 375 x 667, 56 px à 320 x 640) et le texte en arc
+   n'est plus lisible : limite du cadrage du design system, voir `docs/journal/2026-11-24.md`. Le panneau de
+   détail et la liste montrent toujours le badge intact en plus grand.
 2. Mention de marque : faite (#414), voir le tableau. Texte : « Les noms et badges de certification
    appartiennent à leurs propriétaires (Google LLC, Amazon Web Services). Ce site n'est ni affilié ni
    approuvé par eux. »
 3. Calendrier : retirer ou renouveler la certification Google avant novembre 2027 (issue #415).
 
-Seule la mention de marque (point 2) est faite sur le site ; les points 1 et 3 restent ouverts.
+Les points 1 (badge dans la scène) et 2 (mention de marque) sont faits ; le point 3 reste ouvert.
 
 ## Remplacer un badge
 
