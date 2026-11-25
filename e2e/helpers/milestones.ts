@@ -32,12 +32,7 @@ export const certificationsOf = (lang: TestLang): CertificationContent => {
 /** Étapes de la liste : les certifications, puis l'objectif. */
 export const stepCount = (content: CertificationContent): number => content.items.length + 1;
 
-/** Amène la section à l'écran puis fait le geste que le composant attend avant de charger la 3D. */
+/** Amène le haut de la section à l'écran : le défilement suffit, la scène n'attend plus de geste. */
 export const approach = async (page: Page): Promise<void> => {
-  await page.locator('#certifications').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
-  await page.keyboard.press('Shift');
-  // Le premier geste arme l'observation ; le suivant, avec la section déjà à l'écran, charge la scène.
-  await page.waitForTimeout(300);
-  await page.keyboard.press('Shift');
+  await page.locator('#certifications').evaluate((section) => section.scrollIntoView());
 };

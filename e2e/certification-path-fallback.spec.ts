@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { approach, certificationsOf, HOST, stepCount } from './helpers/milestones';
 
-/** Chaque repli laisse la liste complète, sans canvas ni état amélioré, avec la même hauteur de liste. */
+/** Chaque repli laisse la liste complète, sans canvas ni état amélioré, empreinte réservée levée. */
 const expectClassic = async (page: Page, lang: 'fr' | 'en'): Promise<void> => {
   await expect(page.locator(`${HOST} [data-pp-item]`)).toHaveCount(
     stepCount(certificationsOf(lang)),
@@ -9,10 +9,13 @@ const expectClassic = async (page: Page, lang: 'fr' | 'en'): Promise<void> => {
   await expect(page.locator(`${HOST} canvas`)).toHaveCount(0);
   await expect(page.locator(HOST)).not.toHaveAttribute('data-state', 'enhanced');
   await expect(page.locator(`${HOST} [data-pp-item] button`)).toHaveCount(0);
+  await expect(page.locator(HOST)).not.toHaveAttribute('data-reserve', /.+/);
+  expect(await listFlow(page)).not.toBe('column');
 };
 
-const listHeight = (page: Page) =>
-  page.locator(`${HOST} [data-pp-list]`).evaluate((e) => e.getBoundingClientRect().height);
+/** La bande d'étapes réservée est une grille en colonnes ; la liste classique est empilée. */
+const listFlow = (page: Page) =>
+  page.locator(`${HOST} [data-pp-list]`).evaluate((e) => getComputedStyle(e).gridAutoFlow);
 
 for (const lang of ['fr', 'en'] as const) {
   test.describe(`repli sur la liste classique (${lang})`, () => {
@@ -35,7 +38,7 @@ for (const lang of ['fr', 'en'] as const) {
       await approach(page);
       await page.waitForTimeout(800);
       await expectClassic(page, lang);
-      expect(requested.filter((url) => /\.wasm$|milestones/.test(url))).toEqual([]);
+      expect(requested.filter((url) => /\.wasm$|pp_milestones/.test(url))).toEqual([]);
     });
 
     test('WebGL2 absent : la scène est retirée', async ({ page }) => {
@@ -50,16 +53,13 @@ for (const lang of ['fr', 'en'] as const) {
         } as typeof original;
       });
       await page.goto(`/${lang}/`);
-      const before = await listHeight(page);
       await approach(page);
       await page.waitForTimeout(800);
       await expectClassic(page, lang);
-      expect(await listHeight(page)).toBe(before);
     });
 
     test('perte du contexte WebGL sans restauration : retour à la liste', async ({ page }) => {
       await page.goto(`/${lang}/`);
-      const before = await listHeight(page);
       await approach(page);
       await expect(page.locator(HOST)).toHaveAttribute('data-state', 'enhanced');
       await page.locator(`${HOST} canvas`).evaluate((canvas: HTMLCanvasElement) => {
@@ -67,7 +67,6 @@ for (const lang of ['fr', 'en'] as const) {
       });
       await expect(page.locator(`${HOST} canvas`)).toHaveCount(0, { timeout: 6000 });
       await expectClassic(page, lang);
-      expect(await listHeight(page)).toBe(before);
     });
   });
 }
