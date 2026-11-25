@@ -47,12 +47,10 @@ async function run(page: Page, label: string, slow: boolean): Promise<void> {
   page.on('pageerror', (e) => problems.push(e.message));
   if (slow) await throttle(await page.context().newCDPSession(page));
   await page.goto('/fr/');
-  await page.locator('#certifications').evaluate((e) => e.scrollIntoView({ behavior: 'instant' }));
-  await page.waitForTimeout(300);
-  await page.keyboard.press('Shift');
-  await page.waitForTimeout(300);
+  // ADR-0014 : plus de geste. La mesure part de l'arrivée sur la section (le défilement est le signe
+  // qui arme le déclencheur) et couvre silence de défilement, import, `.wasm` et première image.
   const start = Date.now();
-  await page.keyboard.press('Shift');
+  await page.locator('#certifications').evaluate((e) => e.scrollIntoView({ behavior: 'instant' }));
   const ready = await page
     .waitForFunction(
       (h) => document.querySelector(h)?.getAttribute('data-state') === 'enhanced',

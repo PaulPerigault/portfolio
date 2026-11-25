@@ -40,9 +40,31 @@
   );
 }
 
-main .pp-milestones[data-mode='scroll'] .pp-milestones__frame {
-  inset-block-start: var(--site-header-height);
-  block-size: calc(var(--milestones-screen) - var(--site-header-height));
+/*
+ * Même décalage avant et après l'activation (ADR-0014) : l'empreinte réservée du design system
+ * (`data-reserve`, restée posée une fois la scène prête) épingle le cadre à 0 ; sans cette règle
+ * sur elle aussi, le cadre descendrait de la hauteur de l'en-tête à l'activation. Mêmes conditions
+ * que la piste haute réservée (JavaScript, mouvement non réduit).
+ */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  main .pp-milestones[data-reserve='on'] .pp-milestones__frame,
+  main .pp-milestones[data-mode='scroll'] .pp-milestones__frame {
+    inset-block-start: var(--site-header-height);
+    block-size: calc(var(--milestones-screen) - var(--site-header-height));
+  }
+}
+
+/*
+ * Badges de la liste de référence : tant que l'empreinte est réservée, leurs médailles sont réduites
+ * à un point découpé (design system), jamais vues ; la scène charge elle-même l'image du badge actif
+ * (même URL). Sans cette règle, `loading="lazy"` les charge dès qu'un viewport très haut les
+ * touche (capture pleine page de Lighthouse) : 143 Ko, au-delà du budget de poids. La levée de la
+ * réservation (repli) les rend à leur chargement paresseux habituel.
+ */
+@media (scripting: enabled) {
+  .pp-milestones[data-reserve='on'] .pp-milestones__item > .pp-milestones__medal {
+    content-visibility: hidden;
+  }
 }
 
 /* Impression : le CV papier est la page elle-même, sans navigation ni pied de page. */

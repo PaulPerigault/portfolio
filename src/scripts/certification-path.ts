@@ -68,10 +68,21 @@ function watchSection(host: Element): void {
   observer.observe(host);
 }
 
+/**
+ * Économie de données : la scène ne viendra jamais, le comportement du design system lèverait
+ * l'empreinte réservée à l'arrivée sur la section, donc sous les yeux (un décalage unique, ADR-0014).
+ * Levée dès le chargement, hors écran.
+ */
+function releaseOnSaveData(host: Element): void {
+  const connection = (navigator as { connection?: { saveData?: boolean } }).connection;
+  if (connection?.saveData === true) host.removeAttribute('data-reserve');
+}
+
 export function initCertificationPath(): void {
   const host = document.querySelector(HOST);
   if (!host) return;
   openInNewTab(host);
+  releaseOnSaveData(host);
   const watch = (): void => {
     SIGNS.forEach((name) => removeEventListener(name, watch));
     watchSection(host);

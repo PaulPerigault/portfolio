@@ -35,6 +35,8 @@ for (const lang of ['fr', 'en'] as const) {
         Object.defineProperty(navigator, 'connection', { value: { saveData: true } });
       });
       await page.goto(`/${lang}/`);
+      // Levée dès le chargement, avant d'arriver sur la section : aucun décalage sous les yeux.
+      await expect(page.locator(HOST)).not.toHaveAttribute('data-reserve', /.+/);
       await approach(page);
       await page.waitForTimeout(800);
       await expectClassic(page, lang);
