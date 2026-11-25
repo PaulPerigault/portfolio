@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.4.0](https://github.com/PaulPerigault/portfolio/compare/v2.3.0...v2.4.0) (2026-11-25)
+
+
+### Features
+
+* **certifications:** parcours 3d des certifications, paquets npm ([87a2b9b](https://github.com/PaulPerigault/portfolio/commit/87a2b9bb524dd6a4ca1c3a4401169d62ff321f60))
+* **certifications:** parcours 3d en amélioration progressive ([#403](https://github.com/PaulPerigault/portfolio/issues/403)) ([79019ea](https://github.com/PaulPerigault/portfolio/commit/79019ea2752c26e597ce0dde143a467d298879bd)), closes [#401](https://github.com/PaulPerigault/portfolio/issues/401)
+* **certifications:** parcours de badges 3d avec les vrais badges ([#411](https://github.com/PaulPerigault/portfolio/issues/411)) ([8e3d63f](https://github.com/PaulPerigault/portfolio/commit/8e3d63fb43c281fbd23ae5917ddb370297b8901c)), closes [#410](https://github.com/PaulPerigault/portfolio/issues/410)
+
 ## [2.3.0](https://github.com/PaulPerigault/portfolio/compare/v2.2.0...v2.3.0) (2026-11-06)
 
 
